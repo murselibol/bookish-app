@@ -14,7 +14,7 @@ final class HomeVC: UIViewController {
     let helloText: UILabel = {
         let label = UILabel()
         label.text = "Hello"
-        label.textColor = .cyan
+        label.font = UIFont.Raleway(.semibold, size: 30)
         return label
     }()
 
