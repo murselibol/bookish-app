@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeVC.swift
 //  bookish-app
 //
 //  Created by Mursel Elibol on 22.12.2023.
@@ -8,7 +8,8 @@
 import UIKit
 import SnapKit
 
-class ViewController: UIViewController {
+
+final class HomeVC: UIViewController {
     
     let helloText: UILabel = {
         let label = UILabel()
@@ -27,6 +28,4 @@ class ViewController: UIViewController {
         }
     }
 
-
 }
-
