@@ -6,12 +6,25 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
+    
+    let helloText: UILabel = {
+        let label = UILabel()
+        label.text = "Hello"
+        label.textColor = .cyan
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        view.addSubview(helloText)
+        
+        helloText.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
 
 
