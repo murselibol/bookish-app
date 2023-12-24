@@ -21,7 +21,20 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     }
     
     func start() {
+        let homeCoordinator = HomeCoordinator()
+        homeCoordinator.start()
+        self.childCoordinators.append(homeCoordinator)
+        let homeVC = homeCoordinator.homeVC
+        createTabBarItem(vc: homeVC, title: "Home", imageName: "house", selectdImageName: "house.fill")
         
+        
+        self.rootViewController.viewControllers = [homeCoordinator.navigationController]
     }
     
+    func createTabBarItem(vc: UIViewController, title: String, imageName: String, selectdImageName: String) {
+        let defaultImage = UIImage(systemName: imageName)
+        let selectedImage = UIImage(systemName: selectdImageName)
+        let tabBarItem = UITabBarItem(title: title, image: defaultImage, selectedImage: selectedImage)
+        vc.tabBarItem = tabBarItem
+    }
 }
