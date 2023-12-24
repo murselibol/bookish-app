@@ -27,8 +27,13 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         let homeVC = homeCoordinator.homeVC
         createTabBarItem(vc: homeVC, title: "Home", imageName: "house", selectdImageName: "house.fill")
         
+        let bookCategoryCoordinator = BookCategoryCoordinator()
+        bookCategoryCoordinator.start()
+        self.childCoordinators.append(bookCategoryCoordinator)
+        let bookCategoryVC = bookCategoryCoordinator.bookCategoryVC
+        createTabBarItem(vc: bookCategoryVC, title: "Category", imageName: "person", selectdImageName: "person.fill")
         
-        self.rootViewController.viewControllers = [homeCoordinator.navigationController]
+        self.rootViewController.viewControllers = [homeCoordinator.navigationController, bookCategoryCoordinator.navigationController]
     }
     
     func createTabBarItem(vc: UIViewController, title: String, imageName: String, selectdImageName: String) {
