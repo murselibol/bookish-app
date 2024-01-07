@@ -12,7 +12,7 @@ class BookCategoryVC: UIViewController {
     let helloText: UILabel = {
         let label = UILabel()
         label.text = "Category"
-        label.font = UIFont.Raleway(.semibold, size: 30)
+        label.font = .Title2(.semibold, size: 30)
         return label
     }()
 

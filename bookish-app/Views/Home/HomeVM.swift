@@ -24,7 +24,6 @@ final class HomeVM {
 // MARK: - HomeVMDelegate
 extension HomeVM: HomeVMDelegate {
     func viewDidLoad() {
-        print(self.view ?? "mynil")
         view?.configureCollectionViewLayout()
         view?.configureCollectionView()
         view?.constraintsCollectionView()

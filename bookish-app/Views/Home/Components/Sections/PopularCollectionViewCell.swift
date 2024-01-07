@@ -11,10 +11,20 @@ class PopularCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PopularCollectionViewCell"
     
-    lazy var cellLabel: UILabel = {
+    private lazy var thumbnailImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 6
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Populars Collection View Cell"
-        label.numberOfLines = 0
+        label.font = .Title3(.medium)
+        label.text = "Sineklerin Tanrısı"
+        label.textColor = .getColor(.bookTitle)
+        label.numberOfLines = 2
         return label
     }()
     
@@ -29,10 +39,16 @@ class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     func constraintUI() {
-        addSubview(cellLabel)
+        addSubview(thumbnailImage)
+        addSubview(bookTitleLabel)
         
-        cellLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        thumbnailImage.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(thumbnailImage.snp.width).multipliedBy(1.6)
+        }
+        
+        bookTitleLabel.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
         }
     }
 }

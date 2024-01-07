@@ -87,14 +87,14 @@ extension HomeVC {
     func createPopularsSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets.trailing = 10
+        item.contentInsets.trailing = 20
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.35), heightDimension: .absolute(180))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.37), heightDimension: .absolute(260))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
       
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 25, leading: 15, bottom: 25, trailing: 15)
+        section.contentInsets = .init(top: 25, leading: 10, bottom: 25, trailing: 10)
         return section
     }
 }

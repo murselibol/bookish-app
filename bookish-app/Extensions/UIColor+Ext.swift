@@ -10,6 +10,7 @@ import UIKit
 extension UIColor {
     enum ColorName: String {
         case background = "bgColorColor"
+        case bookTitle = "bookTitleColor"
         case primary = "primaryColor"
         case subtitle = "subtitleColor"
         case text = "textColor"
