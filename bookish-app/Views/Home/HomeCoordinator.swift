@@ -14,6 +14,7 @@ final class HomeCoordinator: Coordinator {
     
     lazy var homeVC: HomeVC = {
         let vc = HomeVC()
+        vc.coordinator = self
         return vc
     }()
     
@@ -27,5 +28,12 @@ final class HomeCoordinator: Coordinator {
     
     func finishCoordinator() {
         parentCoordinator?.childDidFinish(self)
+    }
+    
+    func navigateBookListVC() {
+        let coordinator = BookListCoordinator(navigationController: navigationController)
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }

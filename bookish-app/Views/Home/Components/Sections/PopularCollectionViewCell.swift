@@ -21,7 +21,7 @@ class PopularCollectionViewCell: UICollectionViewCell {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Title3(.medium)
+        label.font = .Text1()
         label.text = "Sineklerin Tanrısı"
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 2

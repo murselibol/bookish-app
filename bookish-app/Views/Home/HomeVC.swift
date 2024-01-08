@@ -15,8 +15,8 @@ protocol HomeVCDelegate: AnyObject {
 }
 
 final class HomeVC: UIViewController {
-    
     private lazy var viewModel = HomeVM(view: self)
+    weak var coordinator: HomeCoordinator?
     private var collectionView: UICollectionView!
 
     // MARK: - Init
@@ -33,6 +33,7 @@ extension HomeVC: HomeVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -69,7 +70,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
         
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
@@ -80,6 +80,26 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch indexPath.section {
+            case 0:
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+                header.delegate = self
+                header.setup(title: "Popular 🔥")
+                return header
+            default:
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+                return header
+        }
+        
+    }
+}
+
+extension HomeVC: SectionHeaderViewDelegate {
+    func onClickSeeMoreBtn() {
+        coordinator?.navigateBookListVC()
+    }
 }
 
 // MARK: - Compositional Layout
@@ -89,12 +109,18 @@ extension HomeVC {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets.trailing = 20
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.37), heightDimension: .absolute(260))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.37), heightDimension: .absolute(250))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-      
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 25, leading: 10, bottom: 25, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        section.boundarySupplementaryItems = [header]
+        
         return section
     }
 }
