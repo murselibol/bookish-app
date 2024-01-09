@@ -99,8 +99,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell
-            cell.backgroundColor = .systemPink
-            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
+//            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
@@ -206,13 +205,13 @@ extension HomeVC {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-//        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 5)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .absolute(600))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .absolute(400))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item, item, item])
+        group.interItemSpacing = .fixed(20)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 50
         section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
