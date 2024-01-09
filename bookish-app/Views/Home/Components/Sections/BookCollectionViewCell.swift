@@ -21,7 +21,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Title3(.semibold)
+        label.font = .Text1(.semibold)
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 2
         return label

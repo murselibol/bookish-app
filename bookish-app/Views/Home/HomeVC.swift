@@ -106,14 +106,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 header.delegate = self
                 header.setup(title: "Popular 🔥")
                 return header
+            case 2:
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+                header.delegate = self
+                header.setup(title: "Book of the Week ✨")
+                return header
             default:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 return header
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("OMG")
     }
 }
 
@@ -163,7 +164,7 @@ extension HomeVC {
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
         
         return section
     }
@@ -179,10 +180,10 @@ extension HomeVC {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
         
-//        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
-//        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-//        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
-//        section.boundarySupplementaryItems = [header]
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        section.boundarySupplementaryItems = [header]
         
         return section
     }
