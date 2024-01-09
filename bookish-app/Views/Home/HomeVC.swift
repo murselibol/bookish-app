@@ -18,6 +18,7 @@ final class HomeVC: UIViewController {
     private lazy var viewModel = HomeVM(view: self)
     weak var coordinator: HomeCoordinator?
     private var collectionView: UICollectionView!
+    let categories = ["Fantasy", "Biography", "History", "Romance", "Science Fiction", "Dystopian"]
 
     // MARK: - Init
     override func viewDidLoad() {
@@ -33,6 +34,7 @@ extension HomeVC: HomeVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
+        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderView.identifier)
     }
     
@@ -40,9 +42,12 @@ extension HomeVC: HomeVCDelegate {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) -> NSCollectionLayoutSection? in
             switch sectionIndex {
                 case 0: return self.createPopularsSection()
+                case 1: return self.createCategorySection()
                 default: return self.createPopularsSection()
             }
         }
+        
+        
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     }
@@ -58,13 +63,15 @@ extension HomeVC: HomeVCDelegate {
 // MARK: - UICollectionView
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
             case 0:
                 return 10
+            case 1:
+                return 6
             default:
                 return 0
         }
@@ -74,6 +81,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
+            return cell
+        case 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
+            cell.delegate = self
+            cell.setup(categoryName: categories[indexPath.item])
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
@@ -92,13 +104,24 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 return header
         }
-        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("OMG")
     }
 }
 
+// MARK: - SectionHeaderViewDelegate
 extension HomeVC: SectionHeaderViewDelegate {
     func onClickSeeMoreBtn() {
         coordinator?.navigateBookListVC()
+    }
+}
+
+// MARK: - SectionHeaderViewDelegate
+extension HomeVC: CategoryCollectionViewCellDelegate {
+    func onSelectCategory(category: String) {
+        print(category)
     }
 }
 
@@ -120,6 +143,21 @@ extension HomeVC {
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
         header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
         section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
+    
+    func createCategorySection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(100), heightDimension: .absolute(60))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(10)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
         
         return section
     }
