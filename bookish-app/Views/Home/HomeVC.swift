@@ -37,6 +37,7 @@ extension HomeVC: HomeVCDelegate {
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
         collectionView.register(RisingCollectionViewCell.self, forCellWithReuseIdentifier: RisingCollectionViewCell.identifier)
+        collectionView.register(DiscoverCollectionViewCell.self, forCellWithReuseIdentifier: DiscoverCollectionViewCell.identifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderView.identifier)
     }
     
@@ -47,6 +48,7 @@ extension HomeVC: HomeVCDelegate {
                 case 1: return self.createCategorySection()
                 case 2: return self.createBookSection()
                 case 3: return self.createRisingSection()
+                case 4: return self.createDiscoverSection()
                 default: return self.createPopularSection()
             }
         }
@@ -65,7 +67,7 @@ extension HomeVC: HomeVCDelegate {
 // MARK: - UICollectionView
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        4
+        5
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -78,6 +80,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 return 1
             case 3:
                 return 9
+            case 4:
+                return 4
             default:
                 return 0
         }
@@ -101,6 +105,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell
 //            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
             return cell
+        case 4:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionViewCell.identifier, for: indexPath) as! DiscoverCollectionViewCell
+            return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
             return cell
@@ -123,6 +130,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
                 header.setup(title: "Rising 🚀")
+                return header
+            case 4:
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+                header.delegate = self
+                header.setup(title: "Discover 🔍")
                 return header
             default:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
@@ -213,6 +225,26 @@ extension HomeVC {
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 50
         section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
+    
+    func createDiscoverSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(130))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .none
+        section.interGroupSpacing = 20
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
