@@ -18,7 +18,6 @@ final class HomeVC: UIViewController {
     private lazy var viewModel = HomeVM(view: self)
     weak var coordinator: HomeCoordinator?
     private var collectionView: UICollectionView!
-    let categories = ["Fantasy", "Biography", "History", "Romance", "Science Fiction", "Dystopian"]
 
     // MARK: - Init
     override func viewDidLoad() {
@@ -75,7 +74,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 return 10
             case 1:
-                return 6
+                return viewModel.categories.count
             case 2:
                 return 1
             case 3:
@@ -95,7 +94,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
             cell.delegate = self
-            cell.setup(categoryName: categories[indexPath.item])
+            cell.setup(data: viewModel.categories[indexPath.item])
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as! BookCollectionViewCell
@@ -152,7 +151,7 @@ extension HomeVC: SectionHeaderViewDelegate {
 
 // MARK: - SectionHeaderViewDelegate
 extension HomeVC: CategoryCollectionViewCellDelegate {
-    func onSelectCategory(category: String) {
+    func onSelectCategory(category: CategoryType) {
         print(category)
     }
 }

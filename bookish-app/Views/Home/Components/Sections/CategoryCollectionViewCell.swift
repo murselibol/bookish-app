@@ -8,18 +8,18 @@
 import UIKit
 
 protocol CategoryCollectionViewCellDelegate: AnyObject {
-    func onSelectCategory(category: String)
+    func onSelectCategory(category: CategoryType)
 }
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CategoryCollectionViewCell"
     weak var delegate: CategoryCollectionViewCellDelegate?
+    private var category: CategoryType!
     
     private lazy var containerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 6
-        view.backgroundColor = .blue
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickCategory)))
         view.isUserInteractionEnabled = true
         return view
@@ -27,6 +27,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
 
     private lazy var categoryName: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
@@ -54,12 +55,14 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setup(categoryName: String) {
-        self.categoryName.text = categoryName
+    func setup(data: CategorySectionModel) {
+        self.category = data.type
+        self.categoryName.text = data.name
+        self.containerView.backgroundColor = UIColor(hex: data.color)
     }
     
     @objc func onClickCategory() {
-        delegate?.onSelectCategory(category: categoryName.text ?? "")
+        delegate?.onSelectCategory(category: category)
     }
 }
 

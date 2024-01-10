@@ -14,6 +14,7 @@ protocol HomeVMDelegate {
 final class HomeVM {
     
     private weak var view: HomeVCDelegate?
+    let categories = CATEGORY_SECTION_ITEMS
     
     init(view: HomeVCDelegate) {
         self.view = view
