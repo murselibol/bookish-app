@@ -134,7 +134,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 4:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Discover 🔍")
+                header.setup(title: "Discover 🔎")
                 return header
             default:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
@@ -162,18 +162,18 @@ extension HomeVC {
     func createPopularSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets.trailing = 20
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.37), heightDimension: .absolute(250))
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.35), heightDimension: .absolute(250))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
+        section.interGroupSpacing = 20
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 45, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        header.contentInsets.bottom = 35
         section.boundarySupplementaryItems = [header]
         
         return section
@@ -189,7 +189,7 @@ extension HomeVC {
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
         return section
     }
@@ -203,11 +203,11 @@ extension HomeVC {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        header.contentInsets.bottom = 35
         section.boundarySupplementaryItems = [header]
         
         return section
@@ -224,11 +224,11 @@ extension HomeVC {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 50
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        header.contentInsets.bottom = 35
         section.boundarySupplementaryItems = [header]
         
         return section
@@ -244,11 +244,11 @@ extension HomeVC {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 25, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets = .init(top: 0, leading: 0, bottom: 35, trailing: 0)
+        header.contentInsets.bottom = 35
         section.boundarySupplementaryItems = [header]
         
         return section

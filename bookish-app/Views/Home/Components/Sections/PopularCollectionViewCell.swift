@@ -44,7 +44,7 @@ class PopularCollectionViewCell: UICollectionViewCell {
         
         thumbnailImage.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(thumbnailImage.snp.width).multipliedBy(1.6)
+            make.height.equalTo(self.snp.height).offset(-30)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
