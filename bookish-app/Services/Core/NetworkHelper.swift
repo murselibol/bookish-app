@@ -12,7 +12,7 @@ protocol Endpoint {
     var path: String { get }
     var method: HTTPMethod { get }
     var header: [String: String]? { get }
-    var queryItems: [String: Any]? { get }
+    var queryItems: [URLQueryItem]? { get }
     var body: Encodable? { get }
     
     func request() -> URLRequest
@@ -30,7 +30,7 @@ extension Endpoint {
     
     func request() -> URLRequest {
         guard var components = URLComponents(string: baseURL) else { fatalError("Base URL Error") }
-        components.queryItems = self.queryItems?.map { URLQueryItem(name: $0, value: "\($1)")}
+        components.queryItems = self.queryItems
         components.queryItems?.append(URLQueryItem(name: "key", value: Environment.apiKey))
         guard let url = components.url else { fatalError("URL Error From Component") }
         var request = URLRequest(url: url)

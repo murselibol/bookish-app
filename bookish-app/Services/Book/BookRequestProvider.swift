@@ -8,7 +8,7 @@
 import Foundation
 
 enum BookRequestProvider {
-    case books(queryItems: [String: String])
+    case books(queryItems: [URLQueryItem])
 }
 
 extension BookRequestProvider: Endpoint {
@@ -26,7 +26,7 @@ extension BookRequestProvider: Endpoint {
         }
     }
 
-    var queryItems: [String : Any]? {
+    var queryItems: [URLQueryItem]? {
         switch self {
         case .books(let queryItems):
             return queryItems

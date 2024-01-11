@@ -17,10 +17,10 @@ final class HomeVM {
     private let bookService: BookServiceProtocol
     let categories = CATEGORY_SECTION_ITEMS
     var popularBooks: [BookResponse] = []
-    var paginationQuery: [String: String] = [
-        "q": "subject:love",
-        "startIndex": "0",
-        "maxResults": "5",
+    var paginationQuery: [URLQueryItem] = [
+        .init(name: "q", value: "subject:love"),
+        .init(name: "startIndex", value: "0"),
+        .init(name: "maxResult", value: "5"),
     ]
     
     // MARK: - Life Cycle
