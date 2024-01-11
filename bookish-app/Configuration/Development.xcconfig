@@ -1,0 +1,12 @@
+//
+//  Development.xcconfig
+//  bookish-app
+//
+//  Created by Mursel Elibol on 11.01.2024.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BASE_URL = www.googleapis.com/books/v1/volumes
+API_KEY = AIzaSyAicCAiBsL7J27L8T5j0Iez42p55oM6Qa8
