@@ -20,7 +20,7 @@ protocol Endpoint {
 
 extension Endpoint {
     var baseURL: String {
-        "https://jsonplaceholder.typicode.com/"
+        Environment.baseURL
     }
     
     var header: [String : String]? {
@@ -30,13 +30,11 @@ extension Endpoint {
     
     func request() -> URLRequest {
         guard var components = URLComponents(string: baseURL) else { fatalError("Base URL Error") }
-        components.path = path
         components.queryItems = self.queryItems?.map { URLQueryItem(name: $0, value: "\($1)")}
-    
+        components.queryItems?.append(URLQueryItem(name: "key", value: Environment.apiKey))
         guard let url = components.url else { fatalError("URL Error From Component") }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        
         
         if let body = self.body {
             do {
