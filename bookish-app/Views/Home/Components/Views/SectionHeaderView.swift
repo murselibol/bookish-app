@@ -58,9 +58,9 @@ final class SectionHeaderView: UICollectionReusableView {
         }
     }
     
-    func setup(title: String) {
+    func setup(title: String, homeSectionType: HomeSectionType, hiddenSeeMore: Bool = false) {
         self.sectionTitleLabel.text = title
-        isHiddenSeeMoreBtn(hidden: false) // setup() --> add type parameter and check to it
+        isHiddenSeeMoreBtn(hidden: hiddenSeeMore)
     }
     
     @objc func onClickSeeMoreBtn() {

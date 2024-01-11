@@ -118,22 +118,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Popular 🔥")
+                header.setup(title: "Popular 🔥", homeSectionType: .populer)
                 return header
             case 2:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Book of the Week ✨")
+                header.setup(title: "Book of the Week ✨", homeSectionType: .book, hiddenSeeMore: true)
                 return header
             case 3:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Rising 🚀")
+                header.setup(title: "Rising 🚀", homeSectionType: .rising)
                 return header
             case 4:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Discover 🔎")
+                header.setup(title: "Discover 🔎", homeSectionType: .discover)
                 return header
             default:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
