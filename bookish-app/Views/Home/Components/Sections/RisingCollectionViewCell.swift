@@ -26,17 +26,22 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private lazy var rankImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "pennant"))
+        return imageView
+    }()
+    
     private lazy var rankLabel: UILabel = {
         let label = UILabel()
-        label.font = .Text1()
-        label.text = "1"
-        label.textColor = .getColor(.text)
+        label.font = .Text1(.medium)
+        label.text = "01"
+        label.textColor = .white
         return label
     }()
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Text1()
+        label.font = .Text1(.medium)
         label.text = "Sineklerin Tanrısı"
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 2
@@ -65,6 +70,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     func constraintUI() {
         addSubview(containerView)
         addSubview(thumbnailImage)
+        addSubview(rankImageView)
         addSubview(rankLabel)
         addSubview(bookTitleLabel)
         addSubview(authorLabel)
@@ -79,13 +85,20 @@ final class RisingCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(containerView.snp.height)
         }
         
-        rankLabel.snp.makeConstraints { make in
-            make.top.trailing.equalTo(0)
+        rankImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.leading.equalTo(thumbnailImage.snp.trailing).offset(15)
+            make.width.equalTo(25)
+            make.height.equalTo(34)
+        }
+        
+        rankLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(rankImageView)
+            make.centerY.equalTo(rankImageView).offset(-3)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(rankLabel.snp.bottom).offset(15)
+            make.top.equalTo(rankImageView.snp.bottom).offset(15)
             make.trailing.equalToSuperview()
             make.leading.equalTo(thumbnailImage.snp.trailing).offset(15)
         }
