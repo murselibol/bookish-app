@@ -18,7 +18,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private lazy var thumbnailImage: UIImageView = {
+    private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -67,9 +67,9 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraintUI() {
+    private func constraintUI() {
         addSubview(containerView)
-        addSubview(thumbnailImage)
+        addSubview(thumbnailImageView)
         addSubview(rankImageView)
         addSubview(rankLabel)
         addSubview(bookTitleLabel)
@@ -79,7 +79,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        thumbnailImage.snp.makeConstraints { make in
+        thumbnailImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.width.equalTo(75)
             make.height.equalTo(containerView.snp.height)
@@ -87,31 +87,43 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         
         rankImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalTo(thumbnailImage.snp.trailing).offset(15)
+            make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
             make.width.equalTo(25)
             make.height.equalTo(34)
         }
         
         rankLabel.snp.makeConstraints { make in
             make.centerX.equalTo(rankImageView)
-            make.centerY.equalTo(rankImageView).offset(-3)
+            make.centerY.equalTo(rankImageView).offset(-2)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(rankImageView.snp.bottom).offset(15)
             make.trailing.equalToSuperview()
-            make.leading.equalTo(thumbnailImage.snp.trailing).offset(15)
+            make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
         }
 
         authorLabel.snp.makeConstraints { make in
             make.top.equalTo(bookTitleLabel.snp.bottom).offset(15)
             make.trailing.equalToSuperview()
-            make.leading.equalTo(thumbnailImage.snp.trailing).offset(15)
+            make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
         }
     }
     
-    @objc func onClickItem() {
+    func setup(data: RisingSectionModel) {
+        updateRankImageColor(rank: data.rank)
+        rankLabel.text = data.rank
+        bookTitleLabel.text = data.title
+        authorLabel.text = data.author
+    }
+    
+    @objc private func onClickItem() {
         print("click item")
+    }
+    
+    private func updateRankImageColor(rank: String){
+        guard let rankIndex = Int(rank) else { return }
+        rankImageView.tintColor = UIColor(hex: CATEGORY_SECTION_COLORS[rankIndex-1])
     }
 }
 
