@@ -13,6 +13,8 @@
 		59133E832B3889A6000CA187 /* BookCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E812B3889A6000CA187 /* BookCategoryVC.swift */; };
 		59133E862B3889C2000CA187 /* BookCategoryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E852B3889C2000CA187 /* BookCategoryVM.swift */; };
 		59133E882B3889CC000CA187 /* BookCategoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E872B3889CC000CA187 /* BookCategoryCoordinator.swift */; };
+		5955239E2B51D69500E380B2 /* RisingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5955239D2B51D69500E380B2 /* RisingSectionModel.swift */; };
+		595523A02B51E35500E380B2 /* URLRequest+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5955239F2B51E35500E380B2 /* URLRequest+Ext.swift */; };
 		596E061A2B4F02F500685C11 /* DiscoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E06192B4F02F500685C11 /* DiscoverCollectionViewCell.swift */; };
 		596E061C2B4F1C3100685C11 /* CategorySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E061B2B4F1C3100685C11 /* CategorySectionModel.swift */; };
 		596E06272B50563100685C11 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E06262B50563100685C11 /* NetworkManager.swift */; };
@@ -63,6 +65,8 @@
 		59133E812B3889A6000CA187 /* BookCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategoryVC.swift; sourceTree = "<group>"; };
 		59133E852B3889C2000CA187 /* BookCategoryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategoryVM.swift; sourceTree = "<group>"; };
 		59133E872B3889CC000CA187 /* BookCategoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategoryCoordinator.swift; sourceTree = "<group>"; };
+		5955239D2B51D69500E380B2 /* RisingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RisingSectionModel.swift; sourceTree = "<group>"; };
+		5955239F2B51E35500E380B2 /* URLRequest+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Ext.swift"; sourceTree = "<group>"; };
 		596E06192B4F02F500685C11 /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 		596E061B2B4F1C3100685C11 /* CategorySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySectionModel.swift; sourceTree = "<group>"; };
 		596E06262B50563100685C11 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -273,6 +277,7 @@
 			children = (
 				599290F92B35BA34003A1C71 /* UIFont+Ext.swift */,
 				5986958D2B4B42D6006C598B /* UIColor+Ext.swift */,
+				5955239F2B51E35500E380B2 /* URLRequest+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,9 +311,10 @@
 		59A365CC2B357A7000A9294B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				596E06362B50719100685C11 /* PaginatedResponse.swift */,
 				596E06332B505D6600685C11 /* BookResponse.swift */,
 				596E061B2B4F1C3100685C11 /* CategorySectionModel.swift */,
-				596E06362B50719100685C11 /* PaginatedResponse.swift */,
+				5955239D2B51D69500E380B2 /* RisingSectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -496,7 +502,9 @@
 				598695912B4B4EF7006C598B /* SectionHeaderView.swift in Sources */,
 				59E653582B4DC00600B19849 /* BookCollectionViewCell.swift in Sources */,
 				59133E862B3889C2000CA187 /* BookCategoryVM.swift in Sources */,
+				595523A02B51E35500E380B2 /* URLRequest+Ext.swift in Sources */,
 				59133E832B3889A6000CA187 /* BookCategoryVC.swift in Sources */,
+				5955239E2B51D69500E380B2 /* RisingSectionModel.swift in Sources */,
 				59A365AE2B356E4400A9294B /* AppDelegate.swift in Sources */,
 				59133E7F2B3886E7000CA187 /* TabBarCoordinator.swift in Sources */,
 				59133E882B3889CC000CA187 /* BookCategoryCoordinator.swift in Sources */,
