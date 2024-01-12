@@ -18,7 +18,6 @@ final class BookService: BookServiceProtocol {
     
     func getBooks(queryItems: [URLQueryItem] = [], completion: @escaping (Result<PaginatedResponse<BookResponse>, NetworkError>) -> Void) {
          let request = BookRequestProvider.books(queryItems: queryItems).request()
-            print(request)
          NetworkManager.shared.request(request, completion: completion)
     }
     

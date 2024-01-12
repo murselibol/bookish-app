@@ -17,10 +17,11 @@ final class HomeVM {
     private let bookService: BookServiceProtocol
     let categories = CATEGORY_SECTION_ITEMS
     var popularBooks: [BookResponse] = []
+    var risingBooks: [BookResponse] = []
     var paginationQuery: [URLQueryItem] = [
         .init(name: "q", value: "subject:love"),
         .init(name: "startIndex", value: "0"),
-        .init(name: "maxResult", value: "5"),
+        .init(name: "maxResults", value: "9"),
     ]
     
     // MARK: - Life Cycle
@@ -31,17 +32,19 @@ final class HomeVM {
     
     // MARK: - HTTP Requests
     func getBooks() {
-        bookService.getBooks(queryItems: paginationQuery) { result in
+        bookService.getBooks(queryItems: paginationQuery) {[weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let data):
                 self.popularBooks = data.items ?? []
+                self.risingBooks = data.items ?? []
+                view?.reloadRisingSection()
             case .failure(let error):
                 print(error)
                 break
             }
         }
     }
-    
 }
 
 // MARK: - HomeVMDelegate
@@ -51,7 +54,5 @@ extension HomeVM: HomeVMDelegate {
         view?.configureCollectionView()
         view?.constraintsCollectionView()
         getBooks()
-    }
-    
-    
+    }    
 }

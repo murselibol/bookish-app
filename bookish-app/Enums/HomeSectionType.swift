@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HomeSectionType {
+enum HomeSectionType: Int {
     case populer
     case category
     case book

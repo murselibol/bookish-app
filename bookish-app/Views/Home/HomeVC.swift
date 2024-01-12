@@ -9,9 +9,12 @@ import UIKit
 import SnapKit
 
 protocol HomeVCDelegate: AnyObject {
-   func configureCollectionViewLayout()
-   func configureCollectionView()
-   func constraintsCollectionView()
+    
+    func configureCollectionViewLayout()
+    func configureCollectionView()
+    func constraintsCollectionView()
+    
+    func reloadRisingSection()
 }
 
 final class HomeVC: UIViewController {
@@ -61,6 +64,13 @@ extension HomeVC: HomeVCDelegate {
             make.top.bottom.leading.trailing.equalToSuperview()
         }
     }
+    
+    func reloadRisingSection() {
+        DispatchQueue.main.async {
+            let indexSet = IndexSet(integer: HomeSectionType.rising.rawValue)
+            self.collectionView.reloadSections(indexSet)
+        }
+    }
 }
 
 // MARK: - UICollectionView
@@ -78,7 +88,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 2:
                 return 1
             case 3:
-                return 9
+                return viewModel.risingBooks.count
             case 4:
                 return 4
             default:
@@ -103,6 +113,10 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell
 //            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
+            let book = viewModel.risingBooks[indexPath.item].volumeInfo
+            let title = book?.title ?? "-"
+            let author = book?.authors?.first ?? "-"
+            cell.setup(data: RisingSectionModel(rank: "0\(indexPath.item+1)", title: title, author: author))
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionViewCell.identifier, for: indexPath) as! DiscoverCollectionViewCell
