@@ -56,6 +56,10 @@
 		59B581462B52AE3000B6D792 /* indicator.json in Resources */ = {isa = PBXBuildFile; fileRef = 59B581452B52AE3000B6D792 /* indicator.json */; };
 		59B581492B52AED100B6D792 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 59B581482B52AED100B6D792 /* Lottie */; };
 		59B5814E2B52B07200B6D792 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B5814D2B52B07200B6D792 /* IndicatorView.swift */; };
+		59B581512B52C86900B6D792 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 59B581502B52C86900B6D792 /* SDWebImage */; };
+		59B581532B52C86900B6D792 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 59B581522B52C86900B6D792 /* SDWebImageMapKit */; };
+		59B581562B52C90C00B6D792 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B581552B52C90C00B6D792 /* UIImageView+Ext.swift */; };
+		59B581582B52CCBA00B6D792 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B581572B52CCBA00B6D792 /* Constant.swift */; };
 		59D3431C2B4C6B6000EA2824 /* BookListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3431B2B4C6B6000EA2824 /* BookListVC.swift */; };
 		59D3431F2B4C6B6F00EA2824 /* BookListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3431E2B4C6B6F00EA2824 /* BookListVM.swift */; };
 		59D343212B4C6B7D00EA2824 /* BookListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D343202B4C6B7D00EA2824 /* BookListCoordinator.swift */; };
@@ -112,6 +116,8 @@
 		59B581422B5295D600B6D792 /* DiscoverSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverSectionModel.swift; sourceTree = "<group>"; };
 		59B581452B52AE3000B6D792 /* indicator.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = indicator.json; sourceTree = "<group>"; };
 		59B5814D2B52B07200B6D792 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		59B581552B52C90C00B6D792 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
+		59B581572B52CCBA00B6D792 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		59D3431B2B4C6B6000EA2824 /* BookListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListVC.swift; sourceTree = "<group>"; };
 		59D3431E2B4C6B6F00EA2824 /* BookListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListVM.swift; sourceTree = "<group>"; };
 		59D343202B4C6B7D00EA2824 /* BookListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCoordinator.swift; sourceTree = "<group>"; };
@@ -125,7 +131,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				59A365C32B35720800A9294B /* SnapKit in Frameworks */,
+				59B581532B52C86900B6D792 /* SDWebImageMapKit in Frameworks */,
 				59A365C52B35720800A9294B /* SnapKit-Dynamic in Frameworks */,
+				59B581512B52C86900B6D792 /* SDWebImage in Frameworks */,
 				59B581492B52AED100B6D792 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				596E064F2B50998500685C11 /* CategorySectionItems.swift */,
+				59B581572B52CCBA00B6D792 /* Constant.swift */,
 			);
 			name = Constants;
 			path = ../Enums/Constants;
@@ -288,6 +297,7 @@
 				599290F92B35BA34003A1C71 /* UIFont+Ext.swift */,
 				5986958D2B4B42D6006C598B /* UIColor+Ext.swift */,
 				5955239F2B51E35500E380B2 /* URLRequest+Ext.swift */,
+				59B581552B52C90C00B6D792 /* UIImageView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -323,10 +333,10 @@
 			isa = PBXGroup;
 			children = (
 				596E06362B50719100685C11 /* PaginatedResponse.swift */,
-				596E06332B505D6600685C11 /* BookResponse.swift */,
-				596E061B2B4F1C3100685C11 /* CategorySectionModel.swift */,
-				5955239D2B51D69500E380B2 /* RisingSectionModel.swift */,
 				59B581402B527D3A00B6D792 /* PopularSectionModel.swift */,
+				596E061B2B4F1C3100685C11 /* CategorySectionModel.swift */,
+				596E06332B505D6600685C11 /* BookResponse.swift */,
+				5955239D2B51D69500E380B2 /* RisingSectionModel.swift */,
 				59B581422B5295D600B6D792 /* DiscoverSectionModel.swift */,
 			);
 			path = Models;
@@ -439,6 +449,8 @@
 				59A365C22B35720800A9294B /* SnapKit */,
 				59A365C42B35720800A9294B /* SnapKit-Dynamic */,
 				59B581482B52AED100B6D792 /* Lottie */,
+				59B581502B52C86900B6D792 /* SDWebImage */,
+				59B581522B52C86900B6D792 /* SDWebImageMapKit */,
 			);
 			productName = "bookish-app";
 			productReference = 59A365AA2B356E4400A9294B /* bookish-app.app */;
@@ -471,6 +483,7 @@
 			packageReferences = (
 				59A365C12B35720800A9294B /* XCRemoteSwiftPackageReference "SnapKit" */,
 				59B581472B52AED100B6D792 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				59B5814F2B52C86900B6D792 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 59A365AB2B356E4400A9294B /* Products */;
 			projectDirPath = "";
@@ -522,6 +535,7 @@
 				59D3431F2B4C6B6F00EA2824 /* BookListVM.swift in Sources */,
 				59A365D52B3580CE00A9294B /* HomeVC.swift in Sources */,
 				59B5814E2B52B07200B6D792 /* IndicatorView.swift in Sources */,
+				59B581562B52C90C00B6D792 /* UIImageView+Ext.swift in Sources */,
 				596E06302B5059D100685C11 /* BookService.swift in Sources */,
 				59D3431C2B4C6B6000EA2824 /* BookListVC.swift in Sources */,
 				59B581432B5295D600B6D792 /* DiscoverSectionModel.swift in Sources */,
@@ -541,6 +555,7 @@
 				595523A02B51E35500E380B2 /* URLRequest+Ext.swift in Sources */,
 				59133E832B3889A6000CA187 /* BookCategoryVC.swift in Sources */,
 				5955239E2B51D69500E380B2 /* RisingSectionModel.swift in Sources */,
+				59B581582B52CCBA00B6D792 /* Constant.swift in Sources */,
 				59A365AE2B356E4400A9294B /* AppDelegate.swift in Sources */,
 				59133E7F2B3886E7000CA187 /* TabBarCoordinator.swift in Sources */,
 				59133E882B3889CC000CA187 /* BookCategoryCoordinator.swift in Sources */,
@@ -1141,6 +1156,14 @@
 				minimumVersion = 4.3.4;
 			};
 		};
+		59B5814F2B52C86900B6D792 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.18.10;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1158,6 +1181,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 59B581472B52AED100B6D792 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		59B581502B52C86900B6D792 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59B5814F2B52C86900B6D792 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		59B581522B52C86900B6D792 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59B5814F2B52C86900B6D792 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

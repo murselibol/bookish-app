@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class PopularCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PopularCollectionViewCell"
     
-    private lazy var thumbnailImage: UIImageView = {
+    private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -39,10 +40,10 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     func constraintUI() {
-        addSubview(thumbnailImage)
+        addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
         
-        thumbnailImage.snp.makeConstraints { make in
+        thumbnailImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(self.snp.height).offset(-50)
         }
@@ -53,6 +54,7 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(data: PopularSectionModel) {
+        thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         bookTitleLabel.text = data.title
     }
 }

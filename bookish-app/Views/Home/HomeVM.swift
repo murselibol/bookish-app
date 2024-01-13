@@ -88,9 +88,9 @@ final class HomeVM {
 extension HomeVM: HomeVMDelegate {
     func viewDidLoad() {
         view?.configureCollectionViewLayout()
-        view?.constraintIndicatorView()
         view?.configureCollectionView()
         view?.constraintsCollectionView()
+        view?.constraintIndicatorView()
         getBooksByCategory(type: .history, queryItems: getInitialQueryItemsByCategory(type: .history))
         getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
