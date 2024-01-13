@@ -132,7 +132,12 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as! BookCollectionViewCell
-            cell.setup()
+            let book = viewModel.bookOfWeak?.volumeInfo
+            let id = viewModel.bookOfWeak?.id ?? ""
+            let thumbnailUrl = book?.imageLinks?.smallThumbnail
+            let title = book?.title ?? "-"
+            let description = book?.description ?? "-"
+            cell.setup(data: BookSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, description: description))
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell

@@ -8,7 +8,8 @@
 import Foundation
 
 enum BookRequestProvider {
-    case books(queryItems: [URLQueryItem])
+    case getBooks(queryItems: [URLQueryItem]?)
+    case getBook(queryItems: [URLQueryItem]?)
 }
 
 extension BookRequestProvider: Endpoint {
@@ -21,21 +22,23 @@ extension BookRequestProvider: Endpoint {
 
     var method: HTTPMethod {
         switch self {
-        case .books:
+        case .getBooks, .getBook:
             return .get
         }
     }
 
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .books(let queryItems):
+        case .getBooks(let queryItems):
+            return queryItems
+        case .getBook(let queryItems):
             return queryItems
         }
     }
 
     var body: Encodable? {
         switch self {
-        case .books:
+        case .getBooks, .getBook:
             return nil
         }
     }

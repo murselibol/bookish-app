@@ -19,6 +19,7 @@ final class HomeVM {
     var popularBooks: [BookResponse] = []
     var risingBooks: [BookResponse] = []
     var discoverBooks: [BookResponse] = []
+    var bookOfWeak: BookResponse?
     
     // MARK: - Life Cycle
     init(view: HomeVCDelegate, bookService: BookServiceProtocol = BookService.shared) {
@@ -36,6 +37,11 @@ final class HomeVM {
                 switch type {
                 case .history:
                     popularBooks = data.items ?? []
+                    view?.reloadCollectionView()
+                    view?.updateIndicatorState(hidden: true)
+                    break
+                case .fantasy:
+                    bookOfWeak = data.items?.first
                     view?.reloadCollectionView()
                     view?.updateIndicatorState(hidden: true)
                     break
@@ -68,6 +74,10 @@ final class HomeVM {
             paginationQuery.append(.init(name: "q", value: "subject:history"))
             paginationQuery.append(.init(name: "maxResults", value: "10"))
             break
+        case .fantasy:
+            paginationQuery.append(.init(name: "q", value: "subject:fantasy"))
+            paginationQuery.append(.init(name: "maxResults", value: "1"))
+            break
         case .love:
             paginationQuery.append(.init(name: "q", value: "subject:love"))
             paginationQuery.append(.init(name: "maxResults", value: "9"))
@@ -92,6 +102,7 @@ extension HomeVM: HomeVMDelegate {
         view?.constraintsCollectionView()
         view?.constraintIndicatorView()
         getBooksByCategory(type: .history, queryItems: getInitialQueryItemsByCategory(type: .history))
+        getBooksByCategory(type: .fantasy, queryItems: getInitialQueryItemsByCategory(type: .fantasy))
         getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
     }

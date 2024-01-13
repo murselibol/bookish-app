@@ -11,7 +11,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "BookCollectionViewCell"
     
-    private lazy var thumbnailImage: UIImageView = {
+    private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
@@ -46,18 +46,18 @@ final class BookCollectionViewCell: UICollectionViewCell {
     }
     
     func constraintUI() {
-        addSubview(thumbnailImage)
+        addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
         addSubview(bookDescriptionLabel)
         
-        thumbnailImage.snp.makeConstraints { make in
+        thumbnailImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.width.equalTo(UIScreen.main.bounds.width/3)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(thumbnailImage.snp.bottom).offset(12)
+            make.top.equalTo(thumbnailImageView.snp.bottom).offset(12)
         }
         
         bookDescriptionLabel.snp.makeConstraints { make in
@@ -66,8 +66,9 @@ final class BookCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setup() {
-        bookTitleLabel.text = "Dare to Love"
-        bookDescriptionLabel.text = "She arouses his dominant and protective instincts And he will do anything to possess her … And does. When billionaire Ian Dare gets one glimpse of the sensual and irresistible Riley Taylor, he knows that he must have her. But any future he might have with Riley means he’ll have to confront his past—a past he’d rather forget. And that’s something this NFL team owner won’t dare to do—not even for love"
+    func setup(data: BookSectionModel) {
+        thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
+        bookTitleLabel.text = data.title
+        bookDescriptionLabel.text = data.description
     }
 }

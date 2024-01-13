@@ -12,7 +12,7 @@ let CATEGORY_SECTION_ITEMS = [
     CategorySectionModel(name: "History", type: .history, color: "#186450"),
     CategorySectionModel(name: "Philosophy", type: .philosophy, color: "#1E3264"),
     CategorySectionModel(name: "Art", type: .art, color: "#3073EC"),
-    CategorySectionModel(name: "Novel", type: .novel, color: "#503750"),
+    CategorySectionModel(name: "Fantasy", type: .fantasy, color: "#503750"),
     CategorySectionModel(name: "Crime", type: .crime, color: "#8C67AA"),
     CategorySectionModel(name: "Biography", type: .biography, color: "#D84101"),
     CategorySectionModel(name: "Mythology", type: .mythology, color: "#477D95"),

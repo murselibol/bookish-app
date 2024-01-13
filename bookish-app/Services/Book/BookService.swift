@@ -8,7 +8,8 @@
 import Foundation
 
 protocol BookServiceProtocol {
-    func getBooks(queryItems: [URLQueryItem], completion: @escaping (Result<PaginatedResponse<BookResponse>, NetworkError>) -> Void)
+    func getBooks(queryItems: [URLQueryItem]?, completion: @escaping (Result<PaginatedResponse<BookResponse>, NetworkError>) -> Void)
+    func getBook(id: String, queryItems: [URLQueryItem]?, completion: @escaping (Result<BookResponse, NetworkError>) -> Void)
 }
 
 final class BookService: BookServiceProtocol {
@@ -16,8 +17,13 @@ final class BookService: BookServiceProtocol {
     static let shared = BookService()
     private init() {}
     
-    func getBooks(queryItems: [URLQueryItem] = [], completion: @escaping (Result<PaginatedResponse<BookResponse>, NetworkError>) -> Void) {
-         let request = BookRequestProvider.books(queryItems: queryItems).request()
+    func getBooks(queryItems: [URLQueryItem]?, completion: @escaping (Result<PaginatedResponse<BookResponse>, NetworkError>) -> Void) {
+        let request = BookRequestProvider.getBooks(queryItems: queryItems).request()
+         NetworkManager.shared.request(request, completion: completion)
+    }
+    
+    func getBook(id: String, queryItems: [URLQueryItem]?, completion: @escaping (Result<BookResponse, NetworkError>) -> Void) {
+         let request = BookRequestProvider.getBook(queryItems: queryItems).request()
          NetworkManager.shared.request(request, completion: completion)
     }
     

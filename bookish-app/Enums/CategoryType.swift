@@ -12,7 +12,7 @@ enum CategoryType {
     case history
     case philosophy
     case art
-    case novel
+    case fantasy
     case crime
     case biography
     case mythology
