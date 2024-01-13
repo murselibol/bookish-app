@@ -30,8 +30,9 @@ final class HomeCoordinator: Coordinator {
         parentCoordinator?.childDidFinish(self)
     }
     
-    func navigateBookDetailVC() {
+    func navigateBookDetailVC(id: String) {
         let coordinator = BookDetailCoordinator(navigationController: navigationController)
+        coordinator.id = id
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         coordinator.start()

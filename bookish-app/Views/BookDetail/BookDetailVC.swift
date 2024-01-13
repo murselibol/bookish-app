@@ -12,24 +12,24 @@ protocol BookDetailVCDelegate: AnyObject {
 }
 
 final class BookDetailVC: UIViewController {
-    lazy var viewModel = BookDetailVM(view: self)
+    
+    var viewModel: BookDetailVM!
     weak var coordinator: BookDetailCoordinator?
     
-    private lazy var pageName: UILabel = {
-        let label = UILabel()
-        label.text = "BookDetail"
-        return label
-    }()
+    init(id: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = BookDetailVM(view: self, id: id)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .getColor(.background)
-        
-        view.addSubview(pageName)
-        pageName.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
+        viewModel.viewDidLoad()
     }
     
     deinit { coordinator?.finishCoordinator() }

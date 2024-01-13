@@ -208,7 +208,7 @@ extension HomeVC: SectionHeaderViewDelegate {
 // MARK: - Book Delegate
 extension HomeVC: BookDelegate {
     func onClickBook(id: String) {
-        coordinator?.navigateBookDetailVC()
+        coordinator?.navigateBookDetailVC(id: id)
     }
 }
 

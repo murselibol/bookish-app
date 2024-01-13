@@ -11,13 +11,14 @@ final class BookDetailCoordinator: Coordinator {
     var navigationController: UINavigationController
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
+    var id: String = ""
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
     func start() {
-        let vc = BookDetailVC()
+        let vc = BookDetailVC(id: id)
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

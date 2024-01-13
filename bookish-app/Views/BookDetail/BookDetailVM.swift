@@ -15,8 +15,9 @@ final class BookDetailVM {
     
     weak var view: BookDetailVCDelegate?
     private let bookService: BookService
+    var bookId: String = ""
     
-    init(view: BookDetailVCDelegate?, bookService: BookService = BookService.shared) {
+    init(view: BookDetailVCDelegate?, id: String, bookService: BookService = BookService.shared) {
         self.view = view
         self.bookService = bookService
     }
