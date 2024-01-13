@@ -9,7 +9,7 @@ import UIKit
 
 extension UIColor {
     enum ColorName: String {
-        case background = "bgColorColor"
+        case background = "bgColor"
         case bookTitle = "bookTitleColor"
         case moreBtnText = "moreBtnTextColor"
         case primary = "primaryColor"

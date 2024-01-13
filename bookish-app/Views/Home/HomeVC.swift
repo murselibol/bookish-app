@@ -132,6 +132,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as! BookCollectionViewCell
+            cell.bookDelegate = self
             let book = viewModel.bookOfWeak?.volumeInfo
             let id = viewModel.bookOfWeak?.id ?? ""
             let thumbnailUrl = book?.imageLinks?.smallThumbnail
@@ -194,14 +195,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 }
 
-// MARK: - SectionHeaderViewDelegate
+// MARK: - Compositional Section Header Delegate
 extension HomeVC: SectionHeaderViewDelegate {
     func onClickSeeMoreBtn() {
         coordinator?.navigateBookListVC()
     }
 }
 
-// MARK: - SectionHeaderViewDelegate
+// MARK: - Book Delegate
+extension HomeVC: BookDelegate {
+    func onClickBook(id: String) {
+        coordinator?.navigateBookDetailVC()
+    }
+}
+
+
+// MARK: - Category Section Delegate
 extension HomeVC: CategoryCollectionViewCellDelegate {
     func onSelectCategory(category: CategoryType) {
         print(category)

@@ -10,6 +10,16 @@ import UIKit
 final class BookCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "BookCollectionViewCell"
+    weak var bookDelegate: BookDelegate?
+    private lazy var id: String = ""
+    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 6
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
+        view.isUserInteractionEnabled = true
+        return view
+    }()
     
     private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
@@ -46,12 +56,17 @@ final class BookCollectionViewCell: UICollectionViewCell {
     }
     
     func constraintUI() {
+        addSubview(containerView)
         addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
         addSubview(bookDescriptionLabel)
         
+        containerView.snp.makeConstraints { make in
+            make.edges.equalTo(0)
+        }
+        
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
+            make.top.leading.equalTo(containerView)
             make.width.equalTo(UIScreen.main.bounds.width/3)
         }
         
@@ -70,5 +85,9 @@ final class BookCollectionViewCell: UICollectionViewCell {
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         bookTitleLabel.text = data.title
         bookDescriptionLabel.text = data.description
+    }
+    
+    @objc func onClickBook() {
+        bookDelegate?.onClickBook(id: id)
     }
 }
