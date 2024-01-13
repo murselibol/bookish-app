@@ -16,6 +16,7 @@ final class BookDetailVM {
     weak var view: BookDetailVCDelegate?
     private let bookService: BookService
     var bookId: String = ""
+    var book: BookResponse?
     
     init(view: BookDetailVCDelegate?, id: String, bookService: BookService = BookService.shared) {
         self.view = view
@@ -25,17 +26,16 @@ final class BookDetailVM {
     
     // MARK: - HTTP Requests
     private func getBook(id: String, queryItems: [URLQueryItem] = []) {
-//        view?.updateIndicatorState(hidden: false)
+        view?.updateIndicatorState(hidden: false)
         bookService.getBook(id: id, queryItems: queryItems) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                print(data)
-//                bookOfWeak = data.items ?? nil
-//                view?.reloadCollectionView()
-//                view?.updateIndicatorState(hidden: true)
+                book = data
+                view?.updateIndicatorState(hidden: true)
             case .failure(let error):
                 print(error)
+                view?.updateIndicatorState(hidden: true)
                 break
             }
         }

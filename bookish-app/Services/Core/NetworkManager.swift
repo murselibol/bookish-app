@@ -21,7 +21,7 @@ final class NetworkManager: NetworkManagerProtocol {
     func request<T: Codable>(_ request: URLRequest, completion: @escaping (Result<T, NetworkError>) -> Void) {
         
 //        print("=======================")
-//        print(request.curlString)
+//        debugPrint(request.cURL(pretty: false))
 //        print("=======================")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

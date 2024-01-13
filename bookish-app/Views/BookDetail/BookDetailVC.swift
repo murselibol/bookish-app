@@ -8,13 +8,15 @@
 import UIKit
 
 protocol BookDetailVCDelegate: AnyObject {
-    
+    func updateIndicatorState(hidden: Bool)
 }
 
 final class BookDetailVC: UIViewController {
     
     var viewModel: BookDetailVM!
     weak var coordinator: BookDetailCoordinator?
+    
+    private lazy var indicatorView = IndicatorView()
     
     init(id: String) {
         super.init(nibName: nil, bundle: nil)
@@ -34,8 +36,24 @@ final class BookDetailVC: UIViewController {
     
     deinit { coordinator?.finishCoordinator() }
     
+    // MARK: - Funtions
+    func constraintIndicatorView() {
+        view.addSubview(indicatorView)
+        indicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(200)
+        }
+        updateIndicatorState(hidden: true)
+    }
+    
 }
 
+// MARK: - BookDetailVCDelegate
 extension BookDetailVC: BookDetailVCDelegate {
-    
+    func updateIndicatorState(hidden: Bool) {
+        DispatchQueue.main.async {
+            self.indicatorView.isHidden = hidden
+        }
+    }
 }
