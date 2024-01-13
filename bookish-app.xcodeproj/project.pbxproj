@@ -53,6 +53,9 @@
 		59A365D92B3580EA00A9294B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A365D82B3580EA00A9294B /* HomeCoordinator.swift */; };
 		59B581412B527D3A00B6D792 /* PopularSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B581402B527D3A00B6D792 /* PopularSectionModel.swift */; };
 		59B581432B5295D600B6D792 /* DiscoverSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B581422B5295D600B6D792 /* DiscoverSectionModel.swift */; };
+		59B581462B52AE3000B6D792 /* indicator.json in Resources */ = {isa = PBXBuildFile; fileRef = 59B581452B52AE3000B6D792 /* indicator.json */; };
+		59B581492B52AED100B6D792 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 59B581482B52AED100B6D792 /* Lottie */; };
+		59B5814E2B52B07200B6D792 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B5814D2B52B07200B6D792 /* IndicatorView.swift */; };
 		59D3431C2B4C6B6000EA2824 /* BookListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3431B2B4C6B6000EA2824 /* BookListVC.swift */; };
 		59D3431F2B4C6B6F00EA2824 /* BookListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3431E2B4C6B6F00EA2824 /* BookListVM.swift */; };
 		59D343212B4C6B7D00EA2824 /* BookListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D343202B4C6B7D00EA2824 /* BookListCoordinator.swift */; };
@@ -107,6 +110,8 @@
 		59A365D82B3580EA00A9294B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		59B581402B527D3A00B6D792 /* PopularSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSectionModel.swift; sourceTree = "<group>"; };
 		59B581422B5295D600B6D792 /* DiscoverSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverSectionModel.swift; sourceTree = "<group>"; };
+		59B581452B52AE3000B6D792 /* indicator.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = indicator.json; sourceTree = "<group>"; };
+		59B5814D2B52B07200B6D792 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		59D3431B2B4C6B6000EA2824 /* BookListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListVC.swift; sourceTree = "<group>"; };
 		59D3431E2B4C6B6F00EA2824 /* BookListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListVM.swift; sourceTree = "<group>"; };
 		59D343202B4C6B7D00EA2824 /* BookListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCoordinator.swift; sourceTree = "<group>"; };
@@ -121,6 +126,7 @@
 			files = (
 				59A365C32B35720800A9294B /* SnapKit in Frameworks */,
 				59A365C52B35720800A9294B /* SnapKit-Dynamic in Frameworks */,
+				59B581492B52AED100B6D792 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +302,7 @@
 		59A365CA2B357A5D00A9294B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				59B581442B52AE1800B6D792 /* Lottie */,
 				59A365B62B356E4400A9294B /* Assets.xcassets */,
 			);
 			name = Resources;
@@ -370,6 +377,7 @@
 		59A365D22B35802D00A9294B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				59B5814A2B52B00700B6D792 /* Indicator */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -383,6 +391,22 @@
 				596E062C2B50579D00685C11 /* NetworkError.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		59B581442B52AE1800B6D792 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				59B581452B52AE3000B6D792 /* indicator.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
+		59B5814A2B52B00700B6D792 /* Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				59B5814D2B52B07200B6D792 /* IndicatorView.swift */,
+			);
+			path = Indicator;
 			sourceTree = "<group>";
 		};
 		59D3431A2B4C6B3E00EA2824 /* BookList */ = {
@@ -414,6 +438,7 @@
 			packageProductDependencies = (
 				59A365C22B35720800A9294B /* SnapKit */,
 				59A365C42B35720800A9294B /* SnapKit-Dynamic */,
+				59B581482B52AED100B6D792 /* Lottie */,
 			);
 			productName = "bookish-app";
 			productReference = 59A365AA2B356E4400A9294B /* bookish-app.app */;
@@ -445,6 +470,7 @@
 			mainGroup = 59A365A12B356E4400A9294B;
 			packageReferences = (
 				59A365C12B35720800A9294B /* XCRemoteSwiftPackageReference "SnapKit" */,
+				59B581472B52AED100B6D792 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 59A365AB2B356E4400A9294B /* Products */;
 			projectDirPath = "";
@@ -465,6 +491,7 @@
 				599290F32B35B7A0003A1C71 /* Raleway-Light.ttf in Resources */,
 				599290F62B35B7A0003A1C71 /* Raleway-Medium.ttf in Resources */,
 				599290F52B35B7A0003A1C71 /* Raleway-Italic.ttf in Resources */,
+				59B581462B52AE3000B6D792 /* indicator.json in Resources */,
 				599290F82B35B7A0003A1C71 /* Raleway-Regular.ttf in Resources */,
 				59A365BA2B356E4400A9294B /* LaunchScreen.storyboard in Resources */,
 				59A365B72B356E4400A9294B /* Assets.xcassets in Resources */,
@@ -494,6 +521,7 @@
 				596E06342B505D6600685C11 /* BookResponse.swift in Sources */,
 				59D3431F2B4C6B6F00EA2824 /* BookListVM.swift in Sources */,
 				59A365D52B3580CE00A9294B /* HomeVC.swift in Sources */,
+				59B5814E2B52B07200B6D792 /* IndicatorView.swift in Sources */,
 				596E06302B5059D100685C11 /* BookService.swift in Sources */,
 				59D3431C2B4C6B6000EA2824 /* BookListVC.swift in Sources */,
 				59B581432B5295D600B6D792 /* DiscoverSectionModel.swift in Sources */,
@@ -1105,6 +1133,14 @@
 				minimumVersion = 5.6.0;
 			};
 		};
+		59B581472B52AED100B6D792 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1117,6 +1153,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 59A365C12B35720800A9294B /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
+		};
+		59B581482B52AED100B6D792 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59B581472B52AED100B6D792 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

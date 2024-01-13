@@ -28,6 +28,7 @@ final class HomeVM {
     
     // MARK: - HTTP Requests
     private func getBooksByCategory(type: CategoryType, queryItems: [URLQueryItem]) {
+        view?.updateIndicatorState(hidden: false)
         bookService.getBooks(queryItems: queryItems) {[weak self] result in
             guard let self = self else { return }
             switch result {
@@ -35,15 +36,18 @@ final class HomeVM {
                 switch type {
                 case .history:
                     popularBooks = data.items ?? []
-                    view?.reloadSectionDataSection(type: .popular)
+                    view?.reloadCollectionView()
+                    view?.updateIndicatorState(hidden: true)
                     break
                 case .love:
                     risingBooks = data.items ?? []
-                    view?.reloadSectionDataSection(type: .rising)
+                    view?.reloadCollectionView()
+                    view?.updateIndicatorState(hidden: true)
                     break
                 case .philosophy:
                     discoverBooks = data.items ?? []
-                    view?.reloadSectionDataSection(type: .discover)
+                    view?.reloadCollectionView()
+                    view?.updateIndicatorState(hidden: true)
                     break
                 default:
                     print("default case")
@@ -62,11 +66,11 @@ final class HomeVM {
         switch type {
         case .history:
             paginationQuery.append(.init(name: "q", value: "subject:history"))
-            paginationQuery.append(.init(name: "maxResults", value: "9"))
+            paginationQuery.append(.init(name: "maxResults", value: "10"))
             break
         case .love:
             paginationQuery.append(.init(name: "q", value: "subject:love"))
-            paginationQuery.append(.init(name: "maxResults", value: "3"))
+            paginationQuery.append(.init(name: "maxResults", value: "9"))
             break
         case .philosophy:
             paginationQuery.append(.init(name: "q", value: "subject:philosophy"))
@@ -84,10 +88,11 @@ final class HomeVM {
 extension HomeVM: HomeVMDelegate {
     func viewDidLoad() {
         view?.configureCollectionViewLayout()
+        view?.constraintIndicatorView()
         view?.configureCollectionView()
         view?.constraintsCollectionView()
         getBooksByCategory(type: .history, queryItems: getInitialQueryItemsByCategory(type: .history))
-//        getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
+        getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
     }
 }

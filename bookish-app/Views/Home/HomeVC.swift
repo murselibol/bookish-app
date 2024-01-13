@@ -13,14 +13,18 @@ protocol HomeVCDelegate: AnyObject {
     func configureCollectionViewLayout()
     func configureCollectionView()
     func constraintsCollectionView()
+    func reloadCollectionView()
     
-    func reloadSectionDataSection(type: HomeSectionType)
+    func constraintIndicatorView()
+    func updateIndicatorState(hidden: Bool)
 }
 
 final class HomeVC: UIViewController {
     private lazy var viewModel = HomeVM(view: self)
     weak var coordinator: HomeCoordinator?
+    
     private var collectionView: UICollectionView!
+    private lazy var indicatorView = IndicatorView()
 
     // MARK: - Init
     override func viewDidLoad() {
@@ -65,9 +69,25 @@ extension HomeVC: HomeVCDelegate {
         }
     }
     
-    func reloadSectionDataSection(type: HomeSectionType) {
+    func reloadCollectionView() {
         DispatchQueue.main.async {
-            self.collectionView.reloadSections(IndexSet(integer: type.rawValue))
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func constraintIndicatorView() {
+        view.addSubview(indicatorView)
+//        indicatorView.layer.zPosition = 99
+        indicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(200)
+        }
+        updateIndicatorState(hidden: true)
+    }
+    func updateIndicatorState(hidden: Bool) {
+        DispatchQueue.main.async {
+            self.indicatorView.isHidden = hidden
         }
     }
 }
