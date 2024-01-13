@@ -10,10 +10,12 @@ import UIKit
 final class RisingCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RisingCollectionViewCell"
+    weak var bookDelegate: BookDelegate?
+    private lazy var bookId: String = ""
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickItem)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -111,6 +113,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(data: RisingSectionModel) {
+        bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         updateRankImageColor(rank: data.rank)
         rankLabel.text = data.rank
@@ -118,8 +121,8 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         authorLabel.text = data.author
     }
     
-    @objc private func onClickItem() {
-        print("click item")
+    @objc func onClickBook() {
+        bookDelegate?.onClickBook(id: bookId)
     }
     
     private func updateRankImageColor(rank: String?){

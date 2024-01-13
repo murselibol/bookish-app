@@ -10,10 +10,12 @@ import UIKit
 final class DiscoverCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "DiscoverCollectionViewCell"
+    weak var bookDelegate: BookDelegate?
+    private lazy var bookId: String = ""
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickItem)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -47,7 +49,7 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .Text2()
-        label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
+        label.text = "Lorem ipsum"
         label.textColor = .getColor(.textGray)
         label.numberOfLines = 4
         return label
@@ -99,14 +101,15 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(data: DiscoverSectionModel) {
+        bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         bookTitleLabel.text = data.title
         authorLabel.text = data.author
         descriptionLabel.text = data.description
     }
     
-    @objc func onClickItem() {
-        print("click item")
+    @objc func onClickBook() {
+        bookDelegate?.onClickBook(id: bookId)
     }
 }
 

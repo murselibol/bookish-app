@@ -119,6 +119,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
+            cell.bookDelegate = self
             let book = viewModel.popularBooks[indexPath.item].volumeInfo
             let id = viewModel.popularBooks[indexPath.item].id ?? ""
             let thumbnailUrl = book?.imageLinks?.smallThumbnail
@@ -143,6 +144,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell
 //            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
+            cell.bookDelegate = self
             let book = viewModel.risingBooks[indexPath.item].volumeInfo
             let id = viewModel.risingBooks[indexPath.item].id ?? ""
             let thumbnailUrl = book?.imageLinks?.smallThumbnail
@@ -152,6 +154,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionViewCell.identifier, for: indexPath) as! DiscoverCollectionViewCell
+            cell.bookDelegate = self
             let book = viewModel.discoverBooks[indexPath.item].volumeInfo
             let id = viewModel.discoverBooks[indexPath.item].id ?? ""
             let thumbnailUrl = book?.imageLinks?.smallThumbnail

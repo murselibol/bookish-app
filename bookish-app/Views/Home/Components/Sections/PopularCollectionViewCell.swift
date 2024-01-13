@@ -11,6 +11,16 @@ import SDWebImage
 final class PopularCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PopularCollectionViewCell"
+    weak var bookDelegate: BookDelegate?
+    private lazy var bookId: String = ""
+    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 6
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
+        view.isUserInteractionEnabled = true
+        return view
+    }()
     
     private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
@@ -40,12 +50,17 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     func constraintUI() {
+        addSubview(containerView)
         addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
         
+        containerView.snp.makeConstraints { make in
+            make.edges.equalTo(0)
+        }
+        
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(self.snp.height).offset(-50)
+            make.top.leading.trailing.equalTo(containerView)
+            make.height.equalTo(containerView.snp.height).offset(-50)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
@@ -54,7 +69,12 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(data: PopularSectionModel) {
+        bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         bookTitleLabel.text = data.title
+    }
+    
+    @objc func onClickBook() {
+        bookDelegate?.onClickBook(id: bookId)
     }
 }

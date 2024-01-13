@@ -11,7 +11,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "BookCollectionViewCell"
     weak var bookDelegate: BookDelegate?
-    private lazy var id: String = ""
+    private lazy var bookId: String = ""
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -82,12 +82,13 @@ final class BookCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(data: BookSectionModel) {
+        bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         bookTitleLabel.text = data.title
         bookDescriptionLabel.text = data.description
     }
     
     @objc func onClickBook() {
-        bookDelegate?.onClickBook(id: id)
+        bookDelegate?.onClickBook(id: bookId)
     }
 }
