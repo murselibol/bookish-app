@@ -9,14 +9,16 @@ import Foundation
 
 enum BookRequestProvider {
     case getBooks(queryItems: [URLQueryItem]?)
-    case getBook(queryItems: [URLQueryItem]?)
+    case getBook(id: String, queryItems: [URLQueryItem]?)
 }
 
 extension BookRequestProvider: Endpoint {
     var path: String {
         switch self {
-        default:
+        case .getBooks( _):
             return ""
+        case .getBook(let id, _):
+            return "/\(id)"
         }
     }
 
@@ -31,14 +33,14 @@ extension BookRequestProvider: Endpoint {
         switch self {
         case .getBooks(let queryItems):
             return queryItems
-        case .getBook(let queryItems):
+        case .getBook(_, let queryItems):
             return queryItems
         }
     }
 
     var body: Encodable? {
         switch self {
-        case .getBooks, .getBook:
+        default:
             return nil
         }
     }

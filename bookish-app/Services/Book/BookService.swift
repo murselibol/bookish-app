@@ -23,8 +23,7 @@ final class BookService: BookServiceProtocol {
     }
     
     func getBook(id: String, queryItems: [URLQueryItem]?, completion: @escaping (Result<BookResponse, NetworkError>) -> Void) {
-         let request = BookRequestProvider.getBook(queryItems: queryItems).request()
+         let request = BookRequestProvider.getBook(id: id, queryItems: queryItems).request()
          NetworkManager.shared.request(request, completion: completion)
     }
-    
 }

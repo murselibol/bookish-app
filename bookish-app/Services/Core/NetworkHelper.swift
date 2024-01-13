@@ -29,7 +29,8 @@ extension Endpoint {
 
     
     func request() -> URLRequest {
-        guard var components = URLComponents(string: baseURL) else { fatalError("Base URL Error") }
+        guard var components = URLComponents(string: "https://www.googleapis.com/books/v1/volumes") else { fatalError("Base URL Error") }
+        components.path += path
         components.queryItems = self.queryItems
         components.queryItems?.append(URLQueryItem(name: "key", value: Environment.apiKey))
         guard let url = components.url else { fatalError("URL Error From Component") }
