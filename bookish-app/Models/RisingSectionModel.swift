@@ -8,9 +8,11 @@
 import Foundation
 
 struct RisingSectionModel {
-    var rank: String
-    var title: String
-    var author: String
+    let id: String
+    let thumbnailUrl: String?
+    let rank: String?
+    let title: String
+    let author: String
 }
 
 let CATEGORY_SECTION_COLORS = [
