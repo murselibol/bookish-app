@@ -121,8 +121,10 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         print("click item")
     }
     
-    private func updateRankImageColor(rank: String){
-        guard let rankIndex = Int(rank) else { return }
+    private func updateRankImageColor(rank: String?){
+        guard let rankValue = rank, let rankIndex = Int(rankValue) else {
+            return
+        }
         rankImageView.tintColor = UIColor(hex: CATEGORY_SECTION_COLORS[rankIndex-1])
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PopularCollectionViewCell: UICollectionViewCell {
+final class PopularCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PopularCollectionViewCell"
     
@@ -50,5 +50,9 @@ class PopularCollectionViewCell: UICollectionViewCell {
         bookTitleLabel.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
         }
+    }
+    
+    func setup(data: PopularSectionModel) {
+        bookTitleLabel.text = data.title
     }
 }

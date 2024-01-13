@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DiscoverCollectionViewCell: UICollectionViewCell {
+final class DiscoverCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "DiscoverCollectionViewCell"
     
@@ -28,7 +28,7 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Text1()
+        label.font = .Text1(.medium)
         label.text = "Sineklerin Tanrısı"
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 1
@@ -63,7 +63,7 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraintUI() {
+    private func constraintUI() {
         addSubview(containerView)
         addSubview(thumbnailImage)
         addSubview(bookTitleLabel)
@@ -96,6 +96,12 @@ class DiscoverCollectionViewCell: UICollectionViewCell {
             make.trailing.equalToSuperview()
             make.leading.equalTo(thumbnailImage.snp.trailing).offset(15)
         }
+    }
+    
+    func setup(data: DiscoverSectionModel) {
+        bookTitleLabel.text = data.title
+        authorLabel.text = data.author
+        descriptionLabel.text = data.description
     }
     
     @objc func onClickItem() {
