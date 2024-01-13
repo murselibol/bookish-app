@@ -8,7 +8,7 @@
 import Foundation
 
 enum HomeSectionType: Int {
-    case populer
+    case popular
     case category
     case book
     case rising

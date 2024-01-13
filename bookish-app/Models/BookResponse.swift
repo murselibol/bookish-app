@@ -12,35 +12,8 @@ struct BookResponse: Codable {
     let kind, id, etag: String?
     let selfLink: String?
     let volumeInfo: BookInfo?
-    let saleInfo: SaleInfo?
     let accessInfo: AccessInfo?
-}
-
-// MARK: - AccessInfo
-struct AccessInfo: Codable {
-    let country, viewability: String?
-    let embeddable, publicDomain: Bool?
-    let epub, pdf: Epub?
-    let webReaderLink: String?
-}
-
-// MARK: - Epub
-struct Epub: Codable {
-    let isAvailable: Bool?
-}
-
-// MARK: - SaleInfo
-struct SaleInfo: Codable {
-    let country, saleability: String?
-    let isEbook: Bool?
-    let listPrice, retailPrice: Price?
-    let buyLink: String?
-}
-
-// MARK: - Price
-struct Price: Codable {
-    let amount: Int?
-    let currencyCode: String?
+//    let saleInfo: SaleInfo?
 }
 
 // MARK: - VolumeInfo
@@ -70,4 +43,31 @@ struct ImageLinks: Codable {
 // MARK: - ReadingModes
 struct ReadingModes: Codable {
     let text, image: Bool?
+}
+
+// MARK: - AccessInfo
+struct AccessInfo: Codable {
+    let country, viewability: String?
+    let embeddable, publicDomain: Bool?
+    let epub, pdf: Epub?
+    let webReaderLink: String?
+}
+
+// MARK: - Epub
+struct Epub: Codable {
+    let isAvailable: Bool?
+}
+
+// MARK: - SaleInfo
+struct SaleInfo: Codable {
+    let country, saleability: String?
+    let isEbook: Bool?
+    let listPrice, retailPrice: Price?
+    let buyLink: String?
+}
+
+// MARK: - Price
+struct Price: Codable {
+    let amount: Int?
+    let currencyCode: String?
 }
