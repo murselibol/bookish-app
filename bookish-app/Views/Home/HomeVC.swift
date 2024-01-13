@@ -14,7 +14,7 @@ protocol HomeVCDelegate: AnyObject {
     func configureCollectionView()
     func constraintsCollectionView()
     
-    func reloadRisingSection()
+    func reloadSectionDataSection(type: HomeSectionType)
 }
 
 final class HomeVC: UIViewController {
@@ -65,10 +65,9 @@ extension HomeVC: HomeVCDelegate {
         }
     }
     
-    func reloadRisingSection() {
+    func reloadSectionDataSection(type: HomeSectionType) {
         DispatchQueue.main.async {
-            let indexSet = IndexSet(integer: HomeSectionType.rising.rawValue)
-            self.collectionView.reloadSections(indexSet)
+            self.collectionView.reloadSections(IndexSet(integer: type.rawValue))
         }
     }
 }
@@ -82,7 +81,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
             case 0:
-                return 10
+                return viewModel.popularBooks.count
             case 1:
                 return viewModel.categories.count
             case 2:
@@ -90,7 +89,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 3:
                 return viewModel.risingBooks.count
             case 4:
-                return 4
+                return viewModel.discoverBooks.count
             default:
                 return 0
         }
@@ -100,6 +99,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
+            let book = viewModel.popularBooks[indexPath.item].volumeInfo
+            let id = viewModel.popularBooks[indexPath.item].id ?? ""
+            let thumbnailUrl = book?.imageLinks?.smallThumbnail
+            let title = book?.title ?? "-"
+            cell.setup(data: PopularSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title))
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
@@ -114,12 +118,21 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell
 //            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
             let book = viewModel.risingBooks[indexPath.item].volumeInfo
+            let id = viewModel.risingBooks[indexPath.item].id ?? ""
+            let thumbnailUrl = book?.imageLinks?.smallThumbnail
             let title = book?.title ?? "-"
             let author = book?.authors?.first ?? "-"
-            cell.setup(data: RisingSectionModel(rank: "0\(indexPath.item+1)", title: title, author: author))
+            cell.setup(data: RisingSectionModel(id: id, thumbnailUrl: thumbnailUrl, rank: "0\(indexPath.item+1)", title: title, author: author))
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionViewCell.identifier, for: indexPath) as! DiscoverCollectionViewCell
+            let book = viewModel.discoverBooks[indexPath.item].volumeInfo
+            let id = viewModel.discoverBooks[indexPath.item].id ?? ""
+            let thumbnailUrl = book?.imageLinks?.smallThumbnail
+            let title = book?.title ?? "-"
+            let author = book?.authors?.first ?? "-"
+            let description = book?.description ?? "-"
+            cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
@@ -132,7 +145,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Popular 🔥", homeSectionType: .populer)
+                header.setup(title: "Popular 🔥", homeSectionType: .popular)
                 return header
             case 2:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView

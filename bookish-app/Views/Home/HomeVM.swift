@@ -18,11 +18,7 @@ final class HomeVM {
     let categories = CATEGORY_SECTION_ITEMS
     var popularBooks: [BookResponse] = []
     var risingBooks: [BookResponse] = []
-    var paginationQuery: [URLQueryItem] = [
-        .init(name: "q", value: "subject:love"),
-        .init(name: "startIndex", value: "0"),
-        .init(name: "maxResults", value: "9"),
-    ]
+    var discoverBooks: [BookResponse] = []
     
     // MARK: - Life Cycle
     init(view: HomeVCDelegate, bookService: BookServiceProtocol = BookService.shared) {
@@ -31,20 +27,57 @@ final class HomeVM {
     }
     
     // MARK: - HTTP Requests
-    func getBooks() {
-        bookService.getBooks(queryItems: paginationQuery) {[weak self] result in
+    private func getBooksByCategory(type: CategoryType, queryItems: [URLQueryItem]) {
+        bookService.getBooks(queryItems: queryItems) {[weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                self.popularBooks = data.items ?? []
-                self.risingBooks = data.items ?? []
-                view?.reloadRisingSection()
+                switch type {
+                case .history:
+                    popularBooks = data.items ?? []
+                    view?.reloadSectionDataSection(type: .popular)
+                    break
+                case .love:
+                    risingBooks = data.items ?? []
+                    view?.reloadSectionDataSection(type: .rising)
+                    break
+                case .philosophy:
+                    discoverBooks = data.items ?? []
+                    view?.reloadSectionDataSection(type: .discover)
+                    break
+                default:
+                    print("default case")
+                }
             case .failure(let error):
                 print(error)
                 break
             }
         }
     }
+    
+    // MARK: - Functions
+    private func getInitialQueryItemsByCategory(type: CategoryType) -> [URLQueryItem] {
+        var paginationQuery: [URLQueryItem] = []
+        
+        switch type {
+        case .history:
+            paginationQuery.append(.init(name: "q", value: "subject:history"))
+            paginationQuery.append(.init(name: "maxResults", value: "9"))
+            break
+        case .love:
+            paginationQuery.append(.init(name: "q", value: "subject:love"))
+            paginationQuery.append(.init(name: "maxResults", value: "3"))
+            break
+        case .philosophy:
+            paginationQuery.append(.init(name: "q", value: "subject:philosophy"))
+            paginationQuery.append(.init(name: "maxResults", value: "4"))
+            break
+        default:
+            print("default case")
+        }
+        return paginationQuery
+    }
+    
 }
 
 // MARK: - HomeVMDelegate
@@ -53,6 +86,8 @@ extension HomeVM: HomeVMDelegate {
         view?.configureCollectionViewLayout()
         view?.configureCollectionView()
         view?.constraintsCollectionView()
-        getBooks()
-    }    
+        getBooksByCategory(type: .history, queryItems: getInitialQueryItemsByCategory(type: .history))
+//        getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
+        getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
+    }
 }
