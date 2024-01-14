@@ -9,6 +9,7 @@ import Foundation
 
 protocol BookListVMDelegate {
     func viewDidLoad()
+    func colletionViewWillDisplay(at indexPath: IndexPath)
 }
 
 final class BookListVM {
@@ -37,7 +38,7 @@ final class BookListVM {
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                books = data.items ?? []
+                self.books.append(contentsOf: data.items ?? [])
                 view?.reloadCollectionView()
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
@@ -45,6 +46,14 @@ final class BookListVM {
                 view?.updateIndicatorState(hidden: true)
                 break
             }
+        }
+    }
+    
+    // MARK: - Functions
+    func increasePageSize() {
+        if let queryIndex = paginationQuery.firstIndex(where: { $0.name == "startIndex" }) {
+            let currentPage = Int(paginationQuery[queryIndex].value!)! + 1
+            paginationQuery.append(.init(name: "startIndex", value: String(currentPage)))
         }
     }
 }
@@ -56,7 +65,13 @@ extension BookListVM: BookListVMDelegate {
         view?.configureCollectionView()
         view?.constraintCollectionView()
         view?.constraintIndicatorView()
-        getBooksByCategory(type: .history, queryItems: paginationQuery)
+        getBooksByCategory(type: categoryType, queryItems: paginationQuery)
+    }
+    
+    func colletionViewWillDisplay(at indexPath: IndexPath) {
+        if indexPath.row == books.count - 3 {
+            self.increasePageSize()
+            getBooksByCategory(type: categoryType, queryItems: paginationQuery)
+        }
     }
 }
-

@@ -67,6 +67,10 @@ extension BookListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.colletionViewWillDisplay(at: indexPath)
+    }
 }
 
 // MARK: - BookListVCDelegate
