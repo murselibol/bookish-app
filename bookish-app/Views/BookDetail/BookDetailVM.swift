@@ -32,6 +32,7 @@ final class BookDetailVM {
             switch result {
             case .success(let data):
                 book = data
+                view?.reloadCollectionView()
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
                 print(error)
@@ -44,6 +45,10 @@ final class BookDetailVM {
 
 extension BookDetailVM: BookDetailVMDelegate {
     func viewDidLoad() {
+        view?.configureCollectionViewLayout()
+        view?.configureCollectionView()
+        view?.constraintCollectionView()
+        view?.constraintIndicatorView()
         getBook(id: bookId)
     }
 }

@@ -8,6 +8,12 @@
 import UIKit
 
 protocol BookDetailVCDelegate: AnyObject {
+    func configureCollectionViewLayout()
+    func configureCollectionView()
+    func constraintCollectionView()
+    func reloadCollectionView()
+    
+    func constraintIndicatorView()
     func updateIndicatorState(hidden: Bool)
 }
 
@@ -15,6 +21,7 @@ final class BookDetailVC: UIViewController {
     
     var viewModel: BookDetailVM!
     weak var coordinator: BookDetailCoordinator?
+    private var collectionView: UICollectionView!
     
     private lazy var indicatorView = IndicatorView()
     
@@ -36,7 +43,54 @@ final class BookDetailVC: UIViewController {
     
     deinit { coordinator?.finishCoordinator() }
     
-    // MARK: - Funtions
+}
+
+// MARK: - UICollectionViewDelegate
+extension BookDetailVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        (viewModel.book != nil) ? 1 : 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookDetailCollectionViewCell.identifier, for: indexPath) as! BookDetailCollectionViewCell
+        cell.setup(data: viewModel.book!)
+        return cell
+    }
+}
+
+// MARK: - BookDetailVCDelegate
+extension BookDetailVC: BookDetailVCDelegate {
+    func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(BookDetailCollectionViewCell.self, forCellWithReuseIdentifier: BookDetailCollectionViewCell.identifier)
+    }
+    
+    func configureCollectionViewLayout() {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) -> NSCollectionLayoutSection? in
+            return self.createDetailSection()
+        }
+        
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }
+    
+    func constraintCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    func reloadCollectionView() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
     func constraintIndicatorView() {
         view.addSubview(indicatorView)
         indicatorView.snp.makeConstraints { make in
@@ -47,13 +101,27 @@ final class BookDetailVC: UIViewController {
         updateIndicatorState(hidden: true)
     }
     
-}
-
-// MARK: - BookDetailVCDelegate
-extension BookDetailVC: BookDetailVCDelegate {
     func updateIndicatorState(hidden: Bool) {
         DispatchQueue.main.async {
             self.indicatorView.isHidden = hidden
         }
+    }
+}
+
+
+// MARK: - Compositional Layout
+extension BookDetailVC {
+    func createDetailSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+
+        return section
     }
 }
