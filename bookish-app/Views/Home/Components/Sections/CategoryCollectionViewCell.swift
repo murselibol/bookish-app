@@ -32,6 +32,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -42,6 +43,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
         addSubview(categoryName)
@@ -55,13 +57,14 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Functions
     func setup(data: CategorySectionModel) {
         self.category = data.type
         self.categoryName.text = data.name
         self.containerView.backgroundColor = UIColor(hex: data.color)
     }
     
-    @objc func onClickCategory() {
+    @objc private func onClickCategory() {
         delegate?.onSelectCategory(category: category)
     }
 }

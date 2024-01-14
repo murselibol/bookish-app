@@ -39,6 +39,7 @@ final class PopularCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -49,7 +50,8 @@ final class PopularCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraintUI() {
+    // MARK: - Constraint
+    private func constraintUI() {
         addSubview(containerView)
         addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
@@ -68,13 +70,14 @@ final class PopularCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Functions
     func setup(data: PopularSectionModel) {
         bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
         bookTitleLabel.text = data.title
     }
     
-    @objc func onClickBook() {
+    @objc private func onClickBook() {
         bookDelegate?.onClickBook(id: bookId)
     }
 }

@@ -30,7 +30,7 @@ final class IndicatorView: UIView {
         
         addSubview(lottieAnimationView)
         lottieAnimationView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(self)
+            make.edges.equalToSuperview()
         }
     }
 }

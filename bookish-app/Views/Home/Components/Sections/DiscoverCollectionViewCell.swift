@@ -55,6 +55,7 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -65,6 +66,7 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
         addSubview(thumbnailImageView)
@@ -100,6 +102,7 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Functions
     func setup(data: DiscoverSectionModel) {
         bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
@@ -108,8 +111,9 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         descriptionLabel.text = data.description
     }
     
-    @objc func onClickBook() {
+    @objc private func onClickBook() {
         bookDelegate?.onClickBook(id: bookId)
     }
+    
 }
 

@@ -45,6 +45,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -55,7 +56,8 @@ final class BookCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraintUI() {
+    // MARK: - Constaint
+    private func constraintUI() {
         addSubview(containerView)
         addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
@@ -81,6 +83,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Functions
     func setup(data: BookSectionModel) {
         bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
@@ -88,7 +91,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
         bookDescriptionLabel.text = data.description
     }
     
-    @objc func onClickBook() {
+    @objc private func onClickBook() {
         bookDelegate?.onClickBook(id: bookId)
     }
 }

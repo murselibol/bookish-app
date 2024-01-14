@@ -21,7 +21,7 @@ final class HomeVM {
     var discoverBooks: [BookResponse] = []
     var bookOfWeak: BookResponse?
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     init(view: HomeVCDelegate, bookService: BookServiceProtocol = BookService.shared) {
         self.view = view
         self.bookService = bookService
@@ -99,7 +99,7 @@ extension HomeVM: HomeVMDelegate {
     func viewDidLoad() {
         view?.configureCollectionViewLayout()
         view?.configureCollectionView()
-        view?.constraintsCollectionView()
+        view?.constraintCollectionView()
         view?.constraintIndicatorView()
         getBooksByCategory(type: .history, queryItems: getInitialQueryItemsByCategory(type: .history))
         getBooksByCategory(type: .fantasy, queryItems: getInitialQueryItemsByCategory(type: .fantasy))

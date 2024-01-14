@@ -16,7 +16,7 @@ struct BookResponse: Codable {
 //    let saleInfo: SaleInfo?
 }
 
-// MARK: - VolumeInfo
+// MARK: - BookInfo
 struct BookInfo: Codable {
     let title: String?
     let authors: [String]?

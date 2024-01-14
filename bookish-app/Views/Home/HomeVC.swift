@@ -12,7 +12,7 @@ protocol HomeVCDelegate: AnyObject {
     
     func configureCollectionViewLayout()
     func configureCollectionView()
-    func constraintsCollectionView()
+    func constraintCollectionView()
     func reloadCollectionView()
     
     func constraintIndicatorView()
@@ -62,10 +62,10 @@ extension HomeVC: HomeVCDelegate {
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     }
     
-    func constraintsCollectionView() {
+    func constraintCollectionView() {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     

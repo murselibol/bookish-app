@@ -34,6 +34,7 @@ final class SectionHeaderView: UICollectionReusableView {
         return btn
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -44,7 +45,8 @@ final class SectionHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraintUI() {
+    // MARK: - Constraint
+    private func constraintUI() {
         self.addSubview(sectionTitleLabel)
         self.addSubview(seeMoreBtn)
         
@@ -58,17 +60,16 @@ final class SectionHeaderView: UICollectionReusableView {
         }
     }
     
+    // MARK: - Functions
     func setup(title: String, homeSectionType: HomeSectionType, hiddenSeeMore: Bool = false) {
         self.sectionTitleLabel.text = title
         isHiddenSeeMoreBtn(hidden: hiddenSeeMore)
     }
     
-    @objc func onClickSeeMoreBtn() {
+    @objc private func onClickSeeMoreBtn() {
         self.delegate?.onClickSeeMoreBtn()
     }
-}
-
-extension SectionHeaderView {
+    
     private func isHiddenSeeMoreBtn(hidden: Bool) {
         seeMoreBtn.isHidden = hidden
     }
