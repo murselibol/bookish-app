@@ -14,6 +14,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "BookDetailCollectionViewCell"
     private lazy var viewModel = BookDetailCollectionViewCellVM(view: self)
+    private var book: BookResponse!
     
     private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
@@ -25,9 +26,19 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Title1(.semibold)
+        label.font = .Title2(.semibold)
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var authorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Title3()
+        label.textColor = .getColor(.primary)
+        label.numberOfLines = 1
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -48,7 +59,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     
     private lazy var readMoreLabel: UILabel = {
         let label = UILabel()
-        label.text = "More"
+        label.text = "Read more"
         label.font = .Text2()
         label.textColor = .getColor(.textGray)
         return label
@@ -75,6 +86,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     private func constraintUI() {
         addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
+        addSubview(authorLabel)
         addSubview(bookDescriptionLabel)
         addSubview(readMoreContainerView)
         addSubview(readMoreLabel)
@@ -92,15 +104,20 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
         
+        authorLabel.snp.makeConstraints { make in
+            make.top.equalTo(bookTitleLabel.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+        }
+        
         bookDescriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(bookTitleLabel.snp.bottom).offset(20)
+            make.top.equalTo(authorLabel.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
         }
         
         readMoreContainerView.snp.makeConstraints { make in
             make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview()
-            make.width.equalTo(50)
+            make.width.equalTo(90)
             make.height.equalTo(25)
         }
         
@@ -120,17 +137,23 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Functions
     func setup(data: BookResponse) {
+        self.book = data
         let bookInfo = data.volumeInfo
         thumbnailImageView.loadURL(url: data.volumeInfo?.imageLinks?.thumbnail ?? K.notFoundBookImage)
         bookTitleLabel.text = bookInfo?.title
+        authorLabel.text = bookInfo?.authors?.first ?? "-"
         bookDescriptionLabel.text = bookInfo?.description
+    }
+    
+    @objc private func onClickAuthor() {
+        print(book.volumeInfo?.authors?.first ?? "")
     }
     
     @objc private func onClickReadMore() {
         UIView.animate(withDuration: 0.3) {
             self.viewModel.isOpenReadMore.toggle()
             self.bookDescriptionLabel.numberOfLines = self.viewModel.isOpenReadMore ? 0 : 4
-            self.readMoreLabel.text = self.viewModel.isOpenReadMore ? "Less" : "More"
+            self.readMoreLabel.text = self.viewModel.isOpenReadMore ? "Less more" : "Read more"
             self.chevronImageView.image = UIImage(systemName: self.viewModel.isOpenReadMore ? "chevron.up" : "chevron.down")
             self.layoutIfNeeded()
         }
