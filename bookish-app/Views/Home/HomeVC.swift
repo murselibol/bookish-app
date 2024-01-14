@@ -174,22 +174,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Popular 🔥", sectionIndex: indexPath.item)
+                header.setup(title: "Popular 🔥", sectionIndex: indexPath.section)
                 return header
             case 2:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Book of the Week ✨", sectionIndex: indexPath.item)
+                header.setup(title: "Book of the Week ✨", sectionIndex: indexPath.item, hiddenSeeMore: true)
                 return header
             case 3:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Rising 🚀", sectionIndex: indexPath.item)
+                header.setup(title: "Rising 🚀", sectionIndex: indexPath.section)
                 return header
             case 4:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Discover 🔎", sectionIndex: indexPath.item)
+                header.setup(title: "Discover 🔎", sectionIndex: indexPath.section)
                 return header
             default:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
