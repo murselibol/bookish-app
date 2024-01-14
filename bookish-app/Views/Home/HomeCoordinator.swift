@@ -38,8 +38,9 @@ final class HomeCoordinator: Coordinator {
         coordinator.start()
     }
     
-    func navigateBookListVC() {
+    func navigateBookListVC(category: CategoryType) {
         let coordinator = BookListCoordinator(navigationController: navigationController)
+        coordinator.category = category
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         coordinator.start()

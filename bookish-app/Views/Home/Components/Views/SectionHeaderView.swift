@@ -8,13 +8,14 @@
 import UIKit
 
 protocol SectionHeaderViewDelegate: AnyObject {
-    func onClickSeeMoreBtn()
+    func onClickSeeMoreBtn(sectionIndex: Int)
 }
 
 final class SectionHeaderView: UICollectionReusableView {
     
     static let identifier = "SectionHeaderView"
     weak var delegate: SectionHeaderViewDelegate?
+    private var sectionIndex: Int!
     
     private lazy var sectionTitleLabel: UILabel = {
         let label = UILabel()
@@ -61,13 +62,14 @@ final class SectionHeaderView: UICollectionReusableView {
     }
     
     // MARK: - Functions
-    func setup(title: String, homeSectionType: HomeSectionType, hiddenSeeMore: Bool = false) {
+    func setup(title: String, sectionIndex: Int, hiddenSeeMore: Bool = false) {
+        self.sectionIndex = sectionIndex
         self.sectionTitleLabel.text = title
         isHiddenSeeMoreBtn(hidden: hiddenSeeMore)
     }
     
     @objc private func onClickSeeMoreBtn() {
-        self.delegate?.onClickSeeMoreBtn()
+        self.delegate?.onClickSeeMoreBtn(sectionIndex: sectionIndex)
     }
     
     private func isHiddenSeeMoreBtn(hidden: Bool) {

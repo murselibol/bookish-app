@@ -22,6 +22,7 @@ final class NetworkManager: NetworkManagerProtocol {
         
 //        print("=======================")
 //        debugPrint(request.cURL(pretty: false))
+//        print(request.curlString)
 //        print("=======================")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

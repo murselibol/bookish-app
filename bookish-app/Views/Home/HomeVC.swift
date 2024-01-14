@@ -174,22 +174,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Popular 🔥", homeSectionType: .popular)
+                header.setup(title: "Popular 🔥", sectionIndex: indexPath.item)
                 return header
             case 2:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Book of the Week ✨", homeSectionType: .book, hiddenSeeMore: true)
+                header.setup(title: "Book of the Week ✨", sectionIndex: indexPath.item)
                 return header
             case 3:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Rising 🚀", homeSectionType: .rising)
+                header.setup(title: "Rising 🚀", sectionIndex: indexPath.item)
                 return header
             case 4:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Discover 🔎", homeSectionType: .discover)
+                header.setup(title: "Discover 🔎", sectionIndex: indexPath.item)
                 return header
             default:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
@@ -200,8 +200,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
 // MARK: - Compositional Section Header Delegate
 extension HomeVC: SectionHeaderViewDelegate {
-    func onClickSeeMoreBtn() {
-        coordinator?.navigateBookListVC()
+    func onClickSeeMoreBtn(sectionIndex: Int) {
+        let category = viewModel.getCategoryBySectionIndex(index: sectionIndex)
+        coordinator?.navigateBookListVC(category: category)
     }
 }
 
@@ -216,7 +217,7 @@ extension HomeVC: BookDelegate {
 // MARK: - Category Section Delegate
 extension HomeVC: CategoryCollectionViewCellDelegate {
     func onSelectCategory(category: CategoryType) {
-        print(category)
+        coordinator?.navigateBookListVC(category: category)
     }
 }
 
