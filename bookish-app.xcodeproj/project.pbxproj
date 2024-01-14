@@ -33,6 +33,7 @@
 		596E06502B50998500685C11 /* CategorySectionItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E064F2B50998500685C11 /* CategorySectionItems.swift */; };
 		59740B332B53E60300808600 /* BookDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59740B322B53E60300808600 /* BookDetailCollectionViewCell.swift */; };
 		59740B382B5431FB00808600 /* BookDetailCollectionViewCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59740B372B5431FB00808600 /* BookDetailCollectionViewCellVM.swift */; };
+		59740B3C2B546A9400808600 /* BookListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59740B3B2B546A9400808600 /* BookListCollectionViewCell.swift */; };
 		5985C2532B4C7E2E00934912 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5985C2522B4C7E2E00934912 /* CategoryCollectionViewCell.swift */; };
 		5986958C2B4B1142006C598B /* PopularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5986958B2B4B1142006C598B /* PopularCollectionViewCell.swift */; };
 		5986958E2B4B42D6006C598B /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5986958D2B4B42D6006C598B /* UIColor+Ext.swift */; };
@@ -101,6 +102,7 @@
 		596E064F2B50998500685C11 /* CategorySectionItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySectionItems.swift; sourceTree = "<group>"; };
 		59740B322B53E60300808600 /* BookDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		59740B372B5431FB00808600 /* BookDetailCollectionViewCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailCollectionViewCellVM.swift; sourceTree = "<group>"; };
+		59740B3B2B546A9400808600 /* BookListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCollectionViewCell.swift; sourceTree = "<group>"; };
 		5985C2522B4C7E2E00934912 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		5986958B2B4B1142006C598B /* PopularCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCollectionViewCell.swift; sourceTree = "<group>"; };
 		5986958D2B4B42D6006C598B /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
@@ -225,6 +227,22 @@
 				59740B372B5431FB00808600 /* BookDetailCollectionViewCellVM.swift */,
 			);
 			path = BookDetailCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		59740B392B546A3E00808600 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				59740B3A2B546A4800808600 /* BookListCollectionViewCell */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		59740B3A2B546A4800808600 /* BookListCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				59740B3B2B546A9400808600 /* BookListCollectionViewCell.swift */,
+			);
+			path = BookListCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		598695882B4B0FE7006C598B /* Components */ = {
@@ -467,6 +485,7 @@
 		59D3431A2B4C6B3E00EA2824 /* BookList */ = {
 			isa = PBXGroup;
 			children = (
+				59740B392B546A3E00808600 /* Components */,
 				59D3431B2B4C6B6000EA2824 /* BookListVC.swift */,
 				59D3431E2B4C6B6F00EA2824 /* BookListVM.swift */,
 				59D343202B4C6B7D00EA2824 /* BookListCoordinator.swift */,
@@ -583,6 +602,7 @@
 				59B5815A2B52F21D00B6D792 /* BookSectionModel.swift in Sources */,
 				59B5814E2B52B07200B6D792 /* IndicatorView.swift in Sources */,
 				59B581562B52C90C00B6D792 /* UIImageView+Ext.swift in Sources */,
+				59740B3C2B546A9400808600 /* BookListCollectionViewCell.swift in Sources */,
 				596E06302B5059D100685C11 /* BookService.swift in Sources */,
 				59D3431C2B4C6B6000EA2824 /* BookListVC.swift in Sources */,
 				59B581432B5295D600B6D792 /* DiscoverSectionModel.swift in Sources */,
