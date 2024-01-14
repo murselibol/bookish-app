@@ -60,6 +60,7 @@ final class HomeVM {
                 }
             case .failure(let error):
                 print(error)
+                view?.updateIndicatorState(hidden: true)
                 break
             }
         }
