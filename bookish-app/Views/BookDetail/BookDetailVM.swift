@@ -9,6 +9,8 @@ import Foundation
 
 protocol BookDetailVMDelegate {
     func viewDidLoad()
+    
+    func getMumberOfItemsInSection() -> Int
 }
 
 final class BookDetailVM {
@@ -50,6 +52,10 @@ extension BookDetailVM: BookDetailVMDelegate {
         view?.constraintCollectionView()
         view?.constraintIndicatorView()
         getBook(id: bookId)
+    }
+    
+    func getMumberOfItemsInSection() -> Int {
+        book != nil ? 1 : 0
     }
 }
 
