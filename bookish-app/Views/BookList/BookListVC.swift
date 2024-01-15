@@ -57,7 +57,7 @@ extension BookListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
-//        cell.bookDelegate = self
+        cell.bookDelegate = self
         let book = viewModel.books[indexPath.item].volumeInfo
         let id = viewModel.books[indexPath.item].id ?? ""
         let thumbnailUrl = book?.imageLinks?.smallThumbnail
@@ -119,6 +119,12 @@ extension BookListVC: BookListVCDelegate {
     }
 }
 
+// MARK: - Book Delegate
+extension BookListVC: BookDelegate {
+    func onClickBook(id: String) {
+        coordinator?.navigateBookDetailVC(id: id)
+    }
+}
 
 // MARK: - Compositional Layout
 extension BookListVC {
