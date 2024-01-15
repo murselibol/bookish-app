@@ -51,9 +51,14 @@ final class BookListVM {
     
     // MARK: - Functions
     func increasePageSize() {
+        /**
+         for [0-10] item: startIndex: 0 - maxResults: 10
+         for [10-20] item: startIndex: 10 - maxResults: 10
+         **/
         if let queryIndex = paginationQuery.firstIndex(where: { $0.name == "startIndex" }) {
-            let currentPage = Int(paginationQuery[queryIndex].value!)! + 1
-            paginationQuery.append(.init(name: "startIndex", value: String(currentPage)))
+            let currentPage = Int(paginationQuery[queryIndex].value!)! + 10
+            paginationQuery[queryIndex].value = String(currentPage)
+            getBooksByCategory(type: categoryType, queryItems: paginationQuery)
         }
     }
 }
@@ -71,7 +76,6 @@ extension BookListVM: BookListVMDelegate {
     func colletionViewWillDisplay(at indexPath: IndexPath) {
         if indexPath.row == books.count - 3 {
             self.increasePageSize()
-            getBooksByCategory(type: categoryType, queryItems: paginationQuery)
         }
     }
 }
