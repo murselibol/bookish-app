@@ -201,7 +201,7 @@ extension HomeVC: SectionHeaderViewDelegate {
     func onClickSeeMoreBtn(sectionIndex: Int) {
         let category = HomeSectionType.discover.sectionCategory
         let title = HomeSectionType.discover.sectionTitle
-        coordinator?.navigateBookListVC(title: "title", category: category)
+        coordinator?.navigateBookListVC(title: title, category: category)
     }
 }
 
@@ -216,8 +216,6 @@ extension HomeVC: BookDelegate {
 // MARK: - Category Section Delegate
 extension HomeVC: CategoryCollectionViewCellDelegate {
     func onSelectCategory(category: CategoryType) {
-        print(category.title)
-        print(category)
         coordinator?.navigateBookListVC(title: category.title, category: category)
     }
 }

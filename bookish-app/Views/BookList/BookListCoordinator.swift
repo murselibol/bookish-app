@@ -11,6 +11,7 @@ final class BookListCoordinator: Coordinator {
     var navigationController: UINavigationController
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
+    var title: String = "Books"
     var category: CategoryType = .philosophy
     
     init(navigationController: UINavigationController) {
@@ -18,7 +19,7 @@ final class BookListCoordinator: Coordinator {
     }
     
     func start() {
-        let vc = BookListVC(category: category)
+        let vc = BookListVC(title: title, category: category)
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

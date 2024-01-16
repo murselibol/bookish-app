@@ -16,6 +16,7 @@ final class BookListVM {
 
     weak var view: BookListVCDelegate?
     private let bookService: BookService
+    var sectionTitle: String
     var categoryType: CategoryType
     lazy var books: [BookResponse] = []
     private lazy var paginationQuery: [URLQueryItem] = [
@@ -25,8 +26,9 @@ final class BookListVM {
     ]
     
     // MARK: - Lifecycle
-    init(view: BookListVCDelegate?, category: CategoryType, bookService: BookService = BookService.shared) {
+    init(view: BookListVCDelegate?, title: String, category: CategoryType, bookService: BookService = BookService.shared) {
         self.view = view
+        self.sectionTitle = title
         self.categoryType = category
         self.bookService = bookService
     }

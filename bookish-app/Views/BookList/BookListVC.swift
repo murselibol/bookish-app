@@ -25,9 +25,9 @@ final class BookListVC: UIViewController {
     
     private lazy var indicatorView = IndicatorView()
     
-    init(category: CategoryType) {
+    init(title: String, category: CategoryType) {
         super.init(nibName: nil, bundle: nil)
-        self.viewModel = BookListVM(view: self, category: category)
+        self.viewModel = BookListVM(view: self, title: title, category: category)
     }
     
     required init?(coder: NSCoder) {
@@ -68,6 +68,12 @@ extension BookListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+        header.setup(title: viewModel.sectionTitle, sectionIndex: indexPath.section, hiddenSeeMore: true)
+        return header
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         viewModel.colletionViewWillDisplay(at: indexPath)
     }
@@ -79,6 +85,7 @@ extension BookListVC: BookListVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -92,7 +99,8 @@ extension BookListVC: BookListVCDelegate {
     func constraintCollectionView() {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(0)
+            make.top.equalToSuperview().offset(20)
+            make.bottom.leading.trailing.equalToSuperview()
         }
     }
     
@@ -138,12 +146,11 @@ extension BookListVC {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 10)
+        section.contentInsets = .init(top: 20, leading: 10, bottom: 20, trailing: 10)
         
-//        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
-//        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-//        header.contentInsets.bottom = 35
-//        section.boundarySupplementaryItems = [header]
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        section.boundarySupplementaryItems = [header]
         
         return section
     }
