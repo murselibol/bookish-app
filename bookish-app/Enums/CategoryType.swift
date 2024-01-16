@@ -18,4 +18,29 @@ enum CategoryType {
     case mythology
     case scienceFiction
     case psychology
+    
+    var title: String {
+        switch self {
+        case .love:
+            "Love"
+        case .history:
+            "History"
+        case .philosophy:
+            "Philosophy"
+        case .art:
+            "Art"
+        case .fantasy:
+            "Fantasy"
+        case .crime:
+            "Crime"
+        case .biography:
+            "Biography"
+        case .mythology:
+            "Mythology"
+        case .scienceFiction:
+            "Science Fiction"
+        case .psychology:
+            "Psychology"
+        }
+    }
 }

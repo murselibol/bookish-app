@@ -13,4 +13,34 @@ enum HomeSectionType: Int {
     case book
     case rising
     case discover
+    
+    var sectionTitle: String {
+        switch self {
+        case .popular: 
+            return "Popular 🔥"
+        case .book: 
+            return "Book of the Week ✨"
+        case .rising: 
+            return "Rising 🚀"
+        case .discover: 
+            return "Discover 🔎"
+        default: 
+            return "Book"
+        }
+    }
+    
+    var sectionCategory: CategoryType {
+        switch self {
+        case .popular: 
+            return .history
+        case .category: 
+            return .fantasy
+        case .rising: 
+            return .love
+        case .discover: 
+            return .philosophy
+        default: 
+            return .fantasy
+        }
+    }
 }
