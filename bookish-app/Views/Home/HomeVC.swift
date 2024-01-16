@@ -164,8 +164,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
-            return cell
+            return UICollectionViewCell()
         }
     }
     
@@ -174,26 +173,25 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Popular 🔥", sectionIndex: indexPath.section)
+                header.setup(title: HomeSectionType.popular.sectionTitle, sectionIndex: indexPath.section)
                 return header
             case 2:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Book of the Week ✨", sectionIndex: indexPath.item, hiddenSeeMore: true)
+                header.setup(title: HomeSectionType.book.sectionTitle, sectionIndex: indexPath.item, hiddenSeeMore: true)
                 return header
             case 3:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Rising 🚀", sectionIndex: indexPath.section)
+                header.setup(title: HomeSectionType.rising.sectionTitle, sectionIndex: indexPath.section)
                 return header
             case 4:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
                 header.delegate = self
-                header.setup(title: "Discover 🔎", sectionIndex: indexPath.section)
+                header.setup(title: HomeSectionType.discover.sectionTitle, sectionIndex: indexPath.section)
                 return header
             default:
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
-                return header
+                return UICollectionReusableView()
         }
     }
 }
@@ -201,8 +199,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 // MARK: - Compositional Section Header Delegate
 extension HomeVC: SectionHeaderViewDelegate {
     func onClickSeeMoreBtn(sectionIndex: Int) {
-        let category = viewModel.getCategoryBySectionIndex(index: sectionIndex)
-        coordinator?.navigateBookListVC(category: category)
+        let category = HomeSectionType.discover.sectionCategory
+        let title = HomeSectionType.discover.sectionTitle
+        coordinator?.navigateBookListVC(title: "title", category: category)
     }
 }
 
@@ -217,7 +216,9 @@ extension HomeVC: BookDelegate {
 // MARK: - Category Section Delegate
 extension HomeVC: CategoryCollectionViewCellDelegate {
     func onSelectCategory(category: CategoryType) {
-        coordinator?.navigateBookListVC(category: category)
+        print(category.title)
+        print(category)
+        coordinator?.navigateBookListVC(title: category.title, category: category)
     }
 }
 

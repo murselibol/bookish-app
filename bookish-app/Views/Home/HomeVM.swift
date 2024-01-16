@@ -9,7 +9,6 @@ import Foundation
 
 protocol HomeVMDelegate {
     func viewDidLoad()
-    func getCategoryBySectionIndex(index: Int) -> CategoryType
 }
 
 final class HomeVM {
@@ -107,18 +106,5 @@ extension HomeVM: HomeVMDelegate {
         getBooksByCategory(type: .fantasy, queryItems: getInitialQueryItemsByCategory(type: .fantasy))
         getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
-    }
-    
-    func getCategoryBySectionIndex(index: Int) -> CategoryType {
-        guard let sectionType = HomeSectionType(rawValue: index) else {
-            fatalError("Not Found Section")
-        }
-        switch sectionType {
-            case .popular: return .history
-            case .category: return .fantasy
-            case .rising: return .love
-            case .discover: return .philosophy
-            default: return .fantasy
-        }
     }
 }
