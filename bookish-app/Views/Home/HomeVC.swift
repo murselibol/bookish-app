@@ -48,14 +48,14 @@ extension HomeVC: HomeVCDelegate {
     }
     
     func configureCollectionViewLayout() {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
             switch sectionIndex {
-                case 0: return self.createPopularSection()
-                case 1: return self.createCategorySection()
-                case 2: return self.createBookSection()
-                case 3: return self.createRisingSection()
-                case 4: return self.createDiscoverSection()
-                default: return self.createPopularSection()
+                case 0: return self?.createPopularSection()
+                case 1: return self?.createCategorySection()
+                case 2: return self?.createBookSection()
+                case 3: return self?.createRisingSection()
+                case 4: return self?.createDiscoverSection()
+                default: return self?.createPopularSection()
             }
         }
         

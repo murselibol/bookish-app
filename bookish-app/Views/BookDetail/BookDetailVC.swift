@@ -71,8 +71,8 @@ extension BookDetailVC: BookDetailVCDelegate {
     }
     
     func configureCollectionViewLayout() {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) -> NSCollectionLayoutSection? in
-            return self.createDetailSection()
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
+            return self?.createDetailSection()
         }
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

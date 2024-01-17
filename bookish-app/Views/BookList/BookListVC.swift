@@ -89,8 +89,8 @@ extension BookListVC: BookListVCDelegate {
     }
     
     func configureCollectionViewLayout() {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) -> NSCollectionLayoutSection? in
-            return self.createListSection()
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
+            return self?.createListSection()
         }
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
