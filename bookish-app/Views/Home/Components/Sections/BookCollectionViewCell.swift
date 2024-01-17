@@ -86,7 +86,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
     // MARK: - Functions
     func setup(data: BookSectionModel) {
         bookId = data.id
-        thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
+        thumbnailImageView.loadURL(url: data.thumbnailUrl)
         bookTitleLabel.text = data.title
         bookDescriptionLabel.text = data.description
     }

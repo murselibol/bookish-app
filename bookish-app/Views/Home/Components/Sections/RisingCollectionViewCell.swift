@@ -117,7 +117,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     // MARK: - Functions
     func setup(data: RisingSectionModel) {
         bookId = data.id
-        thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
+        thumbnailImageView.loadURL(url: data.thumbnailUrl)
         updateRankImageColor(rank: data.rank)
         rankLabel.text = data.rank
         bookTitleLabel.text = data.title

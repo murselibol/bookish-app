@@ -157,6 +157,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		590C52AB2B584F2900AD8697 /* Author */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Author;
+			sourceTree = "<group>";
+		};
 		59133E802B38895A000CA187 /* BookCategory */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +403,7 @@
 		59A365CD2B357A7400A9294B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				590C52AB2B584F2900AD8697 /* Author */,
 				59A365DA2B35847900A9294B /* Core */,
 				596E062E2B5059C100685C11 /* Book */,
 			);

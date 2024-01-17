@@ -139,7 +139,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     func setup(data: BookResponse) {
         self.book = data
         let bookInfo = data.volumeInfo
-        thumbnailImageView.loadURL(url: data.volumeInfo?.imageLinks?.thumbnail ?? K.notFoundBookImage)
+        thumbnailImageView.loadURL(url: data.volumeInfo?.imageLinks?.thumbnail)
         bookTitleLabel.text = bookInfo?.title
         authorLabel.text = bookInfo?.authors?.first ?? "-"
         bookDescriptionLabel.text = bookInfo?.description

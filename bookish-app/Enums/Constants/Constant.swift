@@ -7,7 +7,5 @@
 
 import Foundation
 
-struct K {
-    static let notFoundBookImage = "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
-}
+struct K {}
 

@@ -72,7 +72,7 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     // MARK: - Functions
     func setup(data: PopularSectionModel) {
         bookId = data.id
-        thumbnailImageView.loadURL(url: data.thumbnailUrl ?? K.notFoundBookImage)
+        thumbnailImageView.loadURL(url: data.thumbnailUrl)
         bookTitleLabel.text = data.title
     }
     
