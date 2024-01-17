@@ -59,17 +59,18 @@ final class BookCollectionViewCell: UICollectionViewCell {
     // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
-        addSubview(thumbnailImageView)
-        addSubview(bookTitleLabel)
-        addSubview(bookDescriptionLabel)
+        containerView.addSubview(thumbnailImageView)
+        containerView.addSubview(bookTitleLabel)
+        containerView.addSubview(bookDescriptionLabel)
         
         containerView.snp.makeConstraints { make in
-            make.edges.equalTo(0)
+            make.edges.equalToSuperview()
         }
         
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.leading.equalTo(containerView)
-            make.width.equalTo(UIScreen.main.bounds.width/3)
+            make.top.leading.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width / 3)
+            make.height.equalTo(thumbnailImageView.snp.width).multipliedBy(1.5)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
@@ -80,8 +81,10 @@ final class BookCollectionViewCell: UICollectionViewCell {
         bookDescriptionLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(bookTitleLabel.snp.bottom).offset(8)
+            make.bottom.lessThanOrEqualToSuperview()
         }
     }
+
     
     // MARK: - Functions
     func setup(data: BookSectionModel) {
