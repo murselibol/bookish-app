@@ -46,14 +46,14 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
-        addSubview(categoryName)
+        containerView.addSubview(categoryName)
 
         containerView.snp.makeConstraints { make in
-            make.edges.equalTo(0)
+            make.edges.equalToSuperview()
         }
 
         categoryName.snp.makeConstraints { make in
-            make.edges.equalTo(containerView).inset(UIEdgeInsets(top: 15, left: 30, bottom: 15, right: 30))
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 15, left: 30, bottom: 15, right: 30))
         }
     }
     

@@ -73,11 +73,11 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
-        addSubview(thumbnailImageView)
-        addSubview(rankImageView)
-        addSubview(rankLabel)
-        addSubview(bookTitleLabel)
-        addSubview(authorLabel)
+        containerView.addSubview(thumbnailImageView)
+        containerView.addSubview(rankImageView)
+        containerView.addSubview(rankLabel)
+        containerView.addSubview(bookTitleLabel)
+        containerView.addSubview(authorLabel)
         
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -86,7 +86,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         thumbnailImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.width.equalTo(75)
-            make.height.equalTo(containerView.snp.height)
+            make.height.equalToSuperview()
         }
         
         rankImageView.snp.makeConstraints { make in
@@ -129,9 +129,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     }
     
     private func updateRankImageColor(rank: String?){
-        guard let rankValue = rank, let rankIndex = Int(rankValue) else {
-            return
-        }
+        guard let rankValue = rank, let rankIndex = Int(rankValue) else { return }
         rankImageView.tintColor = UIColor(hex: CATEGORY_SECTION_COLORS[rankIndex-1])
     }
 }

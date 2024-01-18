@@ -52,16 +52,16 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     // MARK: - Constraint
     private func constraintUI() {
         addSubview(containerView)
-        addSubview(thumbnailImageView)
-        addSubview(bookTitleLabel)
+        containerView.addSubview(thumbnailImageView)
+        containerView.addSubview(bookTitleLabel)
         
         containerView.snp.makeConstraints { make in
             make.edges.equalTo(0)
         }
         
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(containerView)
-            make.height.equalTo(containerView.snp.height).offset(-50)
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalToSuperview().offset(-50)
         }
         
         bookTitleLabel.snp.makeConstraints { make in

@@ -69,10 +69,10 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
     // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
-        addSubview(thumbnailImageView)
-        addSubview(bookTitleLabel)
-        addSubview(authorLabel)
-        addSubview(descriptionLabel)
+        containerView.addSubview(thumbnailImageView)
+        containerView.addSubview(bookTitleLabel)
+        containerView.addSubview(authorLabel)
+        containerView.addSubview(descriptionLabel)
         
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -81,11 +81,11 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         thumbnailImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.width.equalTo(80)
-            make.height.equalTo(containerView.snp.height)
+            make.height.equalToSuperview()
         }
         
         bookTitleLabel.snp.makeConstraints { make in
-            make.top.trailing.equalTo(0)
+            make.top.trailing.equalToSuperview()
             make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
         }
 
