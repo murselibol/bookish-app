@@ -142,7 +142,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
         thumbnailImageView.loadURL(url: data.volumeInfo?.imageLinks?.thumbnail)
         bookTitleLabel.text = bookInfo?.title
         authorLabel.text = bookInfo?.authors?.first ?? "-"
-        bookDescriptionLabel.text = bookInfo?.description
+        bookDescriptionLabel.text = bookInfo?.description?.htmlToString()
     }
     
     @objc private func onClickAuthor() {
