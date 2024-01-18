@@ -26,13 +26,26 @@ final class SectionHeaderView: UICollectionReusableView {
         return label
     }()
     
-    private lazy var seeMoreBtn: UIButton = {
-        let btn = UIButton()
-        btn.setTitle("more", for: .normal)
-        btn.titleLabel?.font = .Text1()
-        btn.setTitleColor(.getColor(.moreBtnText), for: .normal)
-        btn.addTarget(self, action: #selector(onClickSeeMoreBtn), for: .touchUpInside)
-        return btn
+    private lazy var seeMoreContainerBtn: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 6
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickSeeMoreBtn)))
+        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
+    private lazy var seeMoreLabel: UILabel = {
+        let label = UILabel()
+        label.text = "more"
+        label.font = .Text1()
+        label.textColor = .getColor(.moreBtnText)
+        return label
+    }()
+    
+    private lazy var seeMoreIcon: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+        imageView.tintColor = .getColor(.textGray)
+        return imageView
     }()
     
     // MARK: - Lifecycle
@@ -48,16 +61,30 @@ final class SectionHeaderView: UICollectionReusableView {
     
     // MARK: - Constraint
     private func constraintUI() {
-        self.addSubview(sectionTitleLabel)
-        self.addSubview(seeMoreBtn)
+        addSubview(sectionTitleLabel)
+        addSubview(seeMoreContainerBtn)
+        seeMoreContainerBtn.addSubview(seeMoreLabel)
+        seeMoreContainerBtn.addSubview(seeMoreIcon)
         
         sectionTitleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(0)
-            make.centerY.equalToSuperview()
+            make.leading.centerY.equalToSuperview()
         }
-        seeMoreBtn.snp.makeConstraints { make in
-            make.trailing.equalTo(0)
-            make.centerY.equalToSuperview()
+        
+        seeMoreContainerBtn.snp.makeConstraints { make in
+            make.top.bottom.trailing.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        
+        seeMoreLabel.snp.makeConstraints { make in
+            make.leading.centerY.equalToSuperview()
+            make.trailing.equalTo(seeMoreIcon.snp.leading).offset(-5)
+        }
+        
+        seeMoreIcon.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview().offset(1)
+            make.height.equalTo(16)
+            make.width.equalTo(12)
         }
     }
     
@@ -73,6 +100,6 @@ final class SectionHeaderView: UICollectionReusableView {
     }
     
     private func isHiddenSeeMoreBtn(hidden: Bool) {
-        seeMoreBtn.isHidden = hidden
+        seeMoreContainerBtn.isHidden = hidden
     }
 }

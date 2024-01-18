@@ -234,9 +234,9 @@ extension HomeVC {
         section.interGroupSpacing = 20
         section.contentInsets = .init(top: 0, leading: 10, bottom: 45, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets.bottom = 35
+        header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
         return section
@@ -268,9 +268,9 @@ extension HomeVC {
         section.orthogonalScrollingBehavior = .none
         section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets.bottom = 35
+        header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
         return section
@@ -289,9 +289,9 @@ extension HomeVC {
         section.interGroupSpacing = 50
         section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets.bottom = 35
+        header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
         return section
@@ -309,9 +309,9 @@ extension HomeVC {
         section.interGroupSpacing = 20
         section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        header.contentInsets.bottom = 35
+        header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
         return section
