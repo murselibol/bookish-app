@@ -95,8 +95,8 @@ extension BookDetailVC: BookDetailVCDelegate {
         view.addSubview(indicatorView)
         indicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(200)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
         }
         updateIndicatorState(hidden: true)
     }
