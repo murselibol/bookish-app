@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol SectionHeaderViewDelegate: AnyObject {
+protocol SectionHeaderCollectionViewDelegate: AnyObject {
     func onClickSeeMoreBtn(sectionIndex: Int)
 }
 
-final class SectionHeaderView: UICollectionReusableView {
+final class SectionHeaderCollectionView: UICollectionReusableView {
     
     static let identifier = "SectionHeaderView"
-    weak var delegate: SectionHeaderViewDelegate?
+    weak var delegate: SectionHeaderCollectionViewDelegate?
     private var sectionIndex: Int!
     
     private lazy var sectionTitleLabel: UILabel = {

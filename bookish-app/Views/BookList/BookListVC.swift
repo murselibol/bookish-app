@@ -69,7 +69,7 @@ extension BookListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionView.identifier, for: indexPath) as! SectionHeaderCollectionView
         header.setup(title: viewModel.sectionTitle, sectionIndex: indexPath.section, hiddenSeeMore: true)
         return header
     }
@@ -85,7 +85,7 @@ extension BookListVC: BookListVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderView.identifier)
+        collectionView.register(SectionHeaderCollectionView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderCollectionView.identifier)
     }
     
     func configureCollectionViewLayout() {
