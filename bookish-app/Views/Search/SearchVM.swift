@@ -10,6 +10,7 @@ import UIKit
 protocol SearchVMDelegate {
     func viewDidLoad()
     func colletionViewWillDisplay(at indexPath: IndexPath)
+    func onChangeSearchTextField(text: String)
 }
 
 final class SearchVM {
@@ -17,11 +18,10 @@ final class SearchVM {
     weak var view: SearchVCDelegate?
     private let bookService: BookService
     lazy var books: [BookResponse] = []
-    private lazy var paginationQuery: [URLQueryItem] = [
-        .init(name: "q", value: "sineklerin tanrisi"),
-        .init(name: "startIndex", value: "0"),
-        .init(name: "maxResults", value: "10")
-    ]
+    lazy private var querySearch: URLQueryItem = .init(name: "q", value: "")
+    lazy private var queryStartIndex: URLQueryItem = .init(name: "startIndex", value: "0")
+    lazy private var queryLimit: URLQueryItem = .init(name: "maxResults", value: "10")
+
     
     // MARK: - Lifecycle
     init(view: SearchVCDelegate?, bookService: BookService = BookService.shared) {
@@ -48,12 +48,8 @@ final class SearchVM {
     }
     
     // MARK: - Functions
-    func increasePageSize() {
-        if let queryIndex = paginationQuery.firstIndex(where: { $0.name == "startIndex" }) {
-            let currentPage = Int(paginationQuery[queryIndex].value!)! + 10
-            paginationQuery[queryIndex].value = String(currentPage)
-            getItemsBySearch(queryItems: paginationQuery)
-        }
+    private func prepareQueryItems() -> [URLQueryItem] {
+        return [querySearch, queryStartIndex, queryLimit]
     }
 }
 
@@ -64,12 +60,19 @@ extension SearchVM: SearchVMDelegate {
         view?.configureCollectionView()
         view?.constraintCollectionView()
         view?.constraintIndicatorView()
-        getItemsBySearch(queryItems: paginationQuery)
     }
     
     func colletionViewWillDisplay(at indexPath: IndexPath) {
         if indexPath.row == books.count - 3 {
-            self.increasePageSize()
+            let currentPage = Int(queryStartIndex.value!)! + 10
+            queryStartIndex.value = String(currentPage)
+            getItemsBySearch(queryItems: prepareQueryItems())
         }
+    }
+    
+    func onChangeSearchTextField(text: String) {
+        querySearch.value = text
+        guard text.count > 3 else { return }
+        getItemsBySearch(queryItems: prepareQueryItems())
     }
 }

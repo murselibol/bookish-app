@@ -60,8 +60,8 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
-        header.setup(title: "test", sectionIndex: indexPath.section, hiddenSeeMore: true)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchCollectionReuseView.identifier, for: indexPath) as! SearchCollectionReuseView
+        header.delegate = self
         return header
     }
     
@@ -76,7 +76,7 @@ extension SearchVC: SearchVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
+        collectionView.register(SearchCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SearchCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -118,6 +118,13 @@ extension SearchVC: SearchVCDelegate {
     }
 }
 
+// MARK: - SearchCollectionReuseViewDelegate
+extension SearchVC: SearchCollectionReuseViewDelegate {
+    func onChangeSearchTextField(text: String) {
+        viewModel.onChangeSearchTextField(text: text)
+    }
+}
+
 // MARK: - Book Delegate
 extension SearchVC: BookDelegate {
     func onClickBook(id: String) {
@@ -139,7 +146,7 @@ extension SearchVC {
         section.interGroupSpacing = 20
         section.contentInsets = .init(top: 20, leading: 10, bottom: 20, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(55))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
         section.boundarySupplementaryItems = [header]
         

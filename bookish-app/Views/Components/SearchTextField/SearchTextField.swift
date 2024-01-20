@@ -42,7 +42,7 @@ final class SearchTextField: UITextField {
         self.attributedPlaceholder = NSAttributedString(string: "Enter...", attributes: [NSAttributedString.Key.foregroundColor: placeholderColor])
         self.layer.cornerRadius = UIScreen.main.bounds.width * 0.068
         self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.red.cgColor
+        self.layer.borderColor = UIColor.black.cgColor
         self.backgroundColor = UIColor.init(hex: "#242424")
         self.leftView = searchImageContainerView
         self.leftViewMode = .always
