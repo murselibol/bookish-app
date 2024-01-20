@@ -36,7 +36,7 @@ final class SearchVM {
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                self.books.append(contentsOf: data.items ?? [])
+                self.books = data.items ?? []
                 view?.reloadCollectionView()
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
@@ -56,6 +56,7 @@ final class SearchVM {
 // MARK: - SearchVCDelegate
 extension SearchVM: SearchVMDelegate {
     func viewDidLoad() {
+        view?.configureSearchTextField()
         view?.configureCollectionViewLayout()
         view?.configureCollectionView()
         view?.constraintCollectionView()

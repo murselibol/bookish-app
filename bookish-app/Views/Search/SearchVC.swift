@@ -8,6 +8,7 @@
 import UIKit
 
 protocol SearchVCDelegate: AnyObject {
+    func configureSearchTextField()
     func configureCollectionViewLayout()
     func configureCollectionView()
     func constraintCollectionView()
@@ -22,8 +23,14 @@ final class SearchVC: UIViewController {
     lazy var viewModel: SearchVM = SearchVM(view: self)
     weak var coordinator: SearchCoordinator?
     private var collectionView: UICollectionView!
-    
     private lazy var indicatorView = IndicatorView()
+    
+    lazy var searchTextField: SearchTextField = {
+        let tf = SearchTextField()
+        tf.placeholder = "book name, author, isbn..."
+        return tf
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +41,13 @@ final class SearchVC: UIViewController {
     
     deinit { coordinator?.finishCoordinator() }
     
+}
+
+// MARK: - UITextFieldDelegate
+extension SearchVC: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        viewModel.onChangeSearchTextField(text: textField.text ?? "")
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -59,12 +73,6 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchCollectionReuseView.identifier, for: indexPath) as! SearchCollectionReuseView
-        header.delegate = self
-        return header
-    }
-    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         viewModel.colletionViewWillDisplay(at: indexPath)
     }
@@ -72,11 +80,14 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 
 // MARK: - SearchVCDelegate
 extension SearchVC: SearchVCDelegate {
+    func configureSearchTextField() {
+        searchTextField.delegate = self
+    }
+    
     func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(SearchCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SearchCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -88,9 +99,15 @@ extension SearchVC: SearchVCDelegate {
     }
     
     func constraintCollectionView() {
+        view.addSubview(searchTextField)
         view.addSubview(collectionView)
+        
+        searchTextField.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+        }
         collectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalTo(searchTextField.snp.bottom).offset(20)
             make.bottom.leading.trailing.equalToSuperview()
         }
     }
@@ -118,13 +135,6 @@ extension SearchVC: SearchVCDelegate {
     }
 }
 
-// MARK: - SearchCollectionReuseViewDelegate
-extension SearchVC: SearchCollectionReuseViewDelegate {
-    func onChangeSearchTextField(text: String) {
-        viewModel.onChangeSearchTextField(text: text)
-    }
-}
-
 // MARK: - Book Delegate
 extension SearchVC: BookDelegate {
     func onClickBook(id: String) {
@@ -144,11 +154,7 @@ extension SearchVC {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 20, leading: 10, bottom: 20, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(55))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 10)
         
         return section
     }
