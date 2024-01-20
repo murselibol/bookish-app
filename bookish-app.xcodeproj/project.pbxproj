@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		590E91D72B5BE0930020FCA1 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590E91D62B5BE0930020FCA1 /* SearchVC.swift */; };
+		590E91D92B5BE0A00020FCA1 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590E91D82B5BE0A00020FCA1 /* SearchVM.swift */; };
+		590E91DB2B5BE0A60020FCA1 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590E91DA2B5BE0A60020FCA1 /* SearchCoordinator.swift */; };
 		59133E7B2B38830E000CA187 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E7A2B38830E000CA187 /* Coordinator.swift */; };
 		59133E7D2B3884DE000CA187 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E7C2B3884DE000CA187 /* ApplicationCoordinator.swift */; };
 		59133E7F2B3886E7000CA187 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E7E2B3886E7000CA187 /* TabBarCoordinator.swift */; };
@@ -79,6 +82,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		590E91D62B5BE0930020FCA1 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		590E91D82B5BE0A00020FCA1 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
+		590E91DA2B5BE0A60020FCA1 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		59133E7A2B38830E000CA187 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		59133E7C2B3884DE000CA187 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		59133E7E2B3886E7000CA187 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -168,6 +174,16 @@
 			children = (
 			);
 			path = Author;
+			sourceTree = "<group>";
+		};
+		590E91D32B5BE0690020FCA1 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				590E91D62B5BE0930020FCA1 /* SearchVC.swift */,
+				590E91D82B5BE0A00020FCA1 /* SearchVM.swift */,
+				590E91DA2B5BE0A60020FCA1 /* SearchCoordinator.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		59133E802B38895A000CA187 /* BookCategory */ = {
@@ -439,8 +455,9 @@
 				59A365D22B35802D00A9294B /* Components */,
 				59A365D02B357F5C00A9294B /* Home */,
 				59B5815B2B52F56100B6D792 /* BookDetail */,
-				59133E802B38895A000CA187 /* BookCategory */,
 				59D3431A2B4C6B3E00EA2824 /* BookList */,
+				59133E802B38895A000CA187 /* BookCategory */,
+				590E91D32B5BE0690020FCA1 /* Search */,
 				59A365B82B356E4400A9294B /* LaunchScreen.storyboard */,
 			);
 			path = Views;
@@ -637,6 +654,7 @@
 				59B5814E2B52B07200B6D792 /* IndicatorView.swift in Sources */,
 				59B581562B52C90C00B6D792 /* UIImageView+Ext.swift in Sources */,
 				59740B3C2B546A9400808600 /* BookListCollectionViewCell.swift in Sources */,
+				590E91DB2B5BE0A60020FCA1 /* SearchCoordinator.swift in Sources */,
 				596E06302B5059D100685C11 /* BookService.swift in Sources */,
 				59D3431C2B4C6B6000EA2824 /* BookListVC.swift in Sources */,
 				5940ED5C2B5B160100B73375 /* SearchCollectionView.swift in Sources */,
@@ -647,6 +665,8 @@
 				5985C2532B4C7E2E00934912 /* CategoryCollectionViewCell.swift in Sources */,
 				596E061A2B4F02F500685C11 /* DiscoverCollectionViewCell.swift in Sources */,
 				596E06322B505B7100685C11 /* BookRequestProvider.swift in Sources */,
+				590E91D72B5BE0930020FCA1 /* SearchVC.swift in Sources */,
+				590E91D92B5BE0A00020FCA1 /* SearchVM.swift in Sources */,
 				59740B332B53E60300808600 /* BookDetailCollectionViewCell.swift in Sources */,
 				59B5815F2B52F58100B6D792 /* BookDetailVC.swift in Sources */,
 				596E062B2B50564300685C11 /* HTTPMethod.swift in Sources */,
