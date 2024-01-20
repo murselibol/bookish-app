@@ -27,19 +27,13 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
         let homeVC = homeCoordinator.homeVC
         createTabBarItem(vc: homeVC, title: "Home", imageName: "house", selectdImageName: "house.fill")
         
-        let bookCategoryCoordinator = BookCategoryCoordinator()
-        bookCategoryCoordinator.start()
-        self.childCoordinators.append(bookCategoryCoordinator)
-        let bookCategoryVC = bookCategoryCoordinator.bookCategoryVC
-        createTabBarItem(vc: bookCategoryVC, title: "Category", imageName: "person", selectdImageName: "person.fill")
-        
         let searchCoordinator = SearchCoordinator()
         searchCoordinator.start()
         self.childCoordinators.append(searchCoordinator)
         let searchVC = searchCoordinator.searchVC
         createTabBarItem(vc: searchVC, title: "Search", imageName: "magnifyingglass", selectdImageName: "magnifyingglass.fill")
         
-        self.rootViewController.viewControllers = [homeCoordinator.navigationController, bookCategoryCoordinator.navigationController, searchCoordinator.navigationController]
+        self.rootViewController.viewControllers = [homeCoordinator.navigationController, searchCoordinator.navigationController]
     }
     
     func createTabBarItem(vc: UIViewController, title: String, imageName: String, selectdImageName: String) {
