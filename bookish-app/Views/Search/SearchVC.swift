@@ -60,7 +60,7 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionView.identifier, for: indexPath) as! SectionHeaderCollectionView
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
         header.setup(title: "test", sectionIndex: indexPath.section, hiddenSeeMore: true)
         return header
     }
@@ -76,7 +76,7 @@ extension SearchVC: SearchVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(SectionHeaderCollectionView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderCollectionView.identifier)
+        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {

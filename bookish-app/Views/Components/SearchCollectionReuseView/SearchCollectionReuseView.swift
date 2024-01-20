@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol SearchCollectionViewDelegate: AnyObject {
+protocol SearchCollectionReuseViewDelegate: AnyObject {
     func onChangeSearchTextField(text: String)
 }
 
-final class SearchCollectionView: UICollectionReusableView {
+final class SearchCollectionReuseView: UICollectionReusableView {
     
-    static let identifier = "SearchCollectionView"
-    weak var delegate: SearchCollectionViewDelegate?
+    static let identifier = "SearchCollectionReuseView"
+    weak var delegate: SearchCollectionReuseViewDelegate?
     
     private lazy var searchTextField: SearchTextField = {
         let tf = SearchTextField()
@@ -45,7 +45,7 @@ final class SearchCollectionView: UICollectionReusableView {
     }
 }
 
-extension SearchCollectionView: UITextFieldDelegate {
+extension SearchCollectionReuseView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         delegate?.onChangeSearchTextField(text: searchTextField.text ?? "")
     }

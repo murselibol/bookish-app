@@ -44,7 +44,7 @@ extension HomeVC: HomeVCDelegate {
         collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
         collectionView.register(RisingCollectionViewCell.self, forCellWithReuseIdentifier: RisingCollectionViewCell.identifier)
         collectionView.register(DiscoverCollectionViewCell.self, forCellWithReuseIdentifier: DiscoverCollectionViewCell.identifier)
-        collectionView.register(SectionHeaderCollectionView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SectionHeaderCollectionView.identifier)
+        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -171,22 +171,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch indexPath.section {
             case 0:
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionView.identifier, for: indexPath) as! SectionHeaderCollectionView
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
                 header.setup(title: HomeSectionType.popular.sectionTitle, sectionIndex: indexPath.section)
                 return header
             case 2:
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionView.identifier, for: indexPath) as! SectionHeaderCollectionView
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
                 header.setup(title: HomeSectionType.book.sectionTitle, sectionIndex: indexPath.item, hiddenSeeMore: true)
                 return header
             case 3:
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionView.identifier, for: indexPath) as! SectionHeaderCollectionView
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
                 header.setup(title: HomeSectionType.rising.sectionTitle, sectionIndex: indexPath.section)
                 return header
             case 4:
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionView.identifier, for: indexPath) as! SectionHeaderCollectionView
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
                 header.setup(title: HomeSectionType.discover.sectionTitle, sectionIndex: indexPath.section)
                 return header
@@ -197,7 +197,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 // MARK: - Compositional Section Header Delegate
-extension HomeVC: SectionHeaderCollectionViewDelegate {
+extension HomeVC: TitleCollectionReuseViewDelegate {
     func onClickSeeMoreBtn(sectionIndex: Int) {
         let category = HomeSectionType.discover.sectionCategory
         let title = HomeSectionType.discover.sectionTitle
