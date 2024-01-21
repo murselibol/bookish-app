@@ -1,24 +1,24 @@
 //
-//  BookDetailCoordinator.swift
+//  AuthorBookListCoordinator.swift
 //  bookish-app
 //
-//  Created by Mursel Elibol on 13.01.2024.
+//  Created by Mursel Elibol on 21.01.2024.
 //
 
 import UIKit
 
-final class BookDetailCoordinator: Coordinator {
+final class AuthorBookListCoordinator: Coordinator {
     var navigationController: UINavigationController
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
-    var id: String = ""
+    var authorName: String = ""
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
     func start() {
-        let vc = BookDetailVC(id: id)
+        let vc = AuthorBookListVC(authorName: authorName)
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }
@@ -27,9 +27,9 @@ final class BookDetailCoordinator: Coordinator {
         parentCoordinator?.childDidFinish(self)
     }
     
-    func navigateAuthorBookListVC(authorName: String) {
-        let coordinator = AuthorBookListCoordinator(navigationController: navigationController)
-        coordinator.authorName = authorName
+    func navigateBookDetailVC(id: String) {
+        let coordinator = BookDetailCoordinator(navigationController: navigationController)
+        coordinator.id = id
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         coordinator.start()

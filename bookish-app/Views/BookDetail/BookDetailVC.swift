@@ -57,6 +57,7 @@ extension BookDetailVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookDetailCollectionViewCell.identifier, for: indexPath) as! BookDetailCollectionViewCell
+        cell.bookDetailDelegate = self
         cell.setup(data: viewModel.book!)
         return cell
     }
@@ -108,6 +109,12 @@ extension BookDetailVC: BookDetailVCDelegate {
     }
 }
 
+// MARK: - BookDetailDelegate
+extension BookDetailVC: BookDetailDelegate {
+    func onClickAuthor(authorName: String) {
+        coordinator?.navigateAuthorBookListVC(authorName: authorName)
+    }
+}
 
 // MARK: - Compositional Layout
 extension BookDetailVC {

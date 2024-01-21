@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol BookDetailDelegate: AnyObject {
+    func onClickAuthor(authorName: String)
+}
+
 protocol BookDetailCollectionCellDelegate: AnyObject {
 }
 
 final class BookDetailCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "BookDetailCollectionViewCell"
+    weak var bookDetailDelegate: BookDetailDelegate?
     private lazy var viewModel = BookDetailCollectionViewCellVM(view: self)
     private var book: BookResponse!
     
@@ -146,7 +151,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func onClickAuthor() {
-        print(book.volumeInfo?.authors?.first ?? "")
+        bookDetailDelegate?.onClickAuthor(authorName: book.volumeInfo?.authors?.first ?? "")
     }
     
     @objc private func onClickReadMore() {
