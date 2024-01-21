@@ -15,13 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         if let windowScene = scene as? UIWindowScene {
+            
             let window = UIWindow(windowScene: windowScene)
             let applicationCoordinator = ApplicationCoordinator(window: window)
             applicationCoordinator.start()
             self.applicationCoordinator = applicationCoordinator
             window.makeKeyAndVisible()
+            
+            if #available(iOS 13.0, *) {
+                window.overrideUserInterfaceStyle = .dark
+            }
         }
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
