@@ -64,7 +64,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
         containerView.addSubview(bookDescriptionLabel)
         
         containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
         
         thumbnailImageView.snp.makeConstraints { make in
@@ -81,7 +81,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
         bookDescriptionLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(bookTitleLabel.snp.bottom).offset(8)
-            make.bottom.lessThanOrEqualToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
 

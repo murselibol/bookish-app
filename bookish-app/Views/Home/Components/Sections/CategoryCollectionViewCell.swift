@@ -22,7 +22,15 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         view.layer.cornerRadius = 6
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickCategory)))
         view.isUserInteractionEnabled = true
+        view.clipsToBounds = true
         return view
+    }()
+    
+    private lazy var waveImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "wave"))
+        imageView.contentMode = .scaleAspectFill
+        imageView.alpha = 0.3
+        return imageView
     }()
 
     private lazy var categoryName: UILabel = {
@@ -46,14 +54,21 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     // MARK: - Constaint
     private func constraintUI() {
         addSubview(containerView)
+        containerView.addSubview(waveImageView)
         containerView.addSubview(categoryName)
 
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        waveImageView.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview()
+            make.width.equalTo(200)
+        }
 
         categoryName.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 15, left: 30, bottom: 15, right: 30))
+            make.bottom.left.equalToSuperview().inset(10)
+            make.right.equalToSuperview().inset(70)
         }
     }
     
