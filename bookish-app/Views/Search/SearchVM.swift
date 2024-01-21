@@ -30,14 +30,14 @@ final class SearchVM {
     }
     
     // MARK: - HTTP Requests
-    private func getItemsBySearch(queryItems: [URLQueryItem]) {
+    private func getItemsBySearch(queryItems: [URLQueryItem], isSearchRequest: Bool = false) {
         view?.updateIndicatorState(hidden: false)
         bookService.getBooks(queryItems: queryItems) {[weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                self.books = data.items ?? []
-                view?.reloadCollectionView()
+                isSearchRequest ? (self.books = data.items ?? []) : (self.books += data.items ?? [])
+                self.view?.reloadCollectionView(scrollTop: isSearchRequest)
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
                 print(error)
@@ -74,6 +74,6 @@ extension SearchVM: SearchVMDelegate {
     func onChangeSearchTextField(text: String) {
         querySearch.value = text
         guard text.count > 3 else { return }
-        getItemsBySearch(queryItems: prepareQueryItems())
+        getItemsBySearch(queryItems: prepareQueryItems(), isSearchRequest: true)
     }
 }

@@ -12,8 +12,8 @@ protocol SearchVCDelegate: AnyObject {
     func configureCollectionViewLayout()
     func configureCollectionView()
     func constraintCollectionView()
-    func reloadCollectionView()
-    
+    func reloadCollectionView(scrollTop: Bool)
+
     func constraintIndicatorView()
     func updateIndicatorState(hidden: Bool)
 }
@@ -112,9 +112,12 @@ extension SearchVC: SearchVCDelegate {
         }
     }
     
-    func reloadCollectionView() {
+    func reloadCollectionView(scrollTop: Bool = false) {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            if scrollTop {
+                self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     
