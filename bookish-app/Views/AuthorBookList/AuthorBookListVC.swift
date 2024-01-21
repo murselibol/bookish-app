@@ -69,8 +69,8 @@ extension AuthorBookListVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
-        header.setup(title: "Paulo Coelho", sectionIndex: indexPath.section, hiddenSeeMore: true)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AuthorCollectionReuseView.identifier, for: indexPath) as! AuthorCollectionReuseView
+        header.setup(authorName: viewModel.authorName)
         return header
     }
     
@@ -85,7 +85,7 @@ extension AuthorBookListVC: AuthorBookListVCDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
+        collectionView.register(AuthorCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: AuthorCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -146,12 +146,12 @@ extension AuthorBookListVC {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 20, leading: 10, bottom: 20, trailing: 10)
+        section.contentInsets = .init(top: 70, leading: 10, bottom: 20, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
         section.boundarySupplementaryItems = [header]
-        
+                
         return section
     }
 }
