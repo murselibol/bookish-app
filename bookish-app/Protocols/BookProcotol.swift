@@ -7,6 +7,11 @@
 
 import Foundation
 
-protocol BookDelegate: AnyObject {
+protocol BookClickListener: AnyObject {
     func onClickBook(id: String)
 }
+
+protocol AuthorClickListener: AnyObject {
+    func onClickAuthor(authorName: String)
+}
+

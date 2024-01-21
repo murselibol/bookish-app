@@ -62,7 +62,8 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
-        cell.bookDelegate = self
+        cell.bookCLickListener = self
+        cell.authorClickListener = self
         let book = viewModel.books[indexPath.item].volumeInfo
         let id = viewModel.books[indexPath.item].id ?? ""
         let thumbnailUrl = book?.imageLinks?.smallThumbnail
@@ -138,10 +139,17 @@ extension SearchVC: SearchVCDelegate {
     }
 }
 
-// MARK: - Book Delegate
-extension SearchVC: BookDelegate {
+// MARK: - BookClickListener
+extension SearchVC: BookClickListener {
     func onClickBook(id: String) {
         coordinator?.navigateBookDetailVC(id: id)
+    }
+}
+
+// MARK: - AuthorClickListener
+extension SearchVC: AuthorClickListener {
+    func onClickAuthor(authorName: String) {
+        coordinator?.navigateAuthorBookListVC(authorName: authorName)
     }
 }
 

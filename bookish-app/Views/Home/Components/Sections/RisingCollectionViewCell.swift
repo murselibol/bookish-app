@@ -10,7 +10,8 @@ import UIKit
 final class RisingCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RisingCollectionViewCell"
-    weak var bookDelegate: BookDelegate?
+    weak var bookClickListener: BookClickListener?
+    weak var authorClickListener: AuthorClickListener?
     private lazy var bookId: String = ""
     
     private lazy var containerView: UIView = {
@@ -56,6 +57,8 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         label.text = "John Doe"
         label.textColor = .getColor(.text)
         label.numberOfLines = 1
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -125,7 +128,11 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func onClickBook() {
-        bookDelegate?.onClickBook(id: bookId)
+        bookClickListener?.onClickBook(id: bookId)
+    }
+    
+    @objc private func onClickAuthor() {
+        authorClickListener?.onClickAuthor(authorName: authorLabel.text ?? "")
     }
     
     private func updateRankImageColor(rank: String?){

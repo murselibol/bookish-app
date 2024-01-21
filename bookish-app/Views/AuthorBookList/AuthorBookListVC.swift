@@ -57,7 +57,7 @@ extension AuthorBookListVC: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
-        cell.bookDelegate = self
+        cell.bookCLickListener = self
         let book = viewModel.books[indexPath.item].volumeInfo
         let id = viewModel.books[indexPath.item].id ?? ""
         let thumbnailUrl = book?.imageLinks?.smallThumbnail
@@ -127,12 +127,13 @@ extension AuthorBookListVC: AuthorBookListVCDelegate {
     }
 }
 
-// MARK: - Book Delegate
-extension AuthorBookListVC: BookDelegate {
+// MARK: - BookClickListener
+extension AuthorBookListVC: BookClickListener {
     func onClickBook(id: String) {
         coordinator?.navigateBookDetailVC(id: id)
     }
 }
+
 
 // MARK: - Compositional Layout
 extension AuthorBookListVC {

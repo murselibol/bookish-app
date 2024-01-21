@@ -10,7 +10,7 @@ import UIKit
 final class PopularCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PopularCollectionViewCell"
-    weak var bookDelegate: BookDelegate?
+    weak var bookClickListener: BookClickListener?
     private lazy var bookId: String = ""
     
     private lazy var containerView: UIView = {
@@ -77,6 +77,6 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func onClickBook() {
-        bookDelegate?.onClickBook(id: bookId)
+        bookClickListener?.onClickBook(id: bookId)
     }
 }

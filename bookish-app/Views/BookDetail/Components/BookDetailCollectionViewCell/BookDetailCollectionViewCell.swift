@@ -94,8 +94,8 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
         addSubview(authorLabel)
         addSubview(bookDescriptionLabel)
         addSubview(readMoreContainerView)
-        addSubview(readMoreLabel)
-        addSubview(chevronImageView)
+        readMoreContainerView.addSubview(readMoreLabel)
+        readMoreContainerView.addSubview(chevronImageView)
         
         thumbnailImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()

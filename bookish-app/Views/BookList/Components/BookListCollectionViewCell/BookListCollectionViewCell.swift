@@ -10,7 +10,8 @@ import UIKit
 final class BookListCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "DiscoverCollectionViewCell"
-    weak var bookDelegate: BookDelegate?
+    weak var bookCLickListener: BookClickListener?
+    weak var authorClickListener: AuthorClickListener?
     private lazy var bookId: String = ""
     
     private lazy var containerView: UIView = {
@@ -42,6 +43,8 @@ final class BookListCollectionViewCell: UICollectionViewCell {
         label.font = .Text2()
         label.text = "John Doe"
         label.textColor = .getColor(.text)
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
+        label.isUserInteractionEnabled = true
         label.numberOfLines = 1
         return label
     }()
@@ -112,7 +115,11 @@ final class BookListCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func onClickBook() {
-        bookDelegate?.onClickBook(id: bookId)
+        bookCLickListener?.onClickBook(id: bookId)
+    }
+    
+    @objc private func onClickAuthor() {
+        authorClickListener?.onClickAuthor(authorName: authorLabel.text ?? "")
     }
 }
 
