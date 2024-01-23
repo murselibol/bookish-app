@@ -25,19 +25,19 @@ extension UIFont {
         return UIFont(name: type.rawValue, size: size)!
     }
     
-    static func Title3(_ type: RalewayType = .regular, size: CGFloat = 20.0) -> UIFont {
+    static func Title3(_ type: RalewayType = .medium, size: CGFloat = 20.0) -> UIFont {
         return UIFont(name: type.rawValue, size: size)!
     }
     
-    static func Text1(_ type: RalewayType = .regular, size: CGFloat = 17.0) -> UIFont {
+    static func Text1(_ type: RalewayType = .medium, size: CGFloat = 17.0) -> UIFont {
         return UIFont(name: type.rawValue, size: size)!
     }
     
-    static func Text2(_ type: RalewayType = .regular, size: CGFloat = 14.0) -> UIFont {
+    static func Text2(_ type: RalewayType = .medium, size: CGFloat = 14.0) -> UIFont {
         return UIFont(name: type.rawValue, size: size)!
     }
     
-    static func Text3(_ type: RalewayType = .regular, size: CGFloat = 12.0) -> UIFont {
+    static func Text3(_ type: RalewayType = .medium, size: CGFloat = 12.0) -> UIFont {
         return UIFont(name: type.rawValue, size: size)!
     }
 }

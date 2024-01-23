@@ -33,6 +33,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Title2(.semibold)
         label.textColor = .getColor(.bookTitle)
+        label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }()
@@ -44,6 +45,92 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
         label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    private lazy var infoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .top
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 18
+        return stackView
+    }()
+    
+    private lazy var ratingStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        return stackView
+    }()
+    
+    private lazy var ratingTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text2()
+        label.textColor = .getColor(.text)
+        label.text = "27 Rating"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var ratingLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text1(.semibold)
+        label.textColor = .getColor(.text)
+        label.text = "4,7"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var categoryStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        return stackView
+    }()
+    
+    private lazy var categoryTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text2()
+        label.textColor = .getColor(.text)
+        label.text = "Category"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var categoryLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text1(.semibold)
+        label.textColor = .getColor(.text)
+        label.text = "Love"
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var pageStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.alignment = .leading
+        return stackView
+    }()
+    
+    private lazy var pageTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text2()
+        label.textColor = .getColor(.text)
+        label.text = "Page"
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var pageLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text1(.semibold)
+        label.textColor = .getColor(.text)
+        label.text = "127"
+        label.textAlignment = .center
         return label
     }()
     
@@ -92,6 +179,17 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
         addSubview(thumbnailImageView)
         addSubview(bookTitleLabel)
         addSubview(authorLabel)
+        addSubview(infoStackView)
+        infoStackView.addArrangedSubview(ratingStackView)
+        infoStackView.addArrangedSubview(categoryStackView)
+        infoStackView.addArrangedSubview(pageStackView)
+        ratingStackView.addArrangedSubview(ratingTitleLabel)
+        ratingStackView.addArrangedSubview(ratingLabel)
+        categoryStackView.addArrangedSubview(categoryTitleLabel)
+        categoryStackView.addArrangedSubview(categoryLabel)
+        pageStackView.addArrangedSubview(pageTitleLabel)
+        pageStackView.addArrangedSubview(pageLabel)
+        infoStackView.addVerticalSeparators(color: .getColor(.textGray), width: 1)
         addSubview(bookDescriptionLabel)
         addSubview(readMoreContainerView)
         readMoreContainerView.addSubview(readMoreLabel)
@@ -106,7 +204,7 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
 
         bookTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(thumbnailImageView.snp.bottom).offset(25)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
         
         authorLabel.snp.makeConstraints { make in
@@ -114,8 +212,24 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
         
-        bookDescriptionLabel.snp.makeConstraints { make in
+        infoStackView.snp.makeConstraints { make in
             make.top.equalTo(authorLabel.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.width.lessThanOrEqualTo(320)
+            make.height.lessThanOrEqualTo(400)
+        }
+        
+        pageStackView.snp.makeConstraints { make in
+            make.width.equalTo(ratingStackView)
+            make.width.greaterThanOrEqualTo(70)
+        }
+        
+        pageLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(pageTitleLabel)
+        }
+        
+        bookDescriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(infoStackView.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview()
         }
         
@@ -147,6 +261,10 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
         thumbnailImageView.loadURL(url: data.volumeInfo?.imageLinks?.thumbnail)
         bookTitleLabel.text = bookInfo?.title
         authorLabel.text = bookInfo?.authors?.first ?? "-"
+        ratingTitleLabel.text = String(bookInfo?.ratingsCount ?? 0) + " Ratings"
+        ratingLabel.text = String(bookInfo?.averageRating ?? 0)
+        categoryLabel.text = String(bookInfo?.categories?.first ?? "-")
+        pageLabel.text = String(bookInfo?.pageCount ?? 0)
         bookDescriptionLabel.text = bookInfo?.description?.htmlToString()
     }
     
@@ -169,3 +287,4 @@ final class BookDetailCollectionViewCell: UICollectionViewCell {
 extension BookDetailCollectionViewCell: BookDetailCollectionCellDelegate {
     
 }
+

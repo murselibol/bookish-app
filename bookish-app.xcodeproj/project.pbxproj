@@ -13,6 +13,7 @@
 		59133E7B2B38830E000CA187 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E7A2B38830E000CA187 /* Coordinator.swift */; };
 		59133E7D2B3884DE000CA187 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E7C2B3884DE000CA187 /* ApplicationCoordinator.swift */; };
 		59133E7F2B3886E7000CA187 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59133E7E2B3886E7000CA187 /* TabBarCoordinator.swift */; };
+		5929D78F2B60248300E8C3ED /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929D78E2B60248300E8C3ED /* UIStackView+Ext.swift */; };
 		5940ED5C2B5B160100B73375 /* SearchCollectionReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5940ED5B2B5B160100B73375 /* SearchCollectionReuseView.swift */; };
 		5940ED5F2B5B178E00B73375 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5940ED5E2B5B178E00B73375 /* SearchTextField.swift */; };
 		5955239E2B51D69500E380B2 /* RisingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5955239D2B51D69500E380B2 /* RisingSectionModel.swift */; };
@@ -89,6 +90,7 @@
 		59133E7A2B38830E000CA187 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		59133E7C2B3884DE000CA187 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		59133E7E2B3886E7000CA187 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		5929D78E2B60248300E8C3ED /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 		5940ED5B2B5B160100B73375 /* SearchCollectionReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReuseView.swift; sourceTree = "<group>"; };
 		5940ED5E2B5B178E00B73375 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		5955239D2B51D69500E380B2 /* RisingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RisingSectionModel.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				5955239F2B51E35500E380B2 /* URLRequest+Ext.swift */,
 				59B581552B52C90C00B6D792 /* UIImageView+Ext.swift */,
 				59556A542B59A2DA005BE49D /* String+Ext.swift */,
+				5929D78E2B60248300E8C3ED /* UIStackView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				59740B332B53E60300808600 /* BookDetailCollectionViewCell.swift in Sources */,
 				59B5815F2B52F58100B6D792 /* BookDetailVC.swift in Sources */,
 				596E062B2B50564300685C11 /* HTTPMethod.swift in Sources */,
+				5929D78F2B60248300E8C3ED /* UIStackView+Ext.swift in Sources */,
 				59B581612B52F58800B6D792 /* BookDetailVM.swift in Sources */,
 				5986958E2B4B42D6006C598B /* UIColor+Ext.swift in Sources */,
 				5995C8022B5D4AA000B426A5 /* AuthorCollectionReuseView.swift in Sources */,
