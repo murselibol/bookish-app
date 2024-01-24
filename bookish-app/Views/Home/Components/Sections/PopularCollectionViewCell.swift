@@ -65,7 +65,8 @@ final class PopularCollectionViewCell: UICollectionViewCell {
         }
         
         bookTitleLabel.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview()
+            make.top.equalTo(thumbnailImageView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
     }
     
