@@ -8,9 +8,9 @@
 import Foundation
 
 protocol BookDetailVMDelegate {
+    var authorName: String { get }
     func viewDidLoad()
-    
-    func getMumberOfItemsInSection() -> Int
+    func onClickReadMore() -> (line: Int, text: String, image: String)
 }
 
 final class BookDetailVM {
@@ -19,6 +19,8 @@ final class BookDetailVM {
     private let bookService: BookService
     var bookId: String = ""
     var book: BookResponse?
+    var isOpenReadMore: Bool = false
+
     
     init(view: BookDetailVCDelegate?, id: String, bookService: BookService = BookService.shared) {
         self.view = view
@@ -34,7 +36,7 @@ final class BookDetailVM {
             switch result {
             case .success(let data):
                 book = data
-                view?.reloadCollectionView()
+                updateUIData(data: data)
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
                 print(error)
@@ -43,19 +45,36 @@ final class BookDetailVM {
             }
         }
     }
+    
+    func updateUIData(data: BookResponse) {
+        let bookInfo = book?.volumeInfo
+        let data = BookDetailArguments(
+            title: bookInfo?.title ?? "",
+            thumbnail: bookInfo?.imageLinks?.thumbnail ?? "",
+            author: bookInfo?.authors?.first ?? "-",
+            ratingCount: "\(bookInfo?.ratingsCount ?? 0) Ratings",
+            ratingAvarage: "\(bookInfo?.averageRating ?? 0)",
+            category: bookInfo?.categories?.first ?? "-",
+            page: "\(bookInfo?.pageCount ?? 0)",
+            description: bookInfo?.description?.htmlToString() ?? "-"
+        )
+        view?.setData(args: data)
+    }
 }
 
 extension BookDetailVM: BookDetailVMDelegate {
+    var authorName: String {
+        book?.volumeInfo?.authors?.first ?? ""
+    }
+    
     func viewDidLoad() {
-        view?.configureCollectionViewLayout()
-        view?.configureCollectionView()
-        view?.constraintCollectionView()
+        view?.constraintUI()
         view?.constraintIndicatorView()
         getBook(id: bookId)
     }
     
-    func getMumberOfItemsInSection() -> Int {
-        book != nil ? 1 : 0
+    func onClickReadMore() -> (line: Int, text: String, image: String) {
+        self.isOpenReadMore.toggle()
+        return isOpenReadMore ? (0, "Less more", "chevron.up") : (4, "Read more", "chevron.down")
     }
 }
-

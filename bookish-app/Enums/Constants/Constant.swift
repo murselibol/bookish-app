@@ -7,5 +7,9 @@
 
 import Foundation
 
-struct K {}
+struct K {
+   static let pageBottomSpace = 30.0
+   static let pageLeftSpace = 10.0
+   static let pageRightSpace = 10.0
+}
 

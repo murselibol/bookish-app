@@ -16,26 +16,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQJ-CG-gpG">
-                                <rect key="frame" x="196" y="440.66666666666669" width="1" height="1"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="1Lu-VY-T5l"/>
-                                    <constraint firstAttribute="width" constant="1" id="i4P-T8-3fo"/>
-                                </constraints>
-                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-splash" translatesAutoresizingMaskIntoConstraints="NO" id="yqN-JY-dnl">
-                                <rect key="frame" x="10" y="164.66666666666663" width="373" height="277"/>
+                                <rect key="frame" x="10" y="237.66666666666663" width="373" height="277"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="yqN-JY-dnl" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-50" id="2qI-XE-Ujs"/>
                             <constraint firstItem="yqN-JY-dnl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ASn-bP-oxK"/>
-                            <constraint firstItem="yqN-JY-dnl" firstAttribute="bottom" secondItem="tQJ-CG-gpG" secondAttribute="bottom" id="JQc-aV-BCt"/>
-                            <constraint firstItem="tQJ-CG-gpG" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="15" id="cUM-un-5Bj"/>
                             <constraint firstItem="yqN-JY-dnl" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gWf-3L-pUp"/>
-                            <constraint firstItem="tQJ-CG-gpG" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mbq-Ma-lm7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yqN-JY-dnl" secondAttribute="trailing" constant="10" id="saT-ac-x8f"/>
                         </constraints>
                     </view>
