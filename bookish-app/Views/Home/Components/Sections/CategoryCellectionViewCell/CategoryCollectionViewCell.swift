@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol CategoryCollectionViewCellDelegate: AnyObject {
-    func onSelectCategory(category: CategoryType)
+protocol CategoryCollectionCellViewDelegate: AnyObject {
+    func constraintUI()
+    func setUIData(data: CategorySectionArguments)
 }
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CategoryCollectionViewCell"
-    weak var delegate: CategoryCollectionViewCellDelegate?
-    private var category: CategoryType!
+    var viewModel: CategoryCollectionViewCellVM?
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -44,15 +44,22 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        constraintUI()
+        viewModel?.initCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Constaint
-    private func constraintUI() {
+    // MARK: - Functions
+    @objc private func onClickCategory() {
+        viewModel?.onClickCategory()
+    }
+}
+
+// MARK: - CategoryCollectionCellViewDelegate
+extension CategoryCollectionViewCell: CategoryCollectionCellViewDelegate {
+    func constraintUI() {
         addSubview(containerView)
         containerView.addSubview(waveImageView)
         containerView.addSubview(categoryName)
@@ -72,15 +79,8 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Functions
-    func setup(data: CategorySectionModel) {
-        self.category = data.type
+    func setUIData(data: CategorySectionArguments) {
         self.categoryName.text = data.name
         self.containerView.backgroundColor = UIColor(hex: data.color)
     }
-    
-    @objc private func onClickCategory() {
-        delegate?.onSelectCategory(category: category)
-    }
 }
-

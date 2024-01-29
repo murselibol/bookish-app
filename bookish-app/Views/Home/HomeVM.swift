@@ -9,6 +9,11 @@ import Foundation
 
 protocol HomeVMDelegate {
     func viewDidLoad()
+    func popularCellForItem(at indexPath: IndexPath) -> PopularSectionArguments
+    func categoryCellForItem(at indexPath: IndexPath) -> CategorySectionArguments
+    func bookCellForItem() -> BookSectionArguments
+    func risingCellForItem(at indexPath: IndexPath) -> RisingSectionArguments
+    func discoverCellForItem(at indexPath: IndexPath) -> DiscoverSectionArguments
 }
 
 final class HomeVM {
@@ -92,7 +97,6 @@ final class HomeVM {
         }
         return paginationQuery
     }
-    
 }
 
 // MARK: - HomeVMDelegate
@@ -107,4 +111,45 @@ extension HomeVM: HomeVMDelegate {
         getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
     }
+    
+    func popularCellForItem(at indexPath: IndexPath) -> PopularSectionArguments {
+         let book = popularBooks[indexPath.item].volumeInfo
+         let id = popularBooks[indexPath.item].id ?? ""
+         let thumbnailUrl = book?.imageLinks?.smallThumbnail
+         let title = book?.title ?? "-"
+         return PopularSectionArguments(id: id, thumbnailUrl: thumbnailUrl, title: title)
+     }
+    
+    func categoryCellForItem(at indexPath: IndexPath) -> CategorySectionArguments {
+        return categories[indexPath.item]
+    }
+    
+    func bookCellForItem() -> BookSectionArguments {
+         let book = bookOfWeak?.volumeInfo
+         let id = bookOfWeak?.id ?? ""
+         let thumbnailUrl = book?.imageLinks?.smallThumbnail
+         let title = book?.title ?? "-"
+         let description = book?.description ?? "-"
+         return BookSectionArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, description: description)
+     }
+    
+    func risingCellForItem(at indexPath: IndexPath) -> RisingSectionArguments {
+         let book = risingBooks[indexPath.item].volumeInfo
+         let id = risingBooks[indexPath.item].id ?? ""
+         let thumbnailUrl = book?.imageLinks?.smallThumbnail
+         let rank = "\(indexPath.item + 1)"
+         let title = book?.title ?? "-"
+         let author = book?.authors?.first ?? "-"
+         return RisingSectionArguments(id: id, thumbnailUrl: thumbnailUrl, rank: rank, title: title, author: author)
+     }
+    
+    func discoverCellForItem(at indexPath: IndexPath) -> DiscoverSectionArguments {
+         let book = discoverBooks[indexPath.item].volumeInfo
+         let id = discoverBooks[indexPath.item].id ?? ""
+         let thumbnailUrl = book?.imageLinks?.smallThumbnail
+         let title = book?.title ?? "-"
+         let author = book?.authors?.first ?? "-"
+         let description = book?.description ?? "-"
+         return DiscoverSectionArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description)
+     }
 }

@@ -36,7 +36,7 @@ final class BookDetailVM {
             switch result {
             case .success(let data):
                 book = data
-                updateUIData(data: data)
+                setUIData(data: data)
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
                 print(error)
@@ -46,7 +46,8 @@ final class BookDetailVM {
         }
     }
     
-    func updateUIData(data: BookResponse) {
+    // MARK: - Functions
+    func setUIData(data: BookResponse) {
         let bookInfo = book?.volumeInfo
         let data = BookDetailArguments(
             title: bookInfo?.title ?? "",
@@ -62,6 +63,7 @@ final class BookDetailVM {
     }
 }
 
+// MARK: - BookDetailVMDelegate
 extension BookDetailVM: BookDetailVMDelegate {
     var authorName: String {
         book?.volumeInfo?.authors?.first ?? ""

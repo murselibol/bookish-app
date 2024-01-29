@@ -1,17 +1,21 @@
 //
-//  PopularsCollectionViewCell.swift
+//  BookCollectionViewCell.swift
 //  bookish-app
 //
-//  Created by Mursel Elibol on 7.01.2024.
+//  Created by Mursel Elibol on 9.01.2024.
 //
 
 import UIKit
 
-final class PopularCollectionViewCell: UICollectionViewCell {
+protocol BookCollectionCellViewDelegate: AnyObject {
+    func constraintUI()
+    func setUIData(data: BookSectionArguments)
+}
+
+final class BookCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "PopularCollectionViewCell"
-    weak var bookClickListener: BookClickListener?
-    private lazy var bookId: String = ""
+    static let identifier = "BookCollectionViewCell"
+    var viewModel: BookCollectionViewCellVM?
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -31,10 +35,17 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Text1()
-        label.text = "Sineklerin Tanrısı"
+        label.font = .Text1(.semibold)
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 2
+        return label
+    }()
+    
+    private lazy var bookDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Text2()
+        label.textColor = .getColor(.text)
+        label.numberOfLines = 5
         return label
     }()
     
@@ -42,42 +53,51 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        constraintUI()
+        viewModel?.initCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Constraint
-    private func constraintUI() {
+    // MARK: - Functions
+    @objc private func onClickBook() {
+        viewModel?.onClickBook()
+    }
+}
+
+extension BookCollectionViewCell: BookCollectionCellViewDelegate {
+    func constraintUI() {
         addSubview(containerView)
         containerView.addSubview(thumbnailImageView)
         containerView.addSubview(bookTitleLabel)
+        containerView.addSubview(bookDescriptionLabel)
         
         containerView.snp.makeConstraints { make in
-            make.edges.equalTo(0)
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
         
         thumbnailImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalToSuperview().offset(-50)
+            make.top.leading.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width / 3)
+            make.height.equalTo(thumbnailImageView.snp.width).multipliedBy(1.5)
         }
         
         bookTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(thumbnailImageView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
+            make.top.equalTo(thumbnailImageView.snp.bottom).offset(12)
+        }
+        
+        bookDescriptionLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(bookTitleLabel.snp.bottom).offset(8)
+            make.bottom.equalToSuperview()
         }
     }
     
-    // MARK: - Functions
-    func setup(data: PopularSectionModel) {
-        bookId = data.id
+    func setUIData(data: BookSectionArguments) {
         thumbnailImageView.loadURL(url: data.thumbnailUrl)
         bookTitleLabel.text = data.title
-    }
-    
-    @objc private func onClickBook() {
-        bookClickListener?.onClickBook(id: bookId)
+        bookDescriptionLabel.text = data.description
     }
 }

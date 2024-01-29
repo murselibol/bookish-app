@@ -77,7 +77,6 @@ extension HomeVC: HomeVCDelegate {
     
     func constraintIndicatorView() {
         view.addSubview(indicatorView)
-//        indicatorView.layer.zPosition = 99
         indicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalTo(150)
@@ -119,51 +118,34 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
-            cell.bookClickListener = self
-            let book = viewModel.popularBooks[indexPath.item].volumeInfo
-            let id = viewModel.popularBooks[indexPath.item].id ?? ""
-            let thumbnailUrl = book?.imageLinks?.smallThumbnail
-            let title = book?.title ?? "-"
-            cell.setup(data: PopularSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title))
+            let viewModel = PopularCollectionViewCellVM(view: cell, arguments: viewModel.popularCellForItem(at: indexPath))
+            cell.viewModel = viewModel
+            viewModel.bookClickListener = self
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
-            cell.delegate = self
-            cell.setup(data: viewModel.categories[indexPath.item])
+            let viewModel = CategoryCollectionViewCellVM(view: cell, arguments: viewModel.categoryCellForItem(at: indexPath))
+            cell.viewModel = viewModel
+            viewModel.categoryClickListener = self
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as! BookCollectionViewCell
-            cell.bookClickListener = self
-            let book = viewModel.bookOfWeak?.volumeInfo
-            let id = viewModel.bookOfWeak?.id ?? ""
-            let thumbnailUrl = book?.imageLinks?.smallThumbnail
-            let title = book?.title ?? "-"
-            let description = book?.description ?? "-"
-            cell.setup(data: BookSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, description: description))
+            let viewModel = BookCollectionViewCellVM(view: cell, arguments: self.viewModel.bookCellForItem())
+            cell.viewModel = viewModel
+            viewModel.bookClickListener = self
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RisingCollectionViewCell.identifier, for: indexPath) as! RisingCollectionViewCell
-//            indexPath.item == 1 ? (cell.backgroundColor = .purple) : (cell.backgroundColor = .systemPink)
-            cell.bookClickListener = self
-            cell.authorClickListener = self
-            let book = viewModel.risingBooks[indexPath.item].volumeInfo
-            let id = viewModel.risingBooks[indexPath.item].id ?? ""
-            let thumbnailUrl = book?.imageLinks?.smallThumbnail
-            let title = book?.title ?? "-"
-            let author = book?.authors?.first ?? "-"
-            cell.setup(data: RisingSectionModel(id: id, thumbnailUrl: thumbnailUrl, rank: "0\(indexPath.item+1)", title: title, author: author))
+            let viewModel = RisingCollectionViewCellVM(view: cell, arguments: viewModel.risingCellForItem(at: indexPath))
+            cell.viewModel = viewModel
+            viewModel.bookClickListener = self
+            viewModel.authorClickListener = self
             return cell
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionViewCell.identifier, for: indexPath) as! DiscoverCollectionViewCell
             cell.bookClickListener = self
             cell.authorClickListener = self
-            let book = viewModel.discoverBooks[indexPath.item].volumeInfo
-            let id = viewModel.discoverBooks[indexPath.item].id ?? ""
-            let thumbnailUrl = book?.imageLinks?.smallThumbnail
-            let title = book?.title ?? "-"
-            let author = book?.authors?.first ?? "-"
-            let description = book?.description ?? "-"
-            cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
+            cell.setup(data: viewModel.discoverCellForItem(at: indexPath))
             return cell
         default:
             return UICollectionViewCell()
@@ -213,6 +195,7 @@ extension HomeVC: BookClickListener {
         coordinator?.navigateBookDetailVC(id: id)
     }
 }
+
 // MARK: - AuthorClickListener
 extension HomeVC: AuthorClickListener {
     func onClickAuthor(authorName: String) {
@@ -220,10 +203,9 @@ extension HomeVC: AuthorClickListener {
     }
 }
 
-
-// MARK: - Category Section Delegate
-extension HomeVC: CategoryCollectionViewCellDelegate {
-    func onSelectCategory(category: CategoryType) {
+// MARK: - CategoryClickListener
+extension HomeVC: CategoryClickListener {
+    func onClickCategory(category: CategoryType) {
         coordinator?.navigateBookListVC(title: category.title, category: category)
     }
 }

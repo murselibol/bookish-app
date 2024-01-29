@@ -7,12 +7,15 @@
 
 import UIKit
 
+protocol RisingCollectionCellViewDelegate: AnyObject {
+    func constraintUI()
+    func setUIData(data: RisingSectionArguments)
+}
+
 final class RisingCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RisingCollectionViewCell"
-    weak var bookClickListener: BookClickListener?
-    weak var authorClickListener: AuthorClickListener?
-    private lazy var bookId: String = ""
+    var viewModel: RisingCollectionViewCellVM?
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -66,15 +69,26 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        constraintUI()
+        viewModel?.initCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Constaint
-    private func constraintUI() {
+    // MARK: - Functions
+    @objc private func onClickBook() {
+        viewModel?.onClickBook()
+    }
+    
+    @objc private func onClickAuthor() {
+        viewModel?.onClickAuthor()
+    }
+}
+
+// MARK: - RisingCollectionCellViewDelegate
+extension RisingCollectionViewCell: RisingCollectionCellViewDelegate {
+    func constraintUI() {
         addSubview(containerView)
         containerView.addSubview(thumbnailImageView)
         containerView.addSubview(rankImageView)
@@ -117,27 +131,13 @@ final class RisingCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Functions
-    func setup(data: RisingSectionModel) {
-        bookId = data.id
-        thumbnailImageView.loadURL(url: data.thumbnailUrl)
-        updateRankImageColor(rank: data.rank)
-        rankLabel.text = data.rank
-        bookTitleLabel.text = data.title
-        authorLabel.text = data.author
-    }
-    
-    @objc private func onClickBook() {
-        bookClickListener?.onClickBook(id: bookId)
-    }
-    
-    @objc private func onClickAuthor() {
-        authorClickListener?.onClickAuthor(authorName: authorLabel.text ?? "")
-    }
-    
-    private func updateRankImageColor(rank: String?){
-        guard let rankValue = rank, let rankIndex = Int(rankValue) else { return }
-        rankImageView.tintColor = UIColor(hex: CATEGORY_SECTION_COLORS[rankIndex-1])
+    func setUIData(data: RisingSectionArguments) {
+        DispatchQueue.main.async {
+            self.thumbnailImageView.loadURL(url: data.thumbnailUrl)
+            self.rankImageView.tintColor = UIColor.init(hex: (self.viewModel?.getRankImageColorByRank(rank: data.rank))!)
+            self.rankLabel.text = self.viewModel?.getRankLabelByRank(rank: data.rank)
+            self.bookTitleLabel.text = data.title
+            self.authorLabel.text = data.author
+        }
     }
 }
-

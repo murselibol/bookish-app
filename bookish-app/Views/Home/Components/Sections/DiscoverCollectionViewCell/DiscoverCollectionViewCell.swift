@@ -106,7 +106,7 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Functions
-    func setup(data: DiscoverSectionModel) {
+    func setup(data: DiscoverSectionArguments) {
         bookId = data.id
         thumbnailImageView.loadURL(url: data.thumbnailUrl)
         bookTitleLabel.text = data.title

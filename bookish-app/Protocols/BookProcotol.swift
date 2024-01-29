@@ -15,3 +15,6 @@ protocol AuthorClickListener: AnyObject {
     func onClickAuthor(authorName: String)
 }
 
+protocol CategoryClickListener: AnyObject {
+    func onClickCategory(category: CategoryType)
+}
