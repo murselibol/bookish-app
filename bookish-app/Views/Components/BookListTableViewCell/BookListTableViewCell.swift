@@ -1,25 +1,23 @@
 //
-//  DiscoverCollectionViewCell.swift
+//  BookListTableViewCell.swift
 //  bookish-app
 //
-//  Created by Mursel Elibol on 10.01.2024.
+//  Created by Mursel Elibol on 30.01.2024.
 //
 
 import UIKit
 
-final class DiscoverCollectionViewCell: UICollectionViewCell {
+protocol BookListTableCellViewDelegate: AnyObject {
+    func constraintUI()
+    func setUIData(data: BookListCellArguments)
+}
+
+final class BookListTableViewCell: UITableViewCell {
     
-    static let identifier = "DiscoverCollectionViewCell"
-    weak var bookClickListener: BookClickListener?
-    weak var authorClickListener: AuthorClickListener?
-    private lazy var bookId: String = ""
+    static let identifier = "BookListTableViewCell"
+    var viewModel: BookListTableViewCellVM?
     
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
-        view.isUserInteractionEnabled = true
-        return view
-    }()
+    private lazy var containerView: UIView = UIView()
     
     private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
@@ -43,9 +41,9 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         label.font = .Text2()
         label.text = "John Doe"
         label.textColor = .getColor(.text)
-        label.numberOfLines = 1
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
         label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
+        label.numberOfLines = 1
         return label
     }()
     
@@ -59,8 +57,9 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Lifecycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         
         constraintUI()
     }
@@ -69,16 +68,22 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Constaint
-    private func constraintUI() {
-        addSubview(containerView)
+    @objc private func onClickAuthor() {
+        viewModel?.onClickAuthor()
+    }
+}
+
+extension BookListTableViewCell: BookListTableCellViewDelegate {
+    func constraintUI() {
+        contentView.addSubview(containerView)
         containerView.addSubview(thumbnailImageView)
         containerView.addSubview(bookTitleLabel)
         containerView.addSubview(authorLabel)
         containerView.addSubview(descriptionLabel)
         
         containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-20)
         }
         
         thumbnailImageView.snp.makeConstraints { make in
@@ -105,21 +110,10 @@ final class DiscoverCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Functions
-    func setup(data: DiscoverSectionArguments) {
-        bookId = data.id
+    func setUIData(data: BookListCellArguments) {
         thumbnailImageView.loadURL(url: data.thumbnailUrl)
         bookTitleLabel.text = data.title
         authorLabel.text = data.author
         descriptionLabel.text = data.description
     }
-    
-    @objc private func onClickBook() {
-        bookClickListener?.onClickBook(id: bookId)
-    }
-    
-    @objc private func onClickAuthor() {
-        authorClickListener?.onClickAuthor(authorName: authorLabel.text ?? "")
-    }
 }
-

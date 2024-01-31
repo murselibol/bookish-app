@@ -1,5 +1,5 @@
 //
-//  AuthorCollectionReuseView.swift
+//  AuthorView.swift
 //  bookish-app
 //
 //  Created by Mursel Elibol on 21.01.2024.
@@ -7,9 +7,7 @@
 
 import UIKit
 
-final class AuthorCollectionReuseView: UICollectionReusableView {
-    
-    static let identifier = "AuthorCollectionReuseView"
+final class AuthorView: UIView {
     
     private let profileImageSize = UIScreen.main.bounds.width / 3
     
@@ -90,7 +88,7 @@ final class AuthorCollectionReuseView: UICollectionReusableView {
             make.centerX.equalToSuperview()
             make.width.equalTo(profileImageSize * 1.3)
             make.height.equalTo(1)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-50)
         }
     }
     

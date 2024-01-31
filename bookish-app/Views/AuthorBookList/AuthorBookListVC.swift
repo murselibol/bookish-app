@@ -8,25 +8,35 @@
 import UIKit
 
 protocol AuthorBookListVCDelegate: AnyObject {
-    func configureCollectionViewLayout()
-    func configureCollectionView()
-    func constraintCollectionView()
-    func reloadCollectionView()
-    
+    func configureBookListTableView()
+    func constraintBookListTableView()
+    func reloadBookListTableView()
     func constraintIndicatorView()
     func updateIndicatorState(hidden: Bool)
+    func navigateBookDetailVC(id: String)
 }
 
 final class AuthorBookListVC: UIViewController {
     
     var viewModel: AuthorBookListVM!
     weak var coordinator: AuthorBookListCoordinator?
-    private var collectionView: UICollectionView!
     
     private lazy var indicatorView = IndicatorView()
+    private lazy var authorView: AuthorView = {
+        let view = AuthorView()
+        view.frame = CGRect(x: 0, y: 0, width: bookListTableView.frame.width, height: 370)
+        return view
+    }()
+    
+    private lazy var bookListTableView: UITableView = {
+        let tv = UITableView()
+        tv.separatorStyle = .none
+        return tv
+    }()
     
     init(authorName: String) {
         super.init(nibName: nil, bundle: nil)
+        
         self.viewModel = AuthorBookListVM(view: self, authorName: authorName)
     }
     
@@ -45,68 +55,54 @@ final class AuthorBookListVC: UIViewController {
     
 }
 
-// MARK: - UICollectionViewDelegate
-extension AuthorBookListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+// MARK: - UITableViewDelegate
+extension AuthorBookListVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRowsInSection
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.books.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
-        cell.bookCLickListener = self
-        let book = viewModel.books[indexPath.item].volumeInfo
-        let id = viewModel.books[indexPath.item].id ?? ""
-        let thumbnailUrl = book?.imageLinks?.smallThumbnail
-        let title = book?.title ?? "-"
-        let author = book?.authors?.first ?? "-"
-        let description = book?.description ?? "-"
-        cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: BookListTableViewCell.identifier, for: indexPath) as! BookListTableViewCell
+        cell.setUIData(data: viewModel.tableCellForItem(at: indexPath))
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AuthorCollectionReuseView.identifier, for: indexPath) as! AuthorCollectionReuseView
-        header.setup(authorName: viewModel.authorName)
-        return header
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        140
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        viewModel.colletionViewWillDisplay(at: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewModel.tableViewWillDisplay(at: indexPath)
     }
 }
 
 // MARK: - AuthorBookListVCDelegate
 extension AuthorBookListVC: AuthorBookListVCDelegate {
-    func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(AuthorCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: AuthorCollectionReuseView.identifier)
+    func configureBookListTableView() {
+        bookListTableView.delegate = self
+        bookListTableView.dataSource = self
+        bookListTableView.isUserInteractionEnabled = true
+        bookListTableView.register(BookListTableViewCell.self, forCellReuseIdentifier: BookListTableViewCell.identifier)
+        authorView.setup(authorName: viewModel.authorName)
+        bookListTableView.tableHeaderView = authorView
     }
     
-    func configureCollectionViewLayout() {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
-            return self?.createListSection()
-        }
-        
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }
-    
-    func constraintCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.bottom.leading.trailing.equalToSuperview()
+    func constraintBookListTableView() {
+        view.addSubview(bookListTableView)
+        bookListTableView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
         }
     }
     
-    func reloadCollectionView() {
+    func reloadBookListTableView() {
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.bookListTableView.reloadData()
         }
     }
     
@@ -125,6 +121,10 @@ extension AuthorBookListVC: AuthorBookListVCDelegate {
             self.indicatorView.isHidden = hidden
         }
     }
+    
+    func navigateBookDetailVC(id: String) {
+        coordinator?.navigateBookDetailVC(id: id)
+    }
 }
 
 // MARK: - BookClickListener
@@ -133,27 +133,3 @@ extension AuthorBookListVC: BookClickListener {
         coordinator?.navigateBookDetailVC(id: id)
     }
 }
-
-
-// MARK: - Compositional Layout
-extension AuthorBookListVC {
-    func createListSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(130))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .none
-        section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 70, leading: 10, bottom: 20, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        section.boundarySupplementaryItems = [header]
-                
-        return section
-    }
-}
-

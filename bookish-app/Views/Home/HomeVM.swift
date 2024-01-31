@@ -13,7 +13,7 @@ protocol HomeVMDelegate {
     func categoryCellForItem(at indexPath: IndexPath) -> CategorySectionArguments
     func bookCellForItem() -> BookSectionArguments
     func risingCellForItem(at indexPath: IndexPath) -> RisingSectionArguments
-    func discoverCellForItem(at indexPath: IndexPath) -> DiscoverSectionArguments
+    func discoverCellForItem(at indexPath: IndexPath) -> BookListCellArguments
 }
 
 final class HomeVM {
@@ -143,13 +143,13 @@ extension HomeVM: HomeVMDelegate {
          return RisingSectionArguments(id: id, thumbnailUrl: thumbnailUrl, rank: rank, title: title, author: author)
      }
     
-    func discoverCellForItem(at indexPath: IndexPath) -> DiscoverSectionArguments {
+    func discoverCellForItem(at indexPath: IndexPath) -> BookListCellArguments {
          let book = discoverBooks[indexPath.item].volumeInfo
          let id = discoverBooks[indexPath.item].id ?? ""
          let thumbnailUrl = book?.imageLinks?.smallThumbnail
          let title = book?.title ?? "-"
          let author = book?.authors?.first ?? "-"
          let description = book?.description ?? "-"
-         return DiscoverSectionArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description)
+         return BookListCellArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description)
      }
 }

@@ -1,13 +1,13 @@
 //
-//  DiscoverSectionModel.swift
+//  BookListCellArguments.swift
 //  bookish-app
 //
-//  Created by Mursel Elibol on 13.01.2024.
+//  Created by Mursel Elibol on 1.02.2024.
 //
 
 import Foundation
 
-struct DiscoverSectionModel {
+struct BookListCellArguments {
     let id: String
     let thumbnailUrl: String?
     let title: String

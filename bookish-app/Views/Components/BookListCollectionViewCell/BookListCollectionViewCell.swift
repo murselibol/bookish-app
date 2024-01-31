@@ -7,12 +7,15 @@
 
 import UIKit
 
+protocol BookListCollectionCellViewDelegate: AnyObject {
+    func constraintUI()
+    func setUIData(data: BookListCellArguments)
+}
+
 final class BookListCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "DiscoverCollectionViewCell"
-    weak var bookCLickListener: BookClickListener?
-    weak var authorClickListener: AuthorClickListener?
-    private lazy var bookId: String = ""
+    static let identifier = "BookListCollectionViewCell"
+    var viewModel: BookListCollectionViewCellVM?
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -43,9 +46,9 @@ final class BookListCollectionViewCell: UICollectionViewCell {
         label.font = .Text2()
         label.text = "John Doe"
         label.textColor = .getColor(.text)
+        label.numberOfLines = 1
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickAuthor)))
         label.isUserInteractionEnabled = true
-        label.numberOfLines = 1
         return label
     }()
     
@@ -62,15 +65,26 @@ final class BookListCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        constraintUI()
+        viewModel?.initCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Constaint
-    private func constraintUI() {
+    // MARK: - Functions
+    @objc private func onClickBook() {
+        viewModel?.onClickBook()
+    }
+    
+    @objc private func onClickAuthor() {
+        viewModel?.onClickAuthor()
+    }
+}
+
+// MARK: - BookListCollectionCellViewDelegate
+extension BookListCollectionViewCell: BookListCollectionCellViewDelegate {
+    func constraintUI() {
         addSubview(containerView)
         containerView.addSubview(thumbnailImageView)
         containerView.addSubview(bookTitleLabel)
@@ -105,21 +119,10 @@ final class BookListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Functions
-    func setup(data: DiscoverSectionModel) {
-        bookId = data.id
+    func setUIData(data: BookListCellArguments) {
         thumbnailImageView.loadURL(url: data.thumbnailUrl)
         bookTitleLabel.text = data.title
         authorLabel.text = data.author
         descriptionLabel.text = data.description
     }
-    
-    @objc private func onClickBook() {
-        bookCLickListener?.onClickBook(id: bookId)
-    }
-    
-    @objc private func onClickAuthor() {
-        authorClickListener?.onClickAuthor(authorName: authorLabel.text ?? "")
-    }
 }
-

@@ -8,22 +8,41 @@
 import UIKit
 
 protocol BookListVCDelegate: AnyObject {
-    func configureCollectionViewLayout()
-    func configureCollectionView()
-    func constraintCollectionView()
-    func reloadCollectionView()
-    
+    func configureTableView()
+    func constraintTableView()
+    func reloadTableView()
     func constraintIndicatorView()
     func updateIndicatorState(hidden: Bool)
+    func navigateBookDetailVC(id: String)
 }
 
 final class BookListVC: UIViewController {
     
     var viewModel: BookListVM!
     weak var coordinator: BookListCoordinator?
-    private var collectionView: UICollectionView!
     
     private lazy var indicatorView = IndicatorView()
+    
+    private lazy var pageHeaderView: UIView = {
+        let header = UIView()
+        header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 45)
+        return header
+    }()
+    
+    private lazy var pageHeaderLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Title2(.semibold)
+        label.text = viewModel.pageTitleLabel
+        label.textColor = .getColor(.bookTitle)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tv = UITableView()
+        tv.separatorStyle = .none
+        return tv
+    }()
     
     init(title: String, category: CategoryType) {
         super.init(nibName: nil, bundle: nil)
@@ -45,69 +64,60 @@ final class BookListVC: UIViewController {
     
 }
 
-// MARK: - UICollectionViewDelegate
-extension BookListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+// MARK: - UITableViewDelegate
+extension BookListVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRowsInSection
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.books.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
-        cell.bookCLickListener = self
-        cell.authorClickListener = self
-        let book = viewModel.books[indexPath.item].volumeInfo
-        let id = viewModel.books[indexPath.item].id ?? ""
-        let thumbnailUrl = book?.imageLinks?.smallThumbnail
-        let title = book?.title ?? "-"
-        let author = book?.authors?.first ?? "-"
-        let description = book?.description ?? "-"
-        cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: BookListTableViewCell.identifier, for: indexPath) as! BookListTableViewCell
+        let viewModel = BookListTableViewCellVM(view: cell, arguments: self.viewModel.tableCellForItem(at: indexPath))
+        cell.viewModel = viewModel
+        viewModel.authorClickListener = self
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
-        header.setup(title: viewModel.sectionTitle, sectionIndex: indexPath.section, hiddenSeeMore: true)
-        return header
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        140
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        viewModel.colletionViewWillDisplay(at: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewModel.tableViewWillDisplay(at: indexPath)
     }
 }
 
 // MARK: - BookListVCDelegate
 extension BookListVC: BookListVCDelegate {
-    func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
-        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
+    func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.isUserInteractionEnabled = true
+        tableView.register(BookListTableViewCell.self, forCellReuseIdentifier: BookListTableViewCell.identifier)
+        tableView.tableHeaderView = pageHeaderView
     }
     
-    func configureCollectionViewLayout() {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
-            return self?.createListSection()
-        }
+    func constraintTableView() {
+        view.addSubview(tableView)
+        pageHeaderView.addSubview(pageHeaderLabel)
         
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }
-    
-    func constraintCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
+        tableView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.bottom.leading.trailing.equalToSuperview()
         }
+        
+        pageHeaderLabel.snp.makeConstraints { make in
+            make.leading.trailing.centerY.equalToSuperview()
+        }
     }
     
-    func reloadCollectionView() {
+    func reloadTableView() {
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
     }
     
@@ -126,11 +136,8 @@ extension BookListVC: BookListVCDelegate {
             self.indicatorView.isHidden = hidden
         }
     }
-}
-
-// MARK: - BookClickListener
-extension BookListVC: BookClickListener {
-    func onClickBook(id: String) {
+    
+    func navigateBookDetailVC(id: String) {
         coordinator?.navigateBookDetailVC(id: id)
     }
 }
@@ -139,27 +146,5 @@ extension BookListVC: BookClickListener {
 extension BookListVC: AuthorClickListener {
     func onClickAuthor(authorName: String) {
         coordinator?.navigateAuthorBookListVC(authorName: authorName)
-    }
-}
-
-// MARK: - Compositional Layout
-extension BookListVC {
-    func createListSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(130))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .none
-        section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 20, leading: 10, bottom: 20, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
-        section.boundarySupplementaryItems = [header]
-        
-        return section
     }
 }

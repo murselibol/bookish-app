@@ -8,15 +8,19 @@
 import Foundation
 
 protocol BookListVMDelegate {
+    var pageTitle: String { get }
+    var numberOfRowsInSection: Int { get }
     func viewDidLoad()
-    func colletionViewWillDisplay(at indexPath: IndexPath)
+    func tableCellForItem(at indexPath: IndexPath) -> BookListCellArguments
+    func didSelectRow(at indexPath: IndexPath)
+    func tableViewWillDisplay(at indexPath: IndexPath)
 }
 
 final class BookListVM {
 
     weak var view: BookListVCDelegate?
     private let bookService: BookService
-    var sectionTitle: String
+    var pageTitle: String
     var categoryType: CategoryType
     lazy var books: [BookResponse] = []
     private lazy var paginationQuery: [URLQueryItem] = [
@@ -28,7 +32,7 @@ final class BookListVM {
     // MARK: - Lifecycle
     init(view: BookListVCDelegate?, title: String, category: CategoryType, bookService: BookService = BookService.shared) {
         self.view = view
-        self.sectionTitle = title
+        self.pageTitle = title
         self.categoryType = category
         self.bookService = bookService
     }
@@ -41,7 +45,7 @@ final class BookListVM {
             switch result {
             case .success(let data):
                 self.books.append(contentsOf: data.items ?? [])
-                view?.reloadCollectionView()
+                view?.reloadTableView()
                 view?.updateIndicatorState(hidden: true)
             case .failure(let error):
                 print(error)
@@ -67,15 +71,30 @@ final class BookListVM {
 
 // MARK: - BookListVMDelegate
 extension BookListVM: BookListVMDelegate {
+    var pageTitleLabel: String { pageTitle }
+    var numberOfRowsInSection: Int { books.count }
     func viewDidLoad() {
-        view?.configureCollectionViewLayout()
-        view?.configureCollectionView()
-        view?.constraintCollectionView()
+        view?.configureTableView()
+        view?.constraintTableView()
         view?.constraintIndicatorView()
         getBooksByCategory(type: categoryType, queryItems: paginationQuery)
     }
     
-    func colletionViewWillDisplay(at indexPath: IndexPath) {
+    func tableCellForItem(at indexPath: IndexPath) -> BookListCellArguments {
+         let book = books[indexPath.item].volumeInfo
+         let id = books[indexPath.item].id ?? ""
+         let thumbnailUrl = book?.imageLinks?.smallThumbnail
+         let title = book?.title ?? "-"
+         let author = book?.authors?.first ?? "-"
+         let description = book?.description ?? "-"
+         return BookListCellArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description)
+     }
+    
+    func didSelectRow(at indexPath: IndexPath) {
+        view?.navigateBookDetailVC(id: books[indexPath.row].id ?? "")
+    }
+    
+    func tableViewWillDisplay(at indexPath: IndexPath) {
         if indexPath.row == books.count - 3 {
             self.increasePageSize()
         }

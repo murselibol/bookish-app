@@ -62,15 +62,10 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
-        cell.bookCLickListener = self
-        cell.authorClickListener = self
-        let book = viewModel.books[indexPath.item].volumeInfo
-        let id = viewModel.books[indexPath.item].id ?? ""
-        let thumbnailUrl = book?.imageLinks?.smallThumbnail
-        let title = book?.title ?? "-"
-        let author = book?.authors?.first ?? "-"
-        let description = book?.description ?? "-"
-        cell.setup(data: DiscoverSectionModel(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description))
+        let viewModel = BookListCollectionViewCellVM(view: cell, arguments: viewModel.bookListCellForItem(at: indexPath))
+        cell.viewModel = viewModel
+        viewModel.bookClickListener = self
+        viewModel.authorClickListener = self
         return cell
     }
     

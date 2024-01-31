@@ -43,7 +43,7 @@ extension HomeVC: HomeVCDelegate {
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
         collectionView.register(RisingCollectionViewCell.self, forCellWithReuseIdentifier: RisingCollectionViewCell.identifier)
-        collectionView.register(DiscoverCollectionViewCell.self, forCellWithReuseIdentifier: DiscoverCollectionViewCell.identifier)
+        collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
         collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
     }
     
@@ -142,10 +142,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             viewModel.authorClickListener = self
             return cell
         case 4:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionViewCell.identifier, for: indexPath) as! DiscoverCollectionViewCell
-            cell.bookClickListener = self
-            cell.authorClickListener = self
-            cell.setup(data: viewModel.discoverCellForItem(at: indexPath))
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookListCollectionViewCell.identifier, for: indexPath) as! BookListCollectionViewCell
+            let viewModel = BookListCollectionViewCellVM(view: cell, arguments: viewModel.discoverCellForItem(at: indexPath))
+            cell.viewModel = viewModel
+            viewModel.bookClickListener = self
+            viewModel.authorClickListener = self
             return cell
         default:
             return UICollectionViewCell()

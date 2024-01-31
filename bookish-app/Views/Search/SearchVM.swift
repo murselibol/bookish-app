@@ -9,6 +9,7 @@ import UIKit
 
 protocol SearchVMDelegate {
     func viewDidLoad()
+    func bookListCellForItem(at indexPath: IndexPath) -> BookListCellArguments
     func colletionViewWillDisplay(at indexPath: IndexPath)
     func onChangeSearchTextField(text: String)
 }
@@ -18,9 +19,9 @@ final class SearchVM {
     weak var view: SearchVCDelegate?
     private let bookService: BookService
     lazy var books: [BookResponse] = []
-    lazy private var querySearch: URLQueryItem = .init(name: "q", value: "")
-    lazy private var queryStartIndex: URLQueryItem = .init(name: "startIndex", value: "0")
-    lazy private var queryLimit: URLQueryItem = .init(name: "maxResults", value: "10")
+    private lazy var querySearch: URLQueryItem = .init(name: "q", value: "")
+    private lazy var queryStartIndex: URLQueryItem = .init(name: "startIndex", value: "0")
+    private lazy var queryLimit: URLQueryItem = .init(name: "maxResults", value: "10")
 
     
     // MARK: - Lifecycle
@@ -61,6 +62,16 @@ extension SearchVM: SearchVMDelegate {
         view?.configureCollectionView()
         view?.constraintCollectionView()
         view?.constraintIndicatorView()
+    }
+    
+    func bookListCellForItem(at indexPath: IndexPath) -> BookListCellArguments {
+        let book = books[indexPath.item].volumeInfo
+        let id = books[indexPath.item].id ?? ""
+        let thumbnailUrl = book?.imageLinks?.smallThumbnail
+        let title = book?.title ?? "-"
+        let author = book?.authors?.first ?? "-"
+        let description = book?.description ?? "-"
+        return BookListCellArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description)
     }
     
     func colletionViewWillDisplay(at indexPath: IndexPath) {
