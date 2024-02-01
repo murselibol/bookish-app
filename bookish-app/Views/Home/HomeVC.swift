@@ -44,7 +44,9 @@ extension HomeVC: HomeVCDelegate {
         collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
         collectionView.register(RisingCollectionViewCell.self, forCellWithReuseIdentifier: RisingCollectionViewCell.identifier)
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
+        collectionView.register(EmptyCollectionViewCell.self, forCellWithReuseIdentifier: EmptyCollectionViewCell.identifier)
         collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
+        collectionView.register(EmptyCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: EmptyCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -55,7 +57,7 @@ extension HomeVC: HomeVCDelegate {
                 case 2: return self?.createBookSection()
                 case 3: return self?.createRisingSection()
                 case 4: return self?.createDiscoverSection()
-                default: return self?.createPopularSection()
+                default: return nil
             }
         }
         
@@ -149,7 +151,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             viewModel.authorClickListener = self
             return cell
         default:
-            return UICollectionViewCell()
+            return collectionView.dequeueReusableCell(withReuseIdentifier: EmptyCollectionViewCell.identifier, for: indexPath) as! EmptyCollectionViewCell
         }
     }
     
@@ -176,7 +178,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 header.setup(title: HomeSectionType.discover.sectionTitle, sectionIndex: indexPath.section)
                 return header
             default:
-                return UICollectionReusableView()
+                return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: EmptyCollectionReuseView.identifier, for: indexPath) as! EmptyCollectionReuseView
         }
     }
 }
