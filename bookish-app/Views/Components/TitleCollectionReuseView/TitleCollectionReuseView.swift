@@ -89,10 +89,10 @@ final class TitleCollectionReuseView: UICollectionReusableView {
     }
     
     // MARK: - Functions
-    func setup(title: String, sectionIndex: Int, hiddenSeeMore: Bool = false) {
-        self.sectionIndex = sectionIndex
-        self.sectionTitleLabel.text = title
-        isHiddenSeeMoreBtn(hidden: hiddenSeeMore)
+    func setup(data: TitleCollectionReuseViewArguments) {
+        self.sectionIndex = data.sectionIndex
+        self.sectionTitleLabel.text = data.title
+        isHiddenSeeMoreBtn(hidden: data.hiddenSeeMore)
     }
     
     @objc private func onClickSeeMoreBtn() {

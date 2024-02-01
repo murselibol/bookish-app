@@ -45,8 +45,8 @@ extension HomeVC: HomeVCDelegate {
         collectionView.register(RisingCollectionViewCell.self, forCellWithReuseIdentifier: RisingCollectionViewCell.identifier)
         collectionView.register(BookListCollectionViewCell.self, forCellWithReuseIdentifier: BookListCollectionViewCell.identifier)
         collectionView.register(EmptyCollectionViewCell.self, forCellWithReuseIdentifier: EmptyCollectionViewCell.identifier)
-        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TitleCollectionReuseView.identifier)
-        collectionView.register(EmptyCollectionReuseView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: EmptyCollectionReuseView.identifier)
+        collectionView.register(TitleCollectionReuseView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleCollectionReuseView.identifier)
+        collectionView.register(EmptyCollectionReuseView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: EmptyCollectionReuseView.identifier)
     }
     
     func configureCollectionViewLayout() {
@@ -160,22 +160,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case 0:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
-                header.setup(title: HomeSectionType.popular.sectionTitle, sectionIndex: indexPath.section)
+                header.setup(data: viewModel.getHeaderItemBySection(index: indexPath.section)!)
                 return header
             case 2:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
-                header.setup(title: HomeSectionType.book.sectionTitle, sectionIndex: indexPath.item, hiddenSeeMore: true)
+                header.setup(data: viewModel.getHeaderItemBySection(index: indexPath.section)!)
                 return header
             case 3:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
-                header.setup(title: HomeSectionType.rising.sectionTitle, sectionIndex: indexPath.section)
+                header.setup(data: viewModel.getHeaderItemBySection(index: indexPath.section)!)
                 return header
             case 4:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleCollectionReuseView.identifier, for: indexPath) as! TitleCollectionReuseView
                 header.delegate = self
-                header.setup(title: HomeSectionType.discover.sectionTitle, sectionIndex: indexPath.section)
+                header.setup(data: viewModel.getHeaderItemBySection(index: indexPath.section)!)
                 return header
             default:
                 return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: EmptyCollectionReuseView.identifier, for: indexPath) as! EmptyCollectionReuseView
@@ -228,7 +228,7 @@ extension HomeVC {
         section.contentInsets = .init(top: 0, leading: 10, bottom: 45, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
@@ -262,7 +262,7 @@ extension HomeVC {
         section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
@@ -283,7 +283,7 @@ extension HomeVC {
         section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         
@@ -303,7 +303,7 @@ extension HomeVC {
         section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 10)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "Header", alignment: .top)
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         header.contentInsets.bottom = 15
         section.boundarySupplementaryItems = [header]
         

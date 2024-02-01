@@ -14,6 +14,7 @@ protocol HomeVMDelegate {
     func bookCellForItem() -> BookSectionArguments
     func risingCellForItem(at indexPath: IndexPath) -> RisingSectionArguments
     func discoverCellForItem(at indexPath: IndexPath) -> BookListCellArguments
+    func getHeaderItemBySection(index: Int) -> TitleCollectionReuseViewArguments?
 }
 
 final class HomeVM {
@@ -152,4 +153,18 @@ extension HomeVM: HomeVMDelegate {
          let description = book?.description ?? "-"
          return BookListCellArguments(id: id, thumbnailUrl: thumbnailUrl, title: title, author: author, description: description)
      }
+    
+    func getHeaderItemBySection(index: Int) -> TitleCollectionReuseViewArguments? {
+        switch index {
+            case 0: 
+                TitleCollectionReuseViewArguments(title: HomeSectionType.popular.sectionTitle, sectionIndex: index, hiddenSeeMore: false)
+            case 2: 
+                TitleCollectionReuseViewArguments(title: HomeSectionType.book.sectionTitle, sectionIndex: index, hiddenSeeMore: true)
+            case 3: 
+                TitleCollectionReuseViewArguments(title: HomeSectionType.rising.sectionTitle, sectionIndex: index, hiddenSeeMore: false)
+            case 4: 
+                TitleCollectionReuseViewArguments(title: HomeSectionType.discover.sectionTitle, sectionIndex: index, hiddenSeeMore: false)
+            default: nil
+        }
+    }
 }
