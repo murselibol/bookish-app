@@ -14,13 +14,12 @@ protocol HomeVCDelegate: AnyObject {
     func configureCollectionView()
     func constraintCollectionView()
     func reloadCollectionView()
-    
     func constraintIndicatorView()
     func updateIndicatorState(hidden: Bool)
 }
 
 final class HomeVC: UIViewController {
-    private lazy var viewModel = HomeVM(view: self)
+    private lazy var viewModel: HomeVM = HomeVM(view: self)
     weak var coordinator: HomeCoordinator?
     
     private var collectionView: UICollectionView!
@@ -51,16 +50,8 @@ extension HomeVC: HomeVCDelegate {
     
     func configureCollectionViewLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
-            switch sectionIndex {
-                case 0: return self?.createPopularSection()
-                case 1: return self?.createCategorySection()
-                case 2: return self?.createBookSection()
-                case 3: return self?.createRisingSection()
-                case 4: return self?.createDiscoverSection()
-                default: return nil
-            }
+            self?.viewModel.getLayoutSectionByIndex(index: sectionIndex).section
         }
-        
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     }
     
@@ -96,24 +87,11 @@ extension HomeVC: HomeVCDelegate {
 // MARK: - UICollectionView
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        5
+        viewModel.numberOfSections
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return viewModel.popularBooks.count
-            case 1:
-                return viewModel.categories.count
-            case 2:
-                return 1
-            case 3:
-                return viewModel.risingBooks.count
-            case 4:
-                return viewModel.discoverBooks.count
-            default:
-                return 0
-        }
+        viewModel.numberOfItemsInSection(index: section)
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -186,9 +164,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 // MARK: - Compositional Section Header Delegate
 extension HomeVC: TitleCollectionReuseViewDelegate {
     func onClickSeeMoreBtn(sectionIndex: Int) {
-        let category = HomeSectionType.discover.sectionCategory
-        let title = HomeSectionType.discover.sectionTitle
-        coordinator?.navigateBookListVC(title: title, category: category)
+        let data = viewModel.getListVCArgumentsBySection(index: sectionIndex)
+        coordinator?.navigateBookListVC(title: data.title, category: data.category)
     }
 }
 
@@ -210,103 +187,5 @@ extension HomeVC: AuthorClickListener {
 extension HomeVC: CategoryClickListener {
     func onClickCategory(category: CategoryType) {
         coordinator?.navigateBookListVC(title: category.title, category: category)
-    }
-}
-
-// MARK: - Compositional Layout
-extension HomeVC {
-    func createPopularSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.24), heightDimension: .absolute(200))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 45, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        header.contentInsets.bottom = 15
-        section.boundarySupplementaryItems = [header]
-        
-        return section
-    }
-    
-    func createCategorySection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(100), heightDimension: .absolute(80))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = .fixed(10)
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 40, trailing: 10)
-        
-        return section
-    }
-    
-    func createBookSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .none
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        header.contentInsets.bottom = 15
-        section.boundarySupplementaryItems = [header]
-        
-        return section
-    }
-    
-    func createRisingSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .absolute(400))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item, item, item])
-        group.interItemSpacing = .fixed(20)
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = 50
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 50, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        header.contentInsets.bottom = 15
-        section.boundarySupplementaryItems = [header]
-        
-        return section
-    }
-    
-    func createDiscoverSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(130))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .none
-        section.interGroupSpacing = 20
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 10)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        header.contentInsets.bottom = 15
-        section.boundarySupplementaryItems = [header]
-        
-        return section
     }
 }

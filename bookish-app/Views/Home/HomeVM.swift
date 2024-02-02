@@ -8,13 +8,17 @@
 import Foundation
 
 protocol HomeVMDelegate {
+    var numberOfSections: Int { get }
     func viewDidLoad()
+    func getLayoutSectionByIndex(index: Int) -> HomeCompostionalLayoutSection
+    func numberOfItemsInSection(index: Int) -> Int
     func popularCellForItem(at indexPath: IndexPath) -> PopularSectionArguments
     func categoryCellForItem(at indexPath: IndexPath) -> CategorySectionArguments
     func bookCellForItem() -> BookSectionArguments
     func risingCellForItem(at indexPath: IndexPath) -> RisingSectionArguments
     func discoverCellForItem(at indexPath: IndexPath) -> BookListCellArguments
     func getHeaderItemBySection(index: Int) -> TitleCollectionReuseViewArguments?
+    func getListVCArgumentsBySection(index: Int) -> (title: String, category: CategoryType)
 }
 
 final class HomeVM {
@@ -22,6 +26,7 @@ final class HomeVM {
     private weak var view: HomeVCDelegate?
     private let bookService: BookServiceProtocol
     let categories = CATEGORY_SECTION_ITEMS
+    private lazy var sectionTypes: [HomeSectionType] = [.popular, .category, .book, .rising, .discover]
     var popularBooks: [BookResponse] = []
     var risingBooks: [BookResponse] = []
     var discoverBooks: [BookResponse] = []
@@ -94,7 +99,8 @@ final class HomeVM {
             paginationQuery.append(.init(name: "maxResults", value: "4"))
             break
         default:
-            print("default case")
+            paginationQuery.append(.init(name: "q", value: "subject:fantasy"))
+            paginationQuery.append(.init(name: "maxResults", value: "1"))
         }
         return paginationQuery
     }
@@ -102,6 +108,8 @@ final class HomeVM {
 
 // MARK: - HomeVMDelegate
 extension HomeVM: HomeVMDelegate {
+    var numberOfSections: Int { 5 }
+    
     func viewDidLoad() {
         view?.configureCollectionViewLayout()
         view?.configureCollectionView()
@@ -111,6 +119,21 @@ extension HomeVM: HomeVMDelegate {
         getBooksByCategory(type: .fantasy, queryItems: getInitialQueryItemsByCategory(type: .fantasy))
         getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
+    }
+    
+    func getLayoutSectionByIndex(index: Int) -> HomeCompostionalLayoutSection {
+        return sectionTypes[index].createLayoutSection()
+    }
+    
+    func numberOfItemsInSection(index: Int) -> Int {
+        switch index {
+            case 0: return popularBooks.count
+            case 1: return categories.count
+            case 2: return 1
+            case 3: return risingBooks.count
+            case 4: return discoverBooks.count
+            default: return 0
+        }
     }
     
     func popularCellForItem(at indexPath: IndexPath) -> PopularSectionArguments {
@@ -166,5 +189,10 @@ extension HomeVM: HomeVMDelegate {
                 TitleCollectionReuseViewArguments(title: HomeSectionType.discover.sectionTitle, sectionIndex: index, hiddenSeeMore: false)
             default: nil
         }
+    }
+    
+    func getListVCArgumentsBySection(index: Int) -> (title: String, category: CategoryType) {
+        let sectionType = sectionTypes[index]
+        return (title: sectionType.sectionTitle, category: sectionType.sectionCategory)
     }
 }
