@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct BookResponse: Codable {
     let kind, id, etag: String?
     let selfLink: String?

@@ -13,9 +13,10 @@ protocol HomeVCDelegate: AnyObject {
     func configureCollectionViewLayout()
     func configureCollectionView()
     func constraintCollectionView()
-    func reloadCollectionView()
     func constraintIndicatorView()
-    func updateIndicatorState(hidden: Bool)
+    func reloadCollectionView()
+    func startLoading()
+    func stopLoading()
 }
 
 final class HomeVC: UIViewController {
@@ -25,7 +26,7 @@ final class HomeVC: UIViewController {
     private var collectionView: UICollectionView!
     private lazy var indicatorView = IndicatorView()
 
-    // MARK: - Init
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,11 +76,18 @@ extension HomeVC: HomeVCDelegate {
             make.width.equalTo(150)
             make.height.equalTo(150)
         }
-        updateIndicatorState(hidden: true)
+        stopLoading()
     }
-    func updateIndicatorState(hidden: Bool) {
+    
+    func startLoading() {
         DispatchQueue.main.async {
-            self.indicatorView.isHidden = hidden
+            self.indicatorView.isHidden = false
+        }
+    }
+    
+    func stopLoading() {
+        DispatchQueue.main.async {
+            self.indicatorView.isHidden = true
         }
     }
 }

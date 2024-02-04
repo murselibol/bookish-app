@@ -25,12 +25,12 @@ final class HomeVM {
     
     private weak var view: HomeVCDelegate?
     private let bookService: BookServiceProtocol
-    let categories = CATEGORY_SECTION_ITEMS
+    private let categories = CATEGORY_SECTION_ITEMS
     private lazy var sectionTypes: [HomeSectionType] = [.popular, .category, .book, .rising, .discover]
-    var popularBooks: [BookResponse] = []
-    var risingBooks: [BookResponse] = []
-    var discoverBooks: [BookResponse] = []
-    var bookOfWeak: BookResponse?
+    private lazy var popularBooks: [BookResponse] = []
+    private lazy var risingBooks: [BookResponse] = []
+    private lazy var discoverBooks: [BookResponse] = []
+    private var bookOfWeak: BookResponse!
     
     // MARK: - Lifecycle
     init(view: HomeVCDelegate, bookService: BookServiceProtocol = BookService.shared) {
@@ -40,7 +40,7 @@ final class HomeVM {
     
     // MARK: - HTTP Requests
     private func getBooksByCategory(type: CategoryType, queryItems: [URLQueryItem]) {
-        view?.updateIndicatorState(hidden: false)
+        view?.startLoading()
         bookService.getBooks(queryItems: queryItems) {[weak self] result in
             guard let self = self else { return }
             switch result {
@@ -49,29 +49,29 @@ final class HomeVM {
                 case .history:
                     popularBooks = data.items ?? []
                     view?.reloadCollectionView()
-                    view?.updateIndicatorState(hidden: true)
+                    view?.stopLoading()
                     break
                 case .fantasy:
                     bookOfWeak = data.items?.first
                     view?.reloadCollectionView()
-                    view?.updateIndicatorState(hidden: true)
+                    view?.stopLoading()
                     break
                 case .love:
                     risingBooks = data.items ?? []
                     view?.reloadCollectionView()
-                    view?.updateIndicatorState(hidden: true)
+                    view?.stopLoading()
                     break
                 case .philosophy:
                     discoverBooks = data.items ?? []
                     view?.reloadCollectionView()
-                    view?.updateIndicatorState(hidden: true)
+                    view?.stopLoading()
                     break
                 default:
                     print("default case")
                 }
             case .failure(let error):
                 print(error)
-                view?.updateIndicatorState(hidden: true)
+                view?.stopLoading()
                 break
             }
         }
@@ -108,7 +108,7 @@ final class HomeVM {
 
 // MARK: - HomeVMDelegate
 extension HomeVM: HomeVMDelegate {
-    var numberOfSections: Int { 5 }
+    var numberOfSections: Int { sectionTypes.count }
     
     func viewDidLoad() {
         view?.configureCollectionViewLayout()
