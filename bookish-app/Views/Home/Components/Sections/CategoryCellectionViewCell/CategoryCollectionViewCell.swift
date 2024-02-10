@@ -23,6 +23,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickCategory)))
         view.isUserInteractionEnabled = true
         view.clipsToBounds = true
+        view.addRippleEffect(color: .systemGray5)
         return view
     }()
     
