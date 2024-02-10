@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol BookListVCDelegate: AnyObject {
     func configureTableView()
@@ -41,6 +42,8 @@ final class BookListVC: UIViewController {
     private lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.separatorStyle = .none
+        tv.showsVerticalScrollIndicator = false
+        tv.isUserInteractionEnabled = true
         return tv
     }()
     
@@ -96,7 +99,6 @@ extension BookListVC: BookListVCDelegate {
     func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.isUserInteractionEnabled = true
         tableView.register(BookListTableViewCell.self, forCellReuseIdentifier: BookListTableViewCell.identifier)
         tableView.tableHeaderView = pageHeaderView
     }
@@ -106,8 +108,7 @@ extension BookListVC: BookListVCDelegate {
         pageHeaderView.addSubview(pageHeaderLabel)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.bottom.leading.trailing.equalToSuperview()
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         pageHeaderLabel.snp.makeConstraints { make in

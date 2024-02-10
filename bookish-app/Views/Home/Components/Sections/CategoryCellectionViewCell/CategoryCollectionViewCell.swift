@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol CategoryCollectionCellViewDelegate: AnyObject {
     func constraintUI()

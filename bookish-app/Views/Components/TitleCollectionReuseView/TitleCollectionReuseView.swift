@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol TitleCollectionReuseViewDelegate: AnyObject {
     func onClickSeeMoreBtn(sectionIndex: Int)

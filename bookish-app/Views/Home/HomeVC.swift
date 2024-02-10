@@ -54,12 +54,13 @@ extension HomeVC: HomeVCDelegate {
             self?.viewModel.getLayoutSectionByIndex(index: sectionIndex).section
         }
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.collectionView.showsVerticalScrollIndicator = false
     }
     
     func constraintCollectionView() {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     

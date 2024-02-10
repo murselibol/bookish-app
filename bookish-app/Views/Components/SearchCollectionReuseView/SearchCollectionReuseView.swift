@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol SearchCollectionReuseViewDelegate: AnyObject {
     func onChangeSearchTextField(text: String)

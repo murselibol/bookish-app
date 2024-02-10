@@ -1,11 +1,5 @@
-//
-//  SearchTextField.swift
-//  bookish-app
-//
-//  Created by Mursel Elibol on 19.01.2024.
-//
-
 import UIKit
+import SnapKit
 
 final class SearchTextField: UITextField {
     
@@ -34,9 +28,8 @@ final class SearchTextField: UITextField {
     
     // MARK: - Configure
     private func configureTextField() {
-        addTarget(self, action: #selector(searchTextFieldDidBeginEditing), for: .editingDidBegin)
-        addTarget(self, action: #selector(searchTextFieldDidEndEditing), for: .editingDidEnd)
-        
+        delegate = self
+        self.returnKeyType = .search
         self.font = .Text1()
         self.textColor = .white
         self.attributedPlaceholder = NSAttributedString(string: "Enter...", attributes: [NSAttributedString.Key.foregroundColor: placeholderColor])
@@ -66,15 +59,22 @@ final class SearchTextField: UITextField {
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
-    
-    // MARK: - Action Functions
-    @objc private func searchTextFieldDidBeginEditing(_ textField: UITextField) {
+}
+
+// MARK: - UITextFieldDelegate
+extension SearchTextField: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         self.layer.borderColor = UIColor.white.cgColor
         searchImageView.tintColor = .white
     }
     
-    @objc private func searchTextFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         self.layer.borderColor = UIColor.black.cgColor
         searchImageView.tintColor = placeholderColor
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

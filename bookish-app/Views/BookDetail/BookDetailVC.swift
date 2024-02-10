@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol BookDetailVCDelegate: AnyObject {
     func constraintUI()

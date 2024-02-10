@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol AuthorBookListVCDelegate: AnyObject {
     func configureBookListTableView()
@@ -31,6 +32,7 @@ final class AuthorBookListVC: UIViewController {
     private lazy var bookListTableView: UITableView = {
         let tv = UITableView()
         tv.separatorStyle = .none
+        tv.showsVerticalScrollIndicator = false
         return tv
     }()
     

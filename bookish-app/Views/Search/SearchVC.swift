@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol SearchVCDelegate: AnyObject {
     func configureCollectionViewLayout()
@@ -88,6 +89,7 @@ extension SearchVC: SearchVCDelegate {
         }
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.collectionView.showsVerticalScrollIndicator = false
     }
     
     func constraintCollectionView() {
@@ -95,12 +97,12 @@ extension SearchVC: SearchVCDelegate {
         view.addSubview(collectionView)
         
         searchTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview().inset(10)
         }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(searchTextField.snp.bottom).offset(20)
-            make.bottom.leading.trailing.equalToSuperview()
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
