@@ -8,7 +8,6 @@
 import UIKit
 
 protocol SearchVCDelegate: AnyObject {
-    func configureSearchTextField()
     func configureCollectionViewLayout()
     func configureCollectionView()
     func constraintCollectionView()
@@ -28,6 +27,7 @@ final class SearchVC: UIViewController {
     lazy var searchTextField: SearchTextField = {
         let tf = SearchTextField()
         tf.placeholder = "book name, author, isbn..."
+        tf.addTarget(self, action: #selector(searchTextFieldDidChange(_:)), for: .editingChanged)
         return tf
     }()
     
@@ -41,13 +41,13 @@ final class SearchVC: UIViewController {
     
     deinit { coordinator?.finishCoordinator() }
     
-}
-
-// MARK: - UITextFieldDelegate
-extension SearchVC: UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        viewModel.onChangeSearchTextField(text: textField.text ?? "")
+    // MARK: - Functions
+    @objc func searchTextFieldDidChange(_ textField: UITextField) {
+        textField.debounce(0.3) { text in
+            self.viewModel.onChangeSearchTextField(text: textField.text ?? "")
+        }
     }
+    
 }
 
 // MARK: - UICollectionViewDelegate
@@ -76,10 +76,6 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 
 // MARK: - SearchVCDelegate
 extension SearchVC: SearchVCDelegate {
-    func configureSearchTextField() {
-        searchTextField.delegate = self
-    }
-    
     func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self

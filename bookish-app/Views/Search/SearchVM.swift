@@ -57,7 +57,6 @@ final class SearchVM {
 // MARK: - SearchVCDelegate
 extension SearchVM: SearchVMDelegate {
     func viewDidLoad() {
-        view?.configureSearchTextField()
         view?.configureCollectionViewLayout()
         view?.configureCollectionView()
         view?.constraintCollectionView()
