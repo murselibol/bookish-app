@@ -32,6 +32,10 @@ final class HomeVC: UIViewController {
         
         viewModel.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.viewWillAppear()
+    }
 }
 
 // MARK: - HomeVCDelegate

@@ -94,7 +94,7 @@ final class AuthorView: UIView {
     }
     
     // MARK: - Functions
-    func setup(authorName: String) {
+    func setUIData(authorName: String) {
         nameLabel.text = authorName
     }
 }

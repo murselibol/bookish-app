@@ -21,7 +21,7 @@ final class ApplicationCoordinator: ApplicationCoordinatorProtocol {
     }
     
     func start() {
-        let tabBarController = TabBarCoordinator()
+        let tabBarController = TabBarCoordinator.shared
         tabBarController.start()
         self.childCoordinators = [tabBarController]
         window.rootViewController = tabBarController.rootViewController

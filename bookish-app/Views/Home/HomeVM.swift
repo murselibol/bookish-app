@@ -10,6 +10,7 @@ import Foundation
 protocol HomeVMDelegate {
     var numberOfSections: Int { get }
     func viewDidLoad()
+    func viewWillAppear()
     func getLayoutSectionByIndex(index: Int) -> HomeCompostionalLayoutSection
     func numberOfItemsInSection(index: Int) -> Int
     func popularCellForItem(at indexPath: IndexPath) -> PopularSectionArguments
@@ -119,6 +120,13 @@ extension HomeVM: HomeVMDelegate {
         getBooksByCategory(type: .fantasy, queryItems: getInitialQueryItemsByCategory(type: .fantasy))
         getBooksByCategory(type: .love, queryItems: getInitialQueryItemsByCategory(type: .love))
         getBooksByCategory(type: .philosophy, queryItems: getInitialQueryItemsByCategory(type: .philosophy))
+    }
+    
+    func viewWillAppear() {
+        if let deeplink = deeplinkToOpen {
+            DeepLinkManager.shared.navigate(with: deeplink)
+            deeplinkToOpen = nil
+        }
     }
     
     func getLayoutSectionByIndex(index: Int) -> HomeCompostionalLayoutSection {

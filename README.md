@@ -11,3 +11,4 @@ This project is a simple book application built with the MVMM architecture.
 - Compositional Layout
 - Generic Network Layer
 - Coordinator Pattern
+- Deep Link

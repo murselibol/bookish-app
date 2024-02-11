@@ -13,12 +13,12 @@ protocol TabBarCoordinatorProtocol: AnyObject {
 }
 
 final class TabBarCoordinator: TabBarCoordinatorProtocol {
-    var rootViewController: UITabBarController
+    static let shared = TabBarCoordinator()
+    
+    var rootViewController = UITabBarController()
     var childCoordinators = [Coordinator]()
     
-    init() {
-        self.rootViewController = UITabBarController()
-    }
+    private init() {}
     
     func start() {
         let homeCoordinator = HomeCoordinator()

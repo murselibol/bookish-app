@@ -89,7 +89,7 @@ extension AuthorBookListVC: AuthorBookListVCDelegate {
         bookListTableView.dataSource = self
         bookListTableView.isUserInteractionEnabled = true
         bookListTableView.register(BookListTableViewCell.self, forCellReuseIdentifier: BookListTableViewCell.identifier)
-        authorView.setup(authorName: viewModel.authorName)
+        authorView.setUIData(authorName: viewModel.authorName)
         bookListTableView.tableHeaderView = authorView
     }
     
