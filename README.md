@@ -23,13 +23,13 @@ This project is a simple book application built with the MVMM architecture.
 <table>
     <tbody>
         <tr>
-            <td rowspan=4><img src="/ScreenShots/home-screen.png"></td>
-            <td><img src="/ScreenShots/detail-screen.png"></td>
-            <td><img src="/ScreenShots/book-list-screen.png"></td>
+            <td rowspan=4><img src="/Screenshots/home-screen.png"></td>
+            <td><img src="/Screenshots/detail-screen.png"></td>
+            <td><img src="/Screenshots/book-list-screen.png"></td>
         </tr>
         <tr>
-            <td><img src="/ScreenShots/author-screen.png"></td>
-            <td><img src="/ScreenShots/search-screen.png"></td>
+            <td><img src="/Screenshots/author-screen.png"></td>
+            <td><img src="/Screenshots/search-screen.png"></td>
         </tr>
     </tbody>
 </table>
