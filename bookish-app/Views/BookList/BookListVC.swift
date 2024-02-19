@@ -108,7 +108,8 @@ extension BookListVC: BookListVCDelegate {
         pageHeaderView.addSubview(pageHeaderLabel)
         
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
         
         pageHeaderLabel.snp.makeConstraints { make in

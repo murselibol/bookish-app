@@ -26,7 +26,7 @@ final class BookListCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var thumbnailImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "dummy-thumbnail"))
+        let imageView = UIImageView(image: UIImage(named: "image-not-found"))
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
         imageView.clipsToBounds = true
