@@ -22,6 +22,7 @@ final class BookCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.layer.cornerRadius = 6
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
+        view.addLongPressOpacity()
         view.isUserInteractionEnabled = true
         return view
     }()

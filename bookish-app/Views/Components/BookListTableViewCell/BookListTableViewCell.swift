@@ -53,7 +53,7 @@ final class BookListTableViewCell: UITableViewCell {
         label.font = .Text2()
         label.text = "Lorem ipsum"
         label.textColor = .getColor(.textGray)
-        label.numberOfLines = 4
+        label.numberOfLines = 3
         return label
     }()
     
@@ -105,7 +105,7 @@ extension BookListTableViewCell: BookListTableCellViewDelegate {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(authorLabel.snp.bottom).offset(15)
+            make.top.equalTo(authorLabel.snp.bottom).offset(12)
             make.trailing.equalToSuperview()
             make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
         }

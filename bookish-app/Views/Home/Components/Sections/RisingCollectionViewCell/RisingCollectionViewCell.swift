@@ -21,6 +21,7 @@ final class RisingCollectionViewCell: UICollectionViewCell {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
+        view.addLongPressOpacity()
         view.isUserInteractionEnabled = true
         return view
     }()

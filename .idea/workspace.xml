@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c9a2bd46-59c1-41b1-8527-2e85da230aa4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Poppins-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Poppins-Light.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Poppins-LightItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Poppins-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Poppins-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Poppins-SemiBold.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/App/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/App/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Enums/Constants/Constant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/Enums/Constants/Constant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Extensions/UIFont+Ext.swift" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/Extensions/UIFont+Ext.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/New Group/Assets.xcassets/Colors/textGrayColor.colorset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/New Group/Assets.xcassets/Colors/textGrayColor.colorset/Contents.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Raleway-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Raleway-Light.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Raleway-LightItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Raleway-Medium.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Raleway-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Supports/Fonts/Raleway-SemiBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Views/Components/BookListCollectionViewCell/BookListCollectionViewCell.swift" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/Views/Components/BookListCollectionViewCell/BookListCollectionViewCell.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Views/Components/BookListTableViewCell/BookListTableViewCell.swift" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/Views/Components/BookListTableViewCell/BookListTableViewCell.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookish-app/Views/Home/Components/Sections/PopularCollectionViewCell/PopularCollectionViewCell.swift" beforeDir="false" afterPath="$PROJECT_DIR$/bookish-app/Views/Home/Components/Sections/PopularCollectionViewCell/PopularCollectionViewCell.swift" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2cpCeDrXQk8DjnsIbQUXqCwKsf6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c9a2bd46-59c1-41b1-8527-2e85da230aa4" name="Changes" comment="" />
+      <created>1708799226069</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1708799226069</updated>
+      <workItem from="1708799229456" duration="2000" />
+    </task>
+    <servers />
+  </component>
+</project>

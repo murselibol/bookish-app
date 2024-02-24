@@ -20,11 +20,11 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 6
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickCategory)))
+        view.addLongPressRipple(color: .systemGray5)
+        view.layer.cornerRadius = 6
         view.isUserInteractionEnabled = true
         view.clipsToBounds = true
-        view.addRippleEffect(color: .systemGray5)
         return view
     }()
     

@@ -57,7 +57,7 @@ final class BookDetailVM {
             ratingAvarage: "\(bookInfo?.averageRating ?? 0)",
             category: bookInfo?.categories?.first ?? "-",
             page: "\(bookInfo?.pageCount ?? 0)",
-            description: bookInfo?.description?.htmlToString() ?? "-"
+            description: bookInfo?.description?.htmlToString() ?? K.lorem50
         )
         view?.setData(args: data)
     }

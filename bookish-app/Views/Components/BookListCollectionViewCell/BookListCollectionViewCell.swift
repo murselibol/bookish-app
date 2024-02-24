@@ -21,6 +21,7 @@ final class BookListCollectionViewCell: UICollectionViewCell {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
+        view.addLongPressOpacity()
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -55,7 +56,7 @@ final class BookListCollectionViewCell: UICollectionViewCell {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .Text2()
+        label.font = .Description()
         label.text = "Lorem ipsum"
         label.textColor = .getColor(.textGray)
         label.numberOfLines = 4
@@ -108,13 +109,13 @@ extension BookListCollectionViewCell: BookListCollectionCellViewDelegate {
         }
 
         authorLabel.snp.makeConstraints { make in
-            make.top.equalTo(bookTitleLabel.snp.bottom).offset(8)
+            make.top.equalTo(bookTitleLabel.snp.bottom).offset(6)
             make.trailing.equalToSuperview()
             make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(authorLabel.snp.bottom).offset(15)
+            make.top.equalTo(authorLabel.snp.bottom).offset(12)
             make.trailing.equalToSuperview()
             make.leading.equalTo(thumbnailImageView.snp.trailing).offset(15)
         }

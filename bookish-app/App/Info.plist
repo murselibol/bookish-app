@@ -45,12 +45,12 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Raleway-Light.ttf</string>
-		<string>Raleway-LightItalic.ttf</string>
-		<string>Raleway-Regular.ttf</string>
-		<string>Raleway-Italic.ttf</string>
-		<string>Raleway-Medium.ttf</string>
-		<string>Raleway-SemiBold.ttf</string>
+		<string>Poppins-Light.ttf</string>
+		<string>Poppins-Medium.ttf</string>
+		<string>Poppins-Regular.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
+		<string>Poppins-Italic.ttf</string>
+		<string>Poppins-LightItalic.ttf</string>
 	</array>
 </dict>
 </plist>

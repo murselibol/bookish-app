@@ -23,6 +23,7 @@ final class PopularCollectionViewCell: UICollectionViewCell {
         view.layer.cornerRadius = 6
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickBook)))
+        view.addLongPressOpacity()
         return view
     }()
     
@@ -36,7 +37,7 @@ final class PopularCollectionViewCell: UICollectionViewCell {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Text1()
+        label.font = .Text1(.semibold)
         label.text = "Sineklerin Tanrısı"
         label.textColor = .getColor(.bookTitle)
         label.numberOfLines = 2
